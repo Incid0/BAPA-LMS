@@ -5,7 +5,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using BAPA_LMS.Models;
+using BAPA_LMS.Models.DB;
 
 namespace BAPA_LMS
 {
