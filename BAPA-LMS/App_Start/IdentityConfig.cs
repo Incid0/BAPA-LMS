@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using BAPA_LMS.Models.DB;
+using BAPA_LMS.DataAccessLayer;
 
 namespace BAPA_LMS
 {
