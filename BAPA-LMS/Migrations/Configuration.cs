@@ -9,14 +9,14 @@ namespace BAPA_LMS.Migrations
     using System.Linq;
     using BAPA_LMS.Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BAPA_LMS.DataAccessLayer.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<BAPA_LMS.DataAccessLayer.LMSDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DataAccessLayer.ApplicationDbContext context)
+        protected override void Seed(DataAccessLayer.LMSDbContext context)
         {
             
             context.Courses.AddOrUpdate( c => c.Id,
@@ -99,7 +99,7 @@ namespace BAPA_LMS.Migrations
                 if (!context.Users.Any(u => u.UserName == email))
                 {
                     ApplicationUser user = new ApplicationUser { UserName = email, Email = email, FirstName = firstName[i], LastName = lastName[i]};
-                    var result = userManager.Create(user, "foobar");
+                    var result = userManager.Create(user,"foobar");
                     if (!result.Succeeded)
                     {
                         throw new Exception(string.Join("\n", result.Errors));
