@@ -17,11 +17,11 @@ namespace BAPA_LMS.Migrations
                         Description = c.String(maxLength: 2000),
                         StartTime = c.DateTime(nullable: false),
                         EndTime = c.DateTime(nullable: false),
-                        Module_Id = c.Int(),
+                        ModuleId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Modules", t => t.Module_Id)
-                .Index(t => t.Module_Id);
+                .ForeignKey("dbo.Modules", t => t.ModuleId, cascadeDelete: true)
+                .Index(t => t.ModuleId);
             
             CreateTable(
                 "dbo.Modules",
@@ -32,11 +32,11 @@ namespace BAPA_LMS.Migrations
                         Description = c.String(maxLength: 2000),
                         StartDate = c.DateTime(nullable: false),
                         EndDate = c.DateTime(nullable: false),
-                        Course_Id = c.Int(),
+                        CourseId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Courses", t => t.Course_Id)
-                .Index(t => t.Course_Id);
+                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
+                .Index(t => t.CourseId);
             
             CreateTable(
                 "dbo.Courses",
@@ -127,12 +127,12 @@ namespace BAPA_LMS.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Modules", "Course_Id", "dbo.Courses");
+            DropForeignKey("dbo.Modules", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUsers", "Course_Id", "dbo.Courses");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Activities", "Module_Id", "dbo.Modules");
+            DropForeignKey("dbo.Activities", "ModuleId", "dbo.Modules");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
@@ -140,8 +140,8 @@ namespace BAPA_LMS.Migrations
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", new[] { "Course_Id" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Modules", new[] { "Course_Id" });
-            DropIndex("dbo.Activities", new[] { "Module_Id" });
+            DropIndex("dbo.Modules", new[] { "CourseId" });
+            DropIndex("dbo.Activities", new[] { "ModuleId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");

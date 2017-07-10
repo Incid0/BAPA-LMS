@@ -19,45 +19,50 @@ namespace BAPA_LMS.Migrations
         protected override void Seed(DataAccessLayer.LMSDbContext context)
         {
             
-            context.Courses.AddOrUpdate( c => c.Id,
-                new Course {                    
+            context.Courses.AddOrUpdate(
+                new Course {
+                    Id = 1,
                     Name = "Lexicons Monsterkurs",
                     Description = "Grundläggande inom .NET",
                     StartDate = DateTime.Parse("2017/07/10") }
                 
                 );
-            var courseId = context.Courses.Find(1);
-            context.Modules.AddOrUpdate(c => c.Id,
+          
+            context.Modules.AddOrUpdate( 
                 new Module {
+                    Id = 1,
                     Name = "C# Basic",
                     Description = "Grundläggande inom C#",
-                    Course = courseId,
+                    CourseId = 1,
                     StartDate = DateTime.Parse("2017/07/10"),
                     EndDate = DateTime.Parse("2017/07/28") }
 
                 );
-            var moduleId = context.Modules.Find(1);
-            context.Activities.AddOrUpdate( c => c.Id,
+          
+            context.Activities.AddOrUpdate(
                 new Activity {
+                    Id = 1,
                     Name = "Aktivitet",
                     Type = ActivityTypes.Annat,
-                    Module = moduleId,
+                    ModuleId = 1,
                     Description = "Generell aktivitetsinfo",
                     StartTime = DateTime.Parse("2017/07/10"),
                     EndTime = DateTime.Parse("2017/07/28") },
                 new Activity {
+                    Id = 2,
                     Name = "En till Aktivitet!",
                     Type = ActivityTypes.Annat,
-                    Module = moduleId,
+                    ModuleId = 1,
                     Description = "Generell aktivitetsinfo",
                     StartTime = DateTime.Parse("2017/07/10"),
                     EndTime = DateTime.Parse("2017/07/28")
                 },
                 
                 new Activity {
+                    Id = 3,
                     Name = "Annan Aktivitet",
                     Type = ActivityTypes.Annat,
-                    Module = moduleId,
+                    ModuleId = 1,
                     Description = "Generell aktivitetsinfo",
                     StartTime = DateTime.Parse("2017/07/10"),
                     EndTime = DateTime.Parse("2017/07/28")
@@ -93,12 +98,13 @@ namespace BAPA_LMS.Migrations
             string[] firstName = new[] { "John", "Erik", "Anders", "Basse", "Olga" };
             string[] lastName = new[] { "Hellman", "Svensson", "Eriksson", "Nybom", "Stanislav" };
             int i = 0;
-
+            var c_Id = context.Courses.Find(1);
             foreach (string email in emails)
             {
                 if (!context.Users.Any(u => u.UserName == email))
                 {
-                    ApplicationUser user = new ApplicationUser { UserName = email, Email = email, FirstName = firstName[i], LastName = lastName[i]};
+               
+                    ApplicationUser user = new ApplicationUser { UserName = email, Email = email, FirstName = firstName[i], LastName = lastName[i], Course_Id = 1};
                     var result = userManager.Create(user,"foobar");
                     if (!result.Succeeded)
                     {

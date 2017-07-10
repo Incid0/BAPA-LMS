@@ -18,7 +18,9 @@ namespace BAPA_LMS.Models.DB
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
 
-		public virtual Course Course { get; set; }
+        public int CourseId { get; set; }
+
+        public virtual Course Course { get; set; }
 		public virtual ICollection<Activity> Activities { get; set; }
       
     }
