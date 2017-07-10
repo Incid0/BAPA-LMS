@@ -16,12 +16,58 @@ namespace BAPA_LMS.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(BAPA_LMS.DataAccessLayer.ApplicationDbContext context)
+        protected override void Seed(DataAccessLayer.ApplicationDbContext context)
         {
-            context.Courses.AddOrUpdate( c =>c.Id,
-                new Course { Name = "Lexicons Monsterkurs", Description = "Grundläggande inom .NET", StartDate = DateTime.Parse("2017/07/10") }
+            
+            context.Courses.AddOrUpdate( c => c.Id,
+                new Course {                    
+                    Name = "Lexicons Monsterkurs",
+                    Description = "Grundläggande inom .NET",
+                    StartDate = DateTime.Parse("2017/07/10") }
                 
                 );
+            var courseId = context.Courses.Find(1);
+            context.Modules.AddOrUpdate(c => c.Id,
+                new Module {
+                    Name = "C# Basic",
+                    Description = "Grundläggande inom C#",
+                    Course = courseId,
+                    StartDate = DateTime.Parse("2017/07/10"),
+                    EndDate = DateTime.Parse("2017/07/28") }
+
+                );
+            var moduleId = context.Modules.Find(1);
+            context.Activities.AddOrUpdate( c => c.Id,
+                new Activity {
+                    Name = "Aktivitet",
+                    Type = ActivityTypes.Annat,
+                    Module = moduleId,
+                    Description = "Generell aktivitetsinfo",
+                    StartTime = DateTime.Parse("2017/07/10"),
+                    EndTime = DateTime.Parse("2017/07/28") },
+                new Activity {
+                    Name = "En till Aktivitet!",
+                    Type = ActivityTypes.Annat,
+                    Module = moduleId,
+                    Description = "Generell aktivitetsinfo",
+                    StartTime = DateTime.Parse("2017/07/10"),
+                    EndTime = DateTime.Parse("2017/07/28")
+                },
+                
+                new Activity {
+                    Name = "Annan Aktivitet",
+                    Type = ActivityTypes.Annat,
+                    Module = moduleId,
+                    Description = "Generell aktivitetsinfo",
+                    StartTime = DateTime.Parse("2017/07/10"),
+                    EndTime = DateTime.Parse("2017/07/28")
+                
+                }
+
+                );
+
+           
+
         
 
 
