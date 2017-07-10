@@ -12,6 +12,8 @@ namespace BAPA_LMS.DataAccessLayer
 	{
 		public LMSDbContext(): base("DefaultConnection", throwIfV1Schema: false) { }
 
+		public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+		{
 		public DbSet<Course> Courses { get; set; }
 		public DbSet<Module> Modules { get; set; }
 		public DbSet<Activity> Activities { get; set; }

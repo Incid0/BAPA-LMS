@@ -19,5 +19,6 @@ namespace BAPA_LMS.Models.DB
 
 		public virtual ICollection<Module> Modules { get; set; }
 		public virtual ICollection<ApplicationUser> Members { get; set; }
-	}
+      
+    }
 }
