@@ -14,6 +14,7 @@ namespace BAPA_LMS.Models.DB
 		public string LastName { get; set; }
 		public string FullName { get { return FirstName + " " + LastName; } }
 
+        public int Course_Id { get; set; }
 		public virtual Course Course { get; set; }
 
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
