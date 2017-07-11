@@ -1,4 +1,5 @@
 ﻿using BAPA_LMS.DataAccessLayer;
+using BAPA_LMS.Models.CourseViewModels;
 using BAPA_LMS.Models.DB;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -34,9 +35,9 @@ namespace BAPA_LMS.Controllers
             {
                 return HttpNotFound();
             }
-            
+            CourseDetailViewModel cdvm = course;
 
-            return View(course);
+            return View(cdvm);
         }
 
       
