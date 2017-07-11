@@ -27,7 +27,7 @@ namespace BAPA_LMS.Migrations
                     StartDate = DateTime.Parse("2017/07/10") }
                 
                 );
-          
+            context.SaveChanges();
             context.Modules.AddOrUpdate( 
                 new Module {
                     Id = 1,
@@ -56,11 +56,9 @@ namespace BAPA_LMS.Migrations
                     StartDate = DateTime.Parse("2017/09/10"),
                     EndDate = DateTime.Parse("2017/09/28")
                 
-                }
-                
-
+                }              
                 );
-          
+            context.SaveChanges();
             context.Activities.AddOrUpdate(
                 new Activity {
                     Id = 1,
@@ -93,9 +91,9 @@ namespace BAPA_LMS.Migrations
 
                 );
 
-           
+            context.SaveChanges();
 
-        
+
 
 
             RoleStore<IdentityRole> roleStore = new RoleStore<IdentityRole>(context);
@@ -144,6 +142,7 @@ namespace BAPA_LMS.Migrations
             {
                 userManager.AddToRole(user.Id, "Member");
             }
+            context.SaveChanges();
         }
     }
     

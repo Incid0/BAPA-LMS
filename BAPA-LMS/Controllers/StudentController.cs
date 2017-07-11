@@ -1,10 +1,10 @@
 ﻿using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models.CourseViewModels;
 using BAPA_LMS.Models.DB;
+using BAPA_LMS.Models.ModuleViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 
@@ -50,11 +50,19 @@ namespace BAPA_LMS.Controllers
 
             Course course = db.Courses.Find(currentUser.CourseId);
 
-            Module module = db.Modules.Find(course.Modules); 
+            List <Module> moduleList = new List<Module>();
+            foreach (var item in db.Modules)
+            {
+                if(item.CourseId == course.Id)
+                {
+                    moduleList.Add(item);
+                }
+            }
 
-           
-
-            return View(module);
+            
+          
+        
+            return View(moduleList);
         }
 
       
