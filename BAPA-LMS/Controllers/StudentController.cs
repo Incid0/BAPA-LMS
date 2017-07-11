@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using BAPA_LMS.DataAccessLayer;
+﻿using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models.DB;
-using BAPA_LMS.Models.CourseViewModels;
-using System.Data.Entity.Infrastructure;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+
 
 
 namespace BAPA_LMS.Controllers
@@ -17,15 +13,32 @@ namespace BAPA_LMS.Controllers
     public class StudentController : Controller
     {
 
-        private LMSDbContext _context = new LMSDbContext();
+        private LMSDbContext db = new LMSDbContext();
+        
         public ActionResult Index()
         {
             return View();
         }
 
-        //public ActionResult KursInfo()
-        //{
-        //    var student = _context.Courses.Where(s => s.)
-        //}
+        public ActionResult KursInfo()
+        {
+            var userID = User.Identity.GetUserId();
+         
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new LMSDbContext()));
+
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+
+
+            Course course = db.Courses.Find(currentUser.CourseId);
+            if(course == null)
+            {
+                return HttpNotFound();
+            }
+            
+
+            return View(course);
+        }
+
+      
     }
 }
