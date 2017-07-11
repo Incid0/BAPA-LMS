@@ -21,6 +21,7 @@ namespace BAPA_LMS.Controllers
 		public ActionResult Index(string filter, string sort = "")
 		{
 			var result = new List<CourseListViewModel>();
+            
 			foreach(var course in db.Courses)
 			{
 				result.Add(course);

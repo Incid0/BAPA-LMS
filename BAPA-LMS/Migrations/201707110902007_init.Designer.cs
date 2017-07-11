@@ -7,13 +7,13 @@ namespace BAPA_LMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedFKToMembers : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedFKToMembers));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201707101356204_AddedFKToMembers"; }
+            get { return "201707110902007_init"; }
         }
         
         string IMigrationMetadata.Source

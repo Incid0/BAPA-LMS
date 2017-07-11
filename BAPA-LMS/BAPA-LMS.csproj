@@ -192,17 +192,14 @@
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="DataAccessLayer\LMSDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707101350078_init.cs" />
-    <Compile Include="Migrations\201707101350078_init.Designer.cs">
-      <DependentUpon>201707101350078_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707101356204_AddedFKToMembers.cs" />
-    <Compile Include="Migrations\201707101356204_AddedFKToMembers.Designer.cs">
-      <DependentUpon>201707101356204_AddedFKToMembers.cs</DependentUpon>
+    <Compile Include="Migrations\201707110902007_init.cs" />
+    <Compile Include="Migrations\201707110902007_init.Designer.cs">
+      <DependentUpon>201707110902007_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -283,6 +280,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -300,11 +298,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707101350078_init.resx">
-      <DependentUpon>201707101350078_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707101356204_AddedFKToMembers.resx">
-      <DependentUpon>201707101356204_AddedFKToMembers.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707110902007_init.resx">
+      <DependentUpon>201707110902007_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

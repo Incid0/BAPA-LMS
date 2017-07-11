@@ -98,13 +98,13 @@ namespace BAPA_LMS.Migrations
             string[] firstName = new[] { "John", "Erik", "Anders", "Basse", "Olga" };
             string[] lastName = new[] { "Hellman", "Svensson", "Eriksson", "Nybom", "Stanislav" };
             int i = 0;
-            var c_Id = context.Courses.Find(1);
+           
             foreach (string email in emails)
             {
                 if (!context.Users.Any(u => u.UserName == email))
                 {
-               
-                    ApplicationUser user = new ApplicationUser { UserName = email, Email = email, FirstName = firstName[i], LastName = lastName[i], Course_Id = 1};
+                                 
+                    ApplicationUser user = new ApplicationUser { UserName = email, Email = email, FirstName = firstName[i], LastName = lastName[i], CourseId = 1};
                     var result = userManager.Create(user,"foobar");
                     if (!result.Succeeded)
                     {
@@ -116,7 +116,7 @@ namespace BAPA_LMS.Migrations
             ApplicationUser adminUser = userManager.FindByName("admin@bapa.se");
             userManager.AddToRole(adminUser.Id, "Admin");
 
-         
+      
 
             foreach (ApplicationUser user in userManager.Users.ToList().Where(u => u.Email != "admin@bapa.se"))
             {
