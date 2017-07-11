@@ -7,13 +7,13 @@ namespace BAPA_LMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class KursInfoVM : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(KursInfoVM));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201707111132499_KursInfoVM"; }
+            get { return "201707111423142_init"; }
         }
         
         string IMigrationMetadata.Source
