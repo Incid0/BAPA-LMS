@@ -15,7 +15,7 @@ namespace BAPA_LMS.Models.DB
 		Övningstillfälle,
 		Annat
 	}
-
+    
 	public class Activity
 	{
 		public int Id { get; set; }
