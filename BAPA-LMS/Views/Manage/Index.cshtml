@@ -7,15 +7,15 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Change your account settings</h4>
+    <h4>Ändra kontoinställningar</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Password:</dt>
+        <dt>Lösenord:</dt>
         <dd>
             [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+                @Html.ActionLink("Ändra lösenord", "ChangePassword")
             }
             else
             {
