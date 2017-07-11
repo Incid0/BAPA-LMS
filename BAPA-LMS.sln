@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26228.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAPA-LMS", "BAPA-LMS\BAPA-LMS.csproj", "{A746EFD4-D28B-4990-A588-438BC47D55E3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAPA-LMS.Tests", "BAPA-LMS.Tests\BAPA-LMS.Tests.csproj", "{954B66E5-8E69-430C-80D3-7A6A21C7BF1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{A746EFD4-D28B-4990-A588-438BC47D55E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A746EFD4-D28B-4990-A588-438BC47D55E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A746EFD4-D28B-4990-A588-438BC47D55E3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{954B66E5-8E69-430C-80D3-7A6A21C7BF1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{954B66E5-8E69-430C-80D3-7A6A21C7BF1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{954B66E5-8E69-430C-80D3-7A6A21C7BF1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{954B66E5-8E69-430C-80D3-7A6A21C7BF1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

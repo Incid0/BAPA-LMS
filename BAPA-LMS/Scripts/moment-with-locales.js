@@ -4262,7 +4262,7 @@
             } else {
                 return result + 'minutami';
             }
-            break;
+          break;
         case 'h':  // an hour / in an hour / an hour ago
             return withoutSuffix ? 'hodina' : (isFuture ? 'hodinu' : 'hodinou');
         case 'hh': // 9 hours / in 9 hours / 9 hours ago

@@ -20,5 +20,7 @@ namespace BAPA_LMS.DataAccessLayer
             {
                 return new LMSDbContext();
             }
-        }
+
+        public System.Data.Entity.DbSet<BAPA_LMS.Models.CourseViewModels.CourseDetailViewModel> CourseDetailViewModels { get; set; }
+    }
     }
