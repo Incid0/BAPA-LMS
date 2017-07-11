@@ -1,4 +1,5 @@
 ﻿using BAPA_LMS.DataAccessLayer;
+using BAPA_LMS.Models.CourseViewModels;
 using BAPA_LMS.Models.DB;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -28,15 +29,14 @@ namespace BAPA_LMS.Controllers
 
             var currentUser = manager.FindById(User.Identity.GetUserId());
 
-
             Course course = db.Courses.Find(currentUser.CourseId);
             if(course == null)
             {
                 return HttpNotFound();
             }
-            
+            CourseDetailViewModel cdvm = course; 
 
-            return View(course);
+            return View(cdvm);
         }
 
       
