@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ActivityViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace BAPA_LMS.Controllers
 {
@@ -122,6 +124,30 @@ namespace BAPA_LMS.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+		public JsonResult GetStudentActivities()
+		{
+			//var user = UserManager.FindById(User.Identity.GetUserId());
+			string[] activityIcons = new string[] { "", "file", "heart" };
+			string[] activityColors = new string[] { "blue", "red", "yellow", "purple", "turqoise" };
+			ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext()
+				.GetUserManager<ApplicationUserManager>()
+				.FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+			var actArray = db.Activities
+				.Where(a => a.Module.CourseId == user.CourseId)
+				.ToList()
+				.Select(item => new
+				{
+					id = item.Id,
+					title = item.Name,
+					start = item.StartTime,
+					end = item.EndTime,
+					color = activityColors[(int)item.Type],
+					icon = activityIcons[new Random().Next(3)]
+				}).ToArray();
+
+			return Json(actArray, JsonRequestBehavior.AllowGet);
+		}
 
         protected override void Dispose(bool disposing)
         {
