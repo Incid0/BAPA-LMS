@@ -35,7 +35,29 @@ namespace BAPA_LMS.Migrations
                     Description = "Grundläggande inom C#",
                     CourseId = 1,
                     StartDate = DateTime.Parse("2017/07/10"),
-                    EndDate = DateTime.Parse("2017/07/28") }
+                    EndDate = DateTime.Parse("2017/07/28") },
+
+                new Module
+                {
+                    Id = 2,
+                    Name = "Java",
+                    Description = "Grundläggande inom Java",
+                    CourseId = 1,
+                    StartDate = DateTime.Parse("2017/08/10"),
+                    EndDate = DateTime.Parse("2017/08/28")
+                },
+
+                new Module
+                {
+                    Id = 3,
+                    Name = "AngularJS",
+                    Description = "Grundläggande inom AngularJS",
+                    CourseId = 1,
+                    StartDate = DateTime.Parse("2017/09/10"),
+                    EndDate = DateTime.Parse("2017/09/28")
+                
+                }
+                
 
                 );
           
