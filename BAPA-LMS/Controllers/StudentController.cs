@@ -15,7 +15,9 @@ namespace BAPA_LMS.Controllers
     {
 
         private LMSDbContext db = new LMSDbContext();
-        
+
+        public object ModuleDetailViewModel { get; private set; }
+
         public ActionResult Index()
         {
             return View();
@@ -37,6 +39,22 @@ namespace BAPA_LMS.Controllers
             CourseDetailViewModel cdvm = course; 
 
             return View(cdvm);
+        }
+        public ActionResult ModulInfo()
+        {
+            var userID = User.Identity.GetUserId();
+
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new LMSDbContext()));
+
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+
+            Course course = db.Courses.Find(currentUser.CourseId);
+
+            Module module = db.Modules.Find(course.Modules); 
+
+           
+
+            return View(module);
         }
 
       
