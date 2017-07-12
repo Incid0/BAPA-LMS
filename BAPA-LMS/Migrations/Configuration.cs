@@ -24,7 +24,7 @@ namespace BAPA_LMS.Migrations
                 {
                     Id = 1,
                     Name = "Lexicons Monsterkurs",
-                    Description = "Grundläggande inom .NET",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sem mauris. Mauris vulputate pharetra facilisis. Mauris aliquam sed massa vel mollis. Morbi finibus tortor ultrices enim volutpat, et semper purus dictum. Fusce tellus purus, pulvinar id ornare in, vehicula sit amet magna. Fusce et vestibulum ante. Sed in commodo mi, eu maximus ligula. Sed a libero ultrices, volutpat velit ac, lacinia ipsum. Cras dictum lacinia ante, dapibus tincidunt lectus faucibus et. Donec eleifend, mi eget ultricies pretium, arcu diam sodales lectus, at tincidunt dui felis facilisis sapien. Sed in lorem viverra, vulputate lectus ac, sollicitudin velit. Sed nec est sed massa blandit hendrerit at vestibulum nisi.Suspendisse felis sem,consequat et leo a,viverra pharetra quam.Donec in urna ut risus venenatis finibus.In orci tortor,pretium eget maximus iaculis,porttitor a turpis.Donec id aliquam nulla,ac euismod est.Curabitur euismod odio ut dui fermentum,feugiat dignissim dui gravida.Maecenas aliquam vestibulum accumsan.In luctus erat nec nunc pellentesque tristique.Integer et pellentesque lectus.Vestibulum et sapien a neque mattis scelerisque et in sem.Nam et porta nunc,at accumsan justo.Praesent in odio ex.Pellentesque pretium,magna ut auctor congue,libero tellus suscipit nisl,quis dapibus nisl nulla vitae leo.Mauris dictum nisl nec maximus lobortis.Cras suscipit sem ut felis dignissim suscipit.Aliquam consectetur,justo ac molestie tempor,mi urna tempus augue,sed finibus turpis mauris ut eros.",
                     StartDate = DateTime.Parse("2017/07/10")
                 },
                 
@@ -33,7 +33,7 @@ namespace BAPA_LMS.Migrations
                 {
                     Id = 2,
                     Name = "Rekursiva metoder med John",
-                    Description = "Lär dig programmera som en gud med Johns tips och tricks",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel sem mauris. Mauris vulputate pharetra facilisis. Mauris aliquam sed massa vel mollis. Morbi finibus tortor ultrices enim volutpat, et semper purus dictum. Fusce tellus purus, pulvinar id ornare in, vehicula sit amet magna. Fusce et vestibulum ante. Sed in commodo mi, eu maximus ligula. Sed a libero ultrices, volutpat velit ac, lacinia ipsum. Cras dictum lacinia ante, dapibus tincidunt lectus faucibus et. Donec eleifend, mi eget ultricies pretium, arcu diam sodales lectus, at tincidunt dui felis facilisis sapien. Sed in lorem viverra, vulputate lectus ac, sollicitudin velit. Sed nec est sed massa blandit hendrerit at vestibulum nisi.Suspendisse felis sem,consequat et leo a,viverra pharetra quam.Donec in urna ut risus venenatis finibus.In orci tortor,pretium eget maximus iaculis,porttitor a turpis.Donec id aliquam nulla,ac euismod est.Curabitur euismod odio ut dui fermentum,feugiat dignissim dui gravida.Maecenas aliquam vestibulum accumsan.In luctus erat nec nunc pellentesque tristique.Integer et pellentesque lectus.Vestibulum et sapien a neque mattis scelerisque et in sem.Nam et porta nunc,at accumsan justo.Praesent in odio ex.Pellentesque pretium,magna ut auctor congue,libero tellus suscipit nisl,quis dapibus nisl nulla vitae leo.Mauris dictum nisl nec maximus lobortis.Cras suscipit sem ut felis dignissim suscipit.Aliquam consectetur,justo ac molestie tempor,mi urna tempus augue,sed finibus turpis mauris ut eros.",
                     StartDate = DateTime.Parse("2017/07/10")
 
                 }
@@ -108,15 +108,15 @@ namespace BAPA_LMS.Migrations
                     ModuleId = 1,
                     Description = "Generell aktivitetsinfo",
                     StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28") },
+                    EndTime = DateTime.Parse("2017/07/10") },
                 new Activity {
                     Id = 2,
                     Name = "En till Aktivitet!",
                     Type = ActivityTypes.Annat,
                     ModuleId = 1,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/11"),
+                    EndTime = DateTime.Parse("2017/07/11")
                 },
                 
                 new Activity {
@@ -125,8 +125,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 1,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/12"),
+                    EndTime = DateTime.Parse("2017/07/12")
                 
                 }, new Activity
                 {
@@ -135,8 +135,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 2,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/13"),
+                    EndTime = DateTime.Parse("2017/07/13")
                 },
                 new Activity
                 {
@@ -145,8 +145,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 2,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/14"),
+                    EndTime = DateTime.Parse("2017/07/14")
                 },
 
                 new Activity
@@ -156,8 +156,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 3,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/15"),
+                    EndTime = DateTime.Parse("2017/07/15")
 
                 },
                 new Activity
@@ -167,8 +167,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 4,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/16"),
+                    EndTime = DateTime.Parse("2017/07/16")
                 },
                 new Activity
                 {
@@ -177,8 +177,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 5,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/17"),
+                    EndTime = DateTime.Parse("2017/07/17")
                 },
 
                 new Activity
@@ -188,8 +188,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 6,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/18"),
+                    EndTime = DateTime.Parse("2017/07/18")
 
                 },
                 new Activity
@@ -199,8 +199,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 5,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/19"),
+                    EndTime = DateTime.Parse("2017/07/19")
                 },
                 new Activity
                 {
@@ -209,8 +209,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 6,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/20"),
+                    EndTime = DateTime.Parse("2017/07/20")
                 },
 
                 new Activity
@@ -220,8 +220,8 @@ namespace BAPA_LMS.Migrations
                     Type = ActivityTypes.Annat,
                     ModuleId = 6,
                     Description = "Generell aktivitetsinfo",
-                    StartTime = DateTime.Parse("2017/07/10"),
-                    EndTime = DateTime.Parse("2017/07/28")
+                    StartTime = DateTime.Parse("2017/07/21"),
+                    EndTime = DateTime.Parse("2017/07/21")
 
                 }
 

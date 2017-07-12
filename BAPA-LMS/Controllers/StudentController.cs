@@ -2,10 +2,12 @@
 using BAPA_LMS.Models.CourseViewModels;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ModuleViewModels;
+using BAPA_LMS.Utils;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.Web.Mvc;
+
 
 
 
@@ -26,11 +28,8 @@ namespace BAPA_LMS.Controllers
 
         public ActionResult KursInfo()
         {
-            var userID = User.Identity.GetUserId();
-         
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new LMSDbContext()));
-
-            var currentUser = manager.FindById(User.Identity.GetUserId());
+          
+            var currentUser = UserUtils.GetCurrentUser(HttpContext);
 
             Course course = db.Courses.Find(currentUser.CourseId);
             if(course == null)
@@ -38,16 +37,12 @@ namespace BAPA_LMS.Controllers
                 return HttpNotFound();
             }
             CourseDetailViewModel cdvm = course; 
-
+            
             return View(cdvm);
         }
         public ActionResult ModulInfo()
         {
-            var userID = User.Identity.GetUserId();
-
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new LMSDbContext()));
-
-            var currentUser = manager.FindById(User.Identity.GetUserId());
+            var currentUser = UserUtils.GetCurrentUser(HttpContext);
 
             Course course = db.Courses.Find(currentUser.CourseId);
 
@@ -60,9 +55,7 @@ namespace BAPA_LMS.Controllers
                 }
             }
 
-            
-          
-        
+              
             return View(moduleList);
         }
         protected override void Dispose(bool disposing)
