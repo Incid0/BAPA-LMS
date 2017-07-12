@@ -9,14 +9,17 @@ using System.Web.Mvc;
 using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ModuleViewModels;
+using System.Data.Entity.Infrastructure;
 
 namespace BAPA_LMS.Controllers
 {
+    [Authorize]
     public class ModulesController : Controller
     {
         private LMSDbContext db = new LMSDbContext();
 
         // GET: Modules
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var modules = db.Modules.Include(m => m.Course);
@@ -40,31 +43,48 @@ namespace BAPA_LMS.Controllers
         }
 
         // GET: Modules/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
             return View();
         }
 
         // POST: Modules/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create(ModuleCreateViewModel mcvm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Modules.Add(module);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Module newModule = new Module();
+                    // Match up fieldnames and update the model.
+                    if(TryUpdateModel(newModule, "", new string[] { "Name", "Description", "StartDate", "EndDate" }))
+                    {
+                        db.Modules.Add(newModule);
+                        db.SaveChanges();
+                        TempData["alert"] = "success|Modulen är tillagd!";
+                    }
+                    else
+                    {
+                        TempData["alert"] = "danger|Kunde inte lägga till modul!";
+                    }
+                    
+                }
             }
-
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
-            return View(module);
+            catch (DataException)
+            {
+                // Log errors here
+                ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
+                TempData["alert"] = "danger|Allvarligt fel!";
+            }            
+            return View(mcvm);
         }
 
         // GET: Modules/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,50 +96,82 @@ namespace BAPA_LMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
-            return View(module);
+            ModuleEditViewModel mevm = module;
+            HttpContext.Session["moduleid"] = id;
+            return View(mevm);
         }
 
         // POST: Modules/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit()
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(module).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
-            return View(module);
-        }
-
-        // GET: Modules/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
+            int? id = (int?)HttpContext.Session["moduleid"];
+            if(id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
-            if (module == null)
+            Module updatedModule = null;
+            if (ModelState.IsValid)
             {
-                return HttpNotFound();
+                updatedModule = db.Modules.Find(id);
+                // Match up fieldnames and update the model.
+                if(id != null && TryUpdateModel(updatedModule, "", new string[] { "Name", "Description", "StartDate", "EndDate" }))
+                {
+                    try
+                    {
+                        db.SaveChanges();
+                        TempData["alert"] = "success|Modulen är uppdaterad!";
+                        return RedirectToAction("Index");
+                    }
+                    catch (RetryLimitExceededException)
+                    {
+                        // Log errors here
+                        ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
+                        TempData["alert"] = "danger|Allvarligt fel!";
+                    }
+                }
+                else
+                {
+                    TempData["alert"] = "danger|Kunde inte uppdatera modulen";
+                }
             }
-            return View(module);
+            return View((ModuleEditViewModel)updatedModule);
         }
+
+        // GET: Modules/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Module module = db.Modules.Find(id);
+        //    if (module == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(module);
+        //}
 
         // POST: Modules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Module module = db.Modules.Find(id);
-            db.Modules.Remove(module);
-            db.SaveChanges();
+            try
+            {
+                Module module = db.Modules.Find(id);
+                db.Modules.Remove(module);
+                db.SaveChanges();
+            }
+            catch (RetryLimitExceededException)
+            {
+                // Log errors here
+                TempData["alert"] = "danger|Det gick inte att ta bort modulen";
+            }           
             return RedirectToAction("Index");
         }
 

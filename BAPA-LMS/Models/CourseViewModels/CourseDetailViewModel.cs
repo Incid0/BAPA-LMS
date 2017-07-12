@@ -22,7 +22,7 @@ namespace BAPA_LMS.Models.CourseViewModels
 
 		[Display(Name = "Modullista")]
 		public ICollection<Module> Modules { get; set; }
-
+        public ICollection<ApplicationUser> Members { get; set; }
 		public static implicit operator CourseDetailViewModel(Course model)
 		{
 			return new CourseDetailViewModel
@@ -30,7 +30,8 @@ namespace BAPA_LMS.Models.CourseViewModels
 				Name = model.Name,
 				Description = model.Description,
 				StartDate = model.StartDate,
-				Modules = model.Modules
+				Modules = model.Modules,
+                Members = model.Members
 			};
 
 		}

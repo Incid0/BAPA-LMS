@@ -28,7 +28,7 @@ namespace BAPA_LMS.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
-
+        
         public ApplicationSignInManager SignInManager
         {
             get
@@ -58,6 +58,14 @@ namespace BAPA_LMS.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Manage");
+                }
+                return RedirectToAction("Index", "Student");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -87,7 +95,7 @@ namespace BAPA_LMS.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Ogiltigt inloggningsförsök.");
                     return View(model);
             }
         }
