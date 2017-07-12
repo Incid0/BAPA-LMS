@@ -260,3 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 /BAPA-LMS/Migrations
+/BAPA-LMS/Content
+/BAPA-LMS/fonts
+/BAPA-LMS/Scripts
