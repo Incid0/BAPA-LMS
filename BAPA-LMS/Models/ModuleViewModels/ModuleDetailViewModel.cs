@@ -19,10 +19,10 @@ namespace BAPA_LMS.Models.ModuleViewModels
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
 
-        [Display(Name = "Startdatum")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime StartDate { get; set; }
 
-        [Display(Name = "Slutdatum")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime EndDate { get; set; }
 
         [Display(Name = "Aktivitetslista")]

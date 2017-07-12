@@ -18,9 +18,14 @@ namespace BAPA_LMS.Models.CourseViewModels
 		public string Description { get; set; }
 
 		[Display(Name = "Startdatum")]
-		public DateTime StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]        
+        public DateTime StartDate { get; set; }
 
-		[Display(Name = "Modullista")]
+        [Display(Name = "Tid")]
+        [DisplayFormat(DataFormatString = "{0:HH:mm}")]
+        public DateTime StartTime { get; set; }
+
+        [Display(Name = "Modullista")]
 		public ICollection<Module> Modules { get; set; }
         public ICollection<ApplicationUser> Members { get; set; }
 		public static implicit operator CourseDetailViewModel(Course model)
@@ -30,6 +35,7 @@ namespace BAPA_LMS.Models.CourseViewModels
 				Name = model.Name,
 				Description = model.Description,
 				StartDate = model.StartDate,
+                StartTime = model.StartDate,
 				Modules = model.Modules,
                 Members = model.Members
 			};

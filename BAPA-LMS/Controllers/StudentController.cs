@@ -46,18 +46,17 @@ namespace BAPA_LMS.Controllers
 
             Course course = db.Courses.Find(currentUser.CourseId);
 
-            List <Module> moduleList = new List<Module>();
+            List<Module> moduleList = new List<Module>();
             foreach (var item in db.Modules)
             {
-                if(item.CourseId == course.Id)
+                if (item.CourseId == course.Id)
                 {
                     moduleList.Add(item);
                 }
             }
-
-              
             return View(moduleList);
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
