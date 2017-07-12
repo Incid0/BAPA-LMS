@@ -23,9 +23,10 @@ textarea {
     max-width: 280px;
 }
 .course-modules {
-    height: 320px;
+    height: 220px;
     width: 580px;
     border-radius: 10px;
     border: 1px inset groove;
+    overflow-y:scroll;
 }
 

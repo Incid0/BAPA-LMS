@@ -37,25 +37,29 @@
     </dl>
 </div>
 <div class="row">
-    <div class="panel panel-default col-md-6 course-modules">
+    
+    <div class="panel panel-default col-md-6 course-modules">       
         <div class="panel-heading">Modulöversikt</div>
-
-        @foreach (var item in Model.Modules)
-        {
-            <ul class="list-group">
-                <li class="list-group-item">@Html.DisplayFor(modelItem => item.Name)<span>      </span>@Html.DisplayFor(modelItem => item.Description)</li>
-            </ul>
-        }
-    </div>
+       
+            @foreach (var item in Model.Modules)
+            {
+                <ul class="list-group">
+                    <li class="list-group-item">@Html.DisplayFor(modelItem => item.Name)<span>      </span>@Html.DisplayFor(modelItem => item.Description)</li>
+                </ul>
+            }
+            
+        </div>
+  
     <div class="panel panel-default col-md-6 course-modules">
         <div class="panel-heading">Klasslista</div>
-
+       
         @foreach (var item in Model.Members)
         {
             <ul class="list-group">
                 <li class="list-group-item">@Html.DisplayFor(modelItem => item.FullName)</li>               
             </ul>
         }
+           
     </div>
 </div>
 
