@@ -22,3 +22,10 @@ select,
 textarea {
     max-width: 280px;
 }
+.course-modules {
+    height: 320px;
+    width: 580px;
+    border-radius: 10px;
+    border: 1px inset groove;
+}
+
