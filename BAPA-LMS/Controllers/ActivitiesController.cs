@@ -7,10 +7,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BAPA_LMS.DataAccessLayer;
+using BAPA_LMS.Models;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ActivityViewModels;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
+using BAPA_LMS.Utils;
 
 namespace BAPA_LMS.Controllers
 {
@@ -127,23 +127,22 @@ namespace BAPA_LMS.Controllers
 
 		public JsonResult GetStudentActivities()
 		{
-			//var user = UserManager.FindById(User.Identity.GetUserId());
+			// Hardcoded demodata
+			Random rng = new Random();
 			string[] activityIcons = new string[] { "", "file", "heart" };
-			string[] activityColors = new string[] { "blue", "red", "yellow", "purple", "turqoise" };
-			ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext()
-				.GetUserManager<ApplicationUserManager>()
-				.FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+			string[] activityColors = new string[] { "blue", "red", "yellow", "purple", "turquoise" };
+			var user = UserUtils.GetCurrentUser(HttpContext);
 			var actArray = db.Activities
 				.Where(a => a.Module.CourseId == user.CourseId)
 				.ToList()
 				.Select(item => new
 				{
-					id = item.Id,
+					id = item.Id.Encode(),
 					title = item.Name,
 					start = item.StartTime,
 					end = item.EndTime,
-					color = activityColors[(int)item.Type],
-					icon = activityIcons[new Random().Next(3)]
+					color = activityColors[rng.Next(5)],
+					icon = activityIcons[rng.Next(3)]
 				}).ToArray();
 
 			return Json(actArray, JsonRequestBehavior.AllowGet);

@@ -28,6 +28,7 @@
             }
         },
         height: 'auto', // Maximize height so everything is shown, no scrollbar
+        allDaySlot: false,
         firstDay: 1, // Monday
         minTime: '08:00:00', // Show schedule from only 8-19
         maxTime: '19:00:00',
