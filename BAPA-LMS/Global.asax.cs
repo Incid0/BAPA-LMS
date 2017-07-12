@@ -16,6 +16,8 @@ namespace BAPA_LMS
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+			LMSConfig.Init();
         }
     }
 }
