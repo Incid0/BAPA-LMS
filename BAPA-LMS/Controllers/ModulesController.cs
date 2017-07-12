@@ -13,11 +13,13 @@ using System.Data.Entity.Infrastructure;
 
 namespace BAPA_LMS.Controllers
 {
+    [Authorize]
     public class ModulesController : Controller
     {
         private LMSDbContext db = new LMSDbContext();
 
         // GET: Modules
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var modules = db.Modules.Include(m => m.Course);
@@ -41,6 +43,7 @@ namespace BAPA_LMS.Controllers
         }
 
         // GET: Modules/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +52,7 @@ namespace BAPA_LMS.Controllers
         // POST: Modules/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(ModuleCreateViewModel mcvm)
         {
             try
@@ -80,6 +84,7 @@ namespace BAPA_LMS.Controllers
         }
 
         // GET: Modules/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -99,6 +104,7 @@ namespace BAPA_LMS.Controllers
         // POST: Modules/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit()
         {
             int? id = (int?)HttpContext.Session["moduleid"];
@@ -152,6 +158,7 @@ namespace BAPA_LMS.Controllers
         // POST: Modules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             try

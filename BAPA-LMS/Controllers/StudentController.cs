@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace BAPA_LMS.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
 
