@@ -11,6 +11,7 @@ using BAPA_LMS.Models;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ActivityViewModels;
 using BAPA_LMS.Utils;
+using System.Data.Entity.Infrastructure;
 
 namespace BAPA_LMS.Controllers
 {
@@ -44,7 +45,6 @@ namespace BAPA_LMS.Controllers
         // GET: Activities/Create
         public ActionResult Create()
         {
-            ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name");
             return View();
         }
 
@@ -53,17 +53,32 @@ namespace BAPA_LMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime,ModuleId")] Activity activity)
+        public ActionResult Create(ActivityCreateViewModel adcm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Activities.Add(activity);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Activity newActivity = new Activity();
+                    if (TryUpdateModel(newActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime", "Type" }))
+                    {
+                        db.Activities.Add(newActivity);
+                        db.SaveChanges();
+                        TempData["alert"] = "success|Aktiviteten är tillagd!";
+                    }
+                    else
+                    {
+                        TempData["alert"] = "danger|Kunde inte lägga till aktivitet";
+                    }
+                }
             }
-
-            ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name", activity.ModuleId);
-            return View(activity);
+            catch (DataException)
+            {
+                ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
+                TempData["alert"] = "danger|Allvarligt fel!";
+            }
+            
+            return View(adcm);
         }
 
         // GET: Activities/Edit/5
@@ -78,50 +93,78 @@ namespace BAPA_LMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name", activity.ModuleId);
-            return View(activity);
+            ActivityEditViewModel aevm = activity;
+            HttpContext.Session["activityid"] = id;
+            return View(aevm);
         }
 
         // POST: Activities/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Type,Name,Description,StartTime,EndTime,ModuleId")] Activity activity)
+        public ActionResult Edit()
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(activity).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name", activity.ModuleId);
-            return View(activity);
-        }
-
-        // GET: Activities/Delete/5
-        public ActionResult Delete(int? id)
-        {
+            int? id = (int?)HttpContext.Session["activityid"];
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activity activity = db.Activities.Find(id);
-            if (activity == null)
+            Activity updatedActivity = null;
+            if (ModelState.IsValid)
             {
-                return HttpNotFound();
-            }
-            return View(activity);
+                updatedActivity = db.Activities.Find(id);
+                if(id != null && TryUpdateModel(updatedActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime", "Type" }))
+                {
+                    try
+                    {
+                        db.SaveChanges();
+                        TempData["alert"] = "success|Aktiviteten är uppdaterad!";
+                        return RedirectToAction("Index");
+                    }
+                    catch (RetryLimitExceededException)
+                    {
+                        ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
+                        TempData["alert"] = "danger|Allvarligt fel!";
+                    }
+                }
+                else
+                {
+                    TempData["alert"] = "danger|Kunde inte uppdatera aktiviteten!";
+                }                
+            }            
+            return View((ActivityEditViewModel)updatedActivity);
         }
+
+        // GET: Activities/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Activity activity = db.Activities.Find(id);
+        //    if (activity == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(activity);
+        //}
 
         // POST: Activities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Activity activity = db.Activities.Find(id);
-            db.Activities.Remove(activity);
-            db.SaveChanges();
+            try
+            {
+                Activity activity = db.Activities.Find(id);
+                db.Activities.Remove(activity);
+                db.SaveChanges();
+            }
+            catch (RetryLimitExceededException)
+            {
+                // LOg errors here
+                TempData["alert"] = "danger|Det gick inte att ta bort aktiviteten!";
+            }
             return RedirectToAction("Index");
         }
 

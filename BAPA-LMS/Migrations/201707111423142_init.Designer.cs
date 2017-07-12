@@ -13,7 +13,7 @@ namespace BAPA_LMS.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201707110902007_init"; }
+            get { return "201707111423142_init"; }
         }
         
         string IMigrationMetadata.Source
