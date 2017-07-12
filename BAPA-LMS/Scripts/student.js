@@ -6,11 +6,11 @@
             center: 'title',
             right: 'month,agendaWeek,listWeek'
         },
-        hiddenDays:[0,6],
+        hiddenDays: [0, 6],
         businessHours: {
             dow: [1, 2, 3, 4, 5],
             start: '08:00',
-            end: '19:00',
+            end: '19:00'
         },
         weekNumberTitle: 'v. ',
         monthNames: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'October', 'November', 'December'], // Custom names to get Pascal casing on months
@@ -23,47 +23,20 @@
                 titleFormat: 'MMMM YYYY', // Gives the whole name of the month and the full number for the year
                 slotLabelFormat: 'HH:mm' //Gives the hours a 00:00 format in agendaWeek
             },
-            listWeek:{
-                titleFormat: '[V.] WW, MMMM YYYY', // Gives the whole name of the month and the full number for the year
-            },
+            listWeek: {
+                titleFormat: '[V.] WW, MMMM YYYY' // Gives the whole name of the month and the full number for the year
+            }
         },
         height: 'auto', // Maximize height so everything is shown, no scrollbar
+        allDaySlot: false,
         firstDay: 1, // Monday
         minTime: '08:00:00', // Show schedule from only 8-19
         maxTime: '19:00:00',
         weekNumbers: true,
-        
+
         defaultTimedEventDuration: '01:00:00',
         defaultView: 'agendaWeek',
-        events: [
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2017-07-13T16:00:00'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: '2017-07-12T16:00:00',
-                icon: 'file flag'
-            },
-            {
-                title: ' Date',
-                start: '2017-07-10T10:30:00',
-                end: '2017-07-10T12:30:00',
-                icon: 'heart'
-            },
-            {
-                title: 'Birthday Party',
-                start: '2017-07-16T09:00:00'
-            },
-            {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: '2017-07-12 09:00',
-                end: '2017-07-12 12:00'
-            }
-        ],
+        events: '/activities/GetStudentActivities',
         // Custom renderer to add icon functionality on events
         eventRender: function (event, element) {
             if (event.icon) {
@@ -73,6 +46,6 @@
                 }
             }
         }
-    })
+    });
 
 });
