@@ -1,18 +1,11 @@
 ﻿@model BAPA_LMS.Models.ActivityViewModels.ActivityDetailViewModel
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title">Aktivitetsinformation</h4>
+    <h4 class="modal-title">@Html.DisplayFor(model => model.Name)</h4>
+    <span>@Html.DisplayNameFor(model => model.ModuleName) @Html.DisplayFor(model => model.ModuleName)</span>
 </div>
 <div class="modal-body">
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Type)
         </dt>

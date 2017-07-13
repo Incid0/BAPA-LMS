@@ -1,14 +1,14 @@
 ﻿@model BAPA_LMS.Models.CourseViewModels.CourseIndexViewModel
 @{
-	ViewBag.Title = "Index";
+	ViewBag.Title = "Kurskalender";
 }
-@Html.DisplayFor(model => model.Name)
 <link href="~/Content/fullcalendar.min.css" rel="stylesheet" />
 
-<h2></h2>
-
 <div class="row">
-	<div class="xs-col-12">
+    <h2 class="col-xs-12">Min kurs: <a href="@Url.Action("kursinfo", "student")">@Html.DisplayFor(model => model.Name)</a></h2>
+</div>
+<div class="row">
+	<div class="col-xs-12">
 		<div id='calendar'>
 
 		</div>

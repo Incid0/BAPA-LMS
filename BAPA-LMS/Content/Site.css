@@ -47,6 +47,9 @@ textarea {
 .fc-title {
     font-size: 1.3em;
 }
+.fc-title i.glyphicon {
+    padding-right: 3px;
+}
 .fc-time-grid-event .fc-time > span{
     font-size: 1.2em;
 }
