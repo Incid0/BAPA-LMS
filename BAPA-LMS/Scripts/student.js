@@ -17,6 +17,7 @@
         views: {
             month: {
                 titleFormat: 'MMMM YYYY', // Gives the whole name of the month and the full number for the year
+                timeFormat: 'HH:mm' //Gives the hours a 00:00 format in month
             },
             agendaWeek: {
                 columnFormat: 'ddd DD/MM',
@@ -30,6 +31,7 @@
         height: 'auto', // Maximize height so everything is shown, no scrollbar
         allDaySlot: false,
         firstDay: 1, // Monday
+        timezone: 'local',
         minTime: '08:00:00', // Show schedule from only 8-19
         maxTime: '19:00:00',
         weekNumbers: true,
