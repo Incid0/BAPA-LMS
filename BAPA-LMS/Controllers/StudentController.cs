@@ -1,4 +1,6 @@
 ﻿using BAPA_LMS.DataAccessLayer;
+using BAPA_LMS.Models;
+using BAPA_LMS.Models.ActivityViewModels;
 using BAPA_LMS.Models.CourseViewModels;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ModuleViewModels;
@@ -62,7 +64,15 @@ namespace BAPA_LMS.Controllers
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
             Course course = db.Courses.Find(currentUser.CourseId);
-            return View();
+            List<ActivityDetailViewModel> activityList = new List<ActivityDetailViewModel>();
+            foreach (var item in db.Activities)
+            {
+                if(item.Id == id.Decode())
+                {
+                    activityList.Add(item);
+                }
+            }
+            return View(activityList);
         }
         protected override void Dispose(bool disposing)
         {

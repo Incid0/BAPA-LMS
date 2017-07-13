@@ -32,6 +32,7 @@ namespace BAPA_LMS.Models.ModuleViewModels
         {
             return new ModuleDetailViewModel
             {
+                Id = model.Id.Encode(),
                 Name = model.Name,
                 Description = model.Description,
                 StartDate = model.StartDate,
