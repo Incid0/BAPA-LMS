@@ -21,7 +21,7 @@ namespace BAPA_LMS.Models.CourseViewModels
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]        
         public DateTime StartDate { get; set; }
 
-        [Display(Name = "Tid")]
+        [Display(Name = "Starttid")]
         [DisplayFormat(DataFormatString = "{0:HH:mm}")]
         public DateTime StartTime { get; set; }
 
