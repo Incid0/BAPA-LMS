@@ -26,7 +26,11 @@ namespace BAPA_LMS.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var currentUser = UserUtils.GetCurrentUser(HttpContext);
+
+            Course course = db.Courses.Find(currentUser.CourseId);
+            CourseIndexViewModel cdvm = course;
+            return View(cdvm);
         }
 
         public ActionResult KursInfo()

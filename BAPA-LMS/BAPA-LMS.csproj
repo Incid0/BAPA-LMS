@@ -211,6 +211,7 @@
     <Compile Include="Models\CourseViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseDetailViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseEditViewModel.cs" />
+    <Compile Include="Models\CourseViewModels\CourseIndexViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseListViewModel.cs" />
     <Compile Include="Models\DB\Activity.cs" />
     <Compile Include="Models\DB\ActivityType.cs" />
