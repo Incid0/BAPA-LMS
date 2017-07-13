@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    // Full Calendar initialization
     $('#calendar').fullCalendar({
         // put your options and callbacks here
         header: {
@@ -47,7 +48,34 @@
                     element.find(".fc-title").prepend("<i class='glyphicon glyphicon-" + icons[i] + "'></i>");
                 }
             }
-        }
+        },
+        eventAfterAllRender: student.calUpdate
     });
 
+});
+
+var student = (function ($) {
+
+    return {
+        init: function () {
+            console.log('init started');
+
+            // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
+            $('body').on('click', '.modal-close-btn', function () {
+                $('#modalContainer').modal('hide');
+            });
+            //clear modal cache, so that new content can be loaded and clear old content so it won't show before new
+            $('#modalContainer').on('hidden.bs.modal', function () {
+                $(this).removeData('bs.modal').children('.modal-content').html('');
+            });
+        },
+        calUpdate: function () {
+            console.log('cal updated');
+            $('#calendar .modal-link').attr('data-toggle', 'modal').attr('data-target', '#modalContainer');
+        }
+    };
+})(jQuery);
+
+$(function () {
+    student.init();
 });

@@ -35,7 +35,7 @@ namespace BAPA_LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activity activity = db.Activities.Find(id);
+            Activity activity = db.Activities.Find(id?.Decode());
             if (activity == null)
             {
                 return HttpNotFound();
@@ -191,6 +191,8 @@ namespace BAPA_LMS.Controllers
 					start = item.StartTime,
 					end = item.EndTime,
 					color = item.Type.Color,
+					url = "/activities/details/" + item.Id.Encode(),
+					className = "modal-link",
 					icon = activityIcons[rng.Next(3)] + (item.Type.Submit ? " exclamation-sign" : "")
 				}).ToArray();
 
