@@ -8,19 +8,18 @@ using System.Web;
 
 namespace BAPA_LMS.DataAccessLayer
 {
-    public class LMSDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public LMSDbContext() : base("DefaultConnection", throwIfV1Schema: false) { }
+	public class LMSDbContext : IdentityDbContext<ApplicationUser>
+	{
+		public LMSDbContext() : base("DefaultConnection", throwIfV1Schema: false) { }
 
-            public DbSet<Course> Courses { get; set; }
-            public DbSet<Module> Modules { get; set; }
-            public DbSet<Activity> Activities { get; set; }
+		public DbSet<Course> Courses { get; set; }
+		public DbSet<Module> Modules { get; set; }
+		public DbSet<Activity> Activities { get; set; }
 
-            public static LMSDbContext Create()
-            {
-                return new LMSDbContext();
-            }
+		public static LMSDbContext Create()
+		{
+			return new LMSDbContext();
+		}
 
-        public System.Data.Entity.DbSet<BAPA_LMS.Models.CourseViewModels.CourseDetailViewModel> CourseDetailViewModels { get; set; }
-    }
-    }
+	}
+}

@@ -19,10 +19,20 @@ namespace BAPA_LMS.Models.ActivityViewModels
         public string Description { get; set; }
 
         [Display(Name = "Startdatum")]
-        public DateTime StartTime { get; set; }
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+		public DateTime StartTime { get; set; }
 
-        [Display(Name = "Slutdatum")]
-        public DateTime EndTime { get; set; }
+		[Display(Name = "Starttid")]
+		[DisplayFormat(DataFormatString = "{0:HH:mm}")]
+		public DateTime StartHour { get; set; }
+
+		[Display(Name = "Slutdatum")]
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+		public DateTime EndTime { get; set; }
+
+		[Display(Name = "Sluttid")]
+		[DisplayFormat(DataFormatString = "{0:HH:mm}")]
+		public DateTime EndHour { get; set; }
 
         [Display(Name = "Aktivitet")]
         public ActivityTypes Type { get; set; }

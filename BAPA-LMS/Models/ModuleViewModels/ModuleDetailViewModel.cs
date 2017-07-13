@@ -20,10 +20,10 @@ namespace BAPA_LMS.Models.ModuleViewModels
         public string Description { get; set; }
 
         [Display(Name = "Startdatum")]
-        public DateTime StartDate { get; set; }
+		public DateTime StartDate { get; set; }
 
         [Display(Name = "Slutdatum")]
-        public DateTime EndDate { get; set; }
+		public DateTime EndDate { get; set; }
 
         [Display(Name = "Aktivitetslista")]
         public ICollection<Activity> Activities { get; set; }
