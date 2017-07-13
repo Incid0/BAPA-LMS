@@ -6,6 +6,7 @@ using BAPA_LMS.Utils;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Web.Mvc;
 
 
@@ -45,18 +46,23 @@ namespace BAPA_LMS.Controllers
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
 
             Course course = db.Courses.Find(currentUser.CourseId);
-
-            List <Module> moduleList = new List<Module>();
+            List<ModuleDetailViewModel> moduleList = new List<ModuleDetailViewModel>();
             foreach (var item in db.Modules)
             {
                 if(item.CourseId == course.Id)
                 {
                     moduleList.Add(item);
                 }
-            }
-
-              
+            }                       
             return View(moduleList);
+
+        }
+
+        public ActionResult AktivitetsInfo(int id)
+        {
+            var currentUser = UserUtils.GetCurrentUser(HttpContext);
+            Course course = db.Courses.Find(currentUser.CourseId);
+            return View();
         }
         protected override void Dispose(bool disposing)
         {
