@@ -44,3 +44,12 @@ textarea {
     padding-left:0px !important;
     padding-right:0px !important;
 }
+.fc-title {
+    font-size: 1.3em;
+}
+.fc-time-grid-event .fc-time > span{
+    font-size: 1.2em;
+}
+.fc-time {
+    font-size: 1.1em;
+}

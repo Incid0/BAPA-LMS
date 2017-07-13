@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     $('#calendar').fullCalendar({
-        // put your options and callbacks here
+        //theme: true,
+        //put your options and callbacks here
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -12,6 +13,7 @@
             start: '08:00',
             end: '19:00'
         },
+        noEventMessage: "Inga event finns till",
         weekNumberTitle: 'v. ',
         monthNames: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'October', 'November', 'December'], // Custom names to get Pascal casing on months
         views: {
