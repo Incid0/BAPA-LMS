@@ -14,10 +14,7 @@
         @Html.DisplayFor(model => model.Description)
 
     </div>
-    <div class="panel-footer">
-        @Html.DisplayNameFor(model => model.StartTime): @Html.DisplayFor(model => model.StartTime) <br />
-        @Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)
-    </div>
+    <div class="panel-footer">@Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)</div>
 </div>
 
 <div class="container">
@@ -29,15 +26,15 @@
                 </h4>
             </div>
             <table class="table table-fixed">
-
-                @foreach (var item in Model.Modules)
-                {
-                    <tr>
-                        <td class="col-xs-12">@Html.DisplayFor(modelItem => item.Name)<Span> | </Span>@Html.DisplayFor(modelItem => item.Description)</td>
-                    </tr>
-                }
-
-
+                   
+                    @foreach (var item in Model.Modules)
+                    {                    
+                            <tr>
+                                <td class="col-xs-12">@Html.DisplayFor(modelItem => item.Name)<Span> | </Span>@Html.DisplayFor(modelItem => item.Description)</td>                                                             
+                            </tr>               
+                    }    
+             
+                
             </table>
         </div>
 
