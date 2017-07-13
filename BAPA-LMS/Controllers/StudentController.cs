@@ -5,10 +5,10 @@ using BAPA_LMS.Models.CourseViewModels;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ModuleViewModels;
 using BAPA_LMS.Utils;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 
 
@@ -39,8 +39,10 @@ namespace BAPA_LMS.Controllers
             {
                 return HttpNotFound();
             }
-            CourseDetailViewModel cdvm = course; 
-            
+            CourseDetailViewModel cdvm = course;
+         
+
+
             return View(cdvm);
         }
         public ActionResult ModulInfo()
@@ -51,11 +53,12 @@ namespace BAPA_LMS.Controllers
             List<ModuleDetailViewModel> moduleList = new List<ModuleDetailViewModel>();
             foreach (var item in db.Modules)
             {
-                if(item.CourseId == course.Id)
+                if(item.CourseId == course.Id.Decode())
                 {
                     moduleList.Add(item);
                 }
-            }                       
+            }  
+          
             return View(moduleList);
 
         }
@@ -67,7 +70,7 @@ namespace BAPA_LMS.Controllers
             List<ActivityDetailViewModel> activityList = new List<ActivityDetailViewModel>();
             foreach (var item in db.Activities)
             {
-                if(item.Id == id.Decode())
+                if(item.ModuleId == id.Decode())
                 {
                     activityList.Add(item);
                 }
