@@ -44,3 +44,8 @@ textarea {
     padding-left:0px !important;
     padding-right:0px !important;
 }
+
+.modal-content {
+    width: 500px;
+    margin: 70px auto;
+}

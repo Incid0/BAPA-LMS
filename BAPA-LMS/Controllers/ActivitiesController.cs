@@ -41,7 +41,7 @@ namespace BAPA_LMS.Controllers
                 return HttpNotFound();
             }
             ActivityDetailViewModel advm = activity;
-            return View(advm);
+            return PartialView("_Details", advm);
         }
 
         // GET: Activities/Create
