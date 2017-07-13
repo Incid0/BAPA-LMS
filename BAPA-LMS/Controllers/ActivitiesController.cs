@@ -172,8 +172,7 @@ namespace BAPA_LMS.Controllers
 		{
 			// Hardcoded demodata
 			Random rng = new Random();
-			string[] activityIcons = new string[] { "", "file", "heart" };
-			string[] activityColors = new string[] { "blue", "red", "yellow", "purple", "turquoise" };
+			string[] activityIcons = new string[] { "", "file", "file" };
 			var user = UserUtils.GetCurrentUser(HttpContext);
 			var actArray = db.Activities
 				.Where(a => a.Module.CourseId == user.CourseId)
@@ -184,8 +183,8 @@ namespace BAPA_LMS.Controllers
 					title = item.Name,
 					start = item.StartTime,
 					end = item.EndTime,
-					color = activityColors[rng.Next(5)],
-					icon = activityIcons[rng.Next(3)]
+					color = item.Type.Color,
+					icon = activityIcons[rng.Next(3)] + (item.Type.Submit ? " exclamation-sign" : "")
 				}).ToArray();
 
 			return Json(actArray, JsonRequestBehavior.AllowGet);

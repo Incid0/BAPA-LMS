@@ -25,7 +25,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
         public DateTime EndTime { get; set; }
 
         [Display(Name = "Aktivitet")]
-        public ActivityTypes Type { get; set; }
+        public ActivityType Type { get; set; }
 
         public static implicit operator ActivityDetailViewModel(Activity model)
         {
