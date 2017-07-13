@@ -209,6 +209,7 @@
     <Compile Include="Models\CourseViewModels\CourseEditViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseListViewModel.cs" />
     <Compile Include="Models\DB\Activity.cs" />
+    <Compile Include="Models\DB\ActivityType.cs" />
     <Compile Include="Models\DB\Course.cs" />
     <Compile Include="Models\DB\IdentityModels.cs" />
     <Compile Include="Models\DB\Module.cs" />
