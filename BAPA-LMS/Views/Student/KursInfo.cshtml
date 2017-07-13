@@ -6,31 +6,20 @@
 
 <h2>Kursinformation</h2>
 
-<div>
-
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Html.DisplayFor(model => model.Name)</h3>
+    </div>
+    <div class="panel-body">
+        @Html.DisplayFor(model => model.Description)
 
     </div>
-    <div class="panel-footer">@Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)<br />
-                              @Html.DisplayNameFor(model => model.StartTime): @Html.DisplayFor(model => model.StartTime)
+    <div class="panel-footer">
+        @Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)<br />
+        @Html.DisplayNameFor(model => model.StartTime): @Html.DisplayFor(model => model.StartTime)
     </div>
 </div>
+
 
 <div class="container">
     <div class="row">
@@ -41,28 +30,34 @@
                 </h4>
             </div>
             <table class="table table-fixed">
-                   
-                    @foreach (var item in Model.Modules)
-                    {                    
-                            <tr>
-                                <td class="col-xs-12">@Html.DisplayFor(modelItem => item.Name)<Span> | </Span>@Html.DisplayFor(modelItem => item.Description)</td>                                                             
-                            </tr>               
-                    }    
-             
-                
+
+                @foreach (var item in Model.Modules)
+                {
+                    <tr>
+                        <td class="col-xs-12"><a href="@Url.Action("AktivitetsInfo","Student",new {id=item.Id })">@Html.DisplayFor(modelItem => item.Name)<Span> | </Span>@Html.DisplayFor(modelItem => item.Description)</a></td>
+                    </tr>
+                }
+
+
             </table>
         </div>
-  
-    <div class="panel panel-default col-md-6 course-modules">
-        <div class="panel-heading">Klasslista</div>
-       
-        @foreach (var item in Model.Members)
-        {
-            <ul class="list-group">
-                <li class="list-group-item">@Html.DisplayFor(modelItem => item.FullName)</li>               
-            </ul>
-        }
-           
+
+        <div class="panel panel-default col-md-6 no-padding ">
+            <div class="panel-heading">
+                <h4>
+                    Klasslista för @Html.DisplayFor(model => model.Name)
+                </h4>
+            </div>
+            <table class="table table-fixed">
+
+                @foreach (var item in Model.Members)
+                {
+                    <tr>
+                        <td class="col-xs-12">@Html.DisplayFor(modelItem => item.FullName)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
     </div>
 </div>
-

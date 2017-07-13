@@ -71,7 +71,7 @@ namespace BAPA_LMS.Controllers
             List<ActivityDetailViewModel> activityList = new List<ActivityDetailViewModel>();
             foreach (var item in db.Activities)
             {
-                if(item.Id == id.Decode())
+                if(item.Id == id)
                 {
                     activityList.Add(item);
                 }
