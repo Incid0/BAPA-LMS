@@ -43,8 +43,10 @@ namespace BAPA_LMS.Models.ActivityViewModels
             {
                 Name = model.Name,
                 Description = model.Description,
-                StartTime = model.StartTime,
-                EndTime = model.EndTime,
+				StartDate = model.StartTime,
+				StartTime = model.StartTime,
+				EndDate = model.EndTime,
+				EndTime = model.EndTime,
                 Type = model.Type
             };
 
