@@ -15,11 +15,13 @@ using System.Data.Entity.Infrastructure;
 
 namespace BAPA_LMS.Controllers
 {
+    [Authorize]
     public class ActivitiesController : Controller
     {
         private LMSDbContext db = new LMSDbContext();
 
         // GET: Activities
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var activities = db.Activities.Include(a => a.Module);
@@ -43,6 +45,7 @@ namespace BAPA_LMS.Controllers
         }
 
         // GET: Activities/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -53,6 +56,7 @@ namespace BAPA_LMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(ActivityCreateViewModel adcm)
         {
             try
@@ -82,6 +86,7 @@ namespace BAPA_LMS.Controllers
         }
 
         // GET: Activities/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -101,6 +106,7 @@ namespace BAPA_LMS.Controllers
         // POST: Activities/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit()
         {
             int? id = (int?)HttpContext.Session["activityid"];
@@ -152,6 +158,7 @@ namespace BAPA_LMS.Controllers
         // POST: Activities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             try
@@ -172,8 +179,7 @@ namespace BAPA_LMS.Controllers
 		{
 			// Hardcoded demodata
 			Random rng = new Random();
-			string[] activityIcons = new string[] { "", "file", "heart" };
-			string[] activityColors = new string[] { "blue", "red", "yellow", "purple", "turquoise" };
+			string[] activityIcons = new string[] { "", "file", "file" };
 			var user = UserUtils.GetCurrentUser(HttpContext);
 			var actArray = db.Activities
 				.Where(a => a.Module.CourseId == user.CourseId)
@@ -184,8 +190,8 @@ namespace BAPA_LMS.Controllers
 					title = item.Name,
 					start = item.StartTime,
 					end = item.EndTime,
-					color = activityColors[rng.Next(5)],
-					icon = activityIcons[rng.Next(3)]
+					color = item.Type.Color,
+					icon = activityIcons[rng.Next(3)] + (item.Type.Submit ? " exclamation-sign" : "")
 				}).ToArray();
 
 			return Json(actArray, JsonRequestBehavior.AllowGet);

@@ -13,12 +13,14 @@ using System.Data.Entity.Infrastructure;
 
 namespace BAPA_LMS.Controllers
 {
+    [Authorize]
 	public class CoursesController : Controller
 	{
 		private LMSDbContext db = new LMSDbContext();
 
-		// GET: Courses
-		public ActionResult Index(string filter, string sort = "")
+        // GET: Courses
+        [Authorize(Roles = "Admin")]
+        public ActionResult Index(string filter, string sort = "")
 		{
 			var result = new List<CourseListViewModel>();
             
@@ -46,8 +48,9 @@ namespace BAPA_LMS.Controllers
 			return View(cdvm);
 		}
 
-		// GET: Courses/Create
-		public ActionResult Create()
+        // GET: Courses/Create
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create()
 		{
 			return View();
 		}
@@ -55,7 +58,8 @@ namespace BAPA_LMS.Controllers
 		// POST: Courses/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create(CourseCreateViewModel ccvm)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create(CourseCreateViewModel ccvm)
 		{
 			try
 			{
@@ -84,8 +88,9 @@ namespace BAPA_LMS.Controllers
 			return View(ccvm);
 		}
 
-		// GET: Courses/Edit/5
-		public ActionResult Edit(int? id)
+        // GET: Courses/Edit/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(int? id)
 		{
 			if (id == null)
 			{
@@ -104,7 +109,8 @@ namespace BAPA_LMS.Controllers
 		// POST: Courses/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit()
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit()
 		{
 			int? id = (int?)HttpContext.Session["courseid"];
 			if (id == null)
@@ -157,7 +163,8 @@ namespace BAPA_LMS.Controllers
 		// POST: Courses/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public ActionResult DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteConfirmed(int id)
 		{
 			try
 			{
