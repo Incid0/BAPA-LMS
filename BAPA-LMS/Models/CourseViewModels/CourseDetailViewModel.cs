@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 
 namespace BAPA_LMS.Models.CourseViewModels
-{
+{ 
 	public class CourseDetailViewModel
 	{
 		public int Id { get; set; }
@@ -18,7 +18,7 @@ namespace BAPA_LMS.Models.CourseViewModels
 		public string Description { get; set; }
 
 		[Display(Name = "Startdatum")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]        
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]        
         public DateTime StartDate { get; set; }
 
         [Display(Name = "Tid")]

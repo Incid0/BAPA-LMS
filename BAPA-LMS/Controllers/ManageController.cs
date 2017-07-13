@@ -227,7 +227,7 @@ namespace BAPA_LMS.Controllers
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
-            {
+            {                
                 return View(model);
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
@@ -238,9 +238,9 @@ namespace BAPA_LMS.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", "Student", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
-            AddErrors(result);
+            ModelState.AddModelError("", "Lösenord måste innehålla minst en symbol och ett siffertecken samt minst en stor bokstav ('A'-'Z').");
             return View(model);
         }
 
@@ -348,7 +348,7 @@ namespace BAPA_LMS.Controllers
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
-            {
+            {                
                 ModelState.AddModelError("", error);
             }
         }
