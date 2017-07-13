@@ -1,10 +1,10 @@
-﻿@model IEnumerable<BAPA_LMS.Models.ModuleViewModels.ModuleDetailViewModel>
+﻿@model IEnumerable<BAPA_LMS.Models.ActivityViewModels.ActivityDetailViewModel>
 
 @{
-    ViewBag.Title = "ModulInfo";
+    ViewBag.Title = "AktivitetsInfo";
 }
 
-<h2>Modulinformation</h2>
+<h2>AktivitetsInfo</h2>
 
 
 <table class="table">
@@ -16,10 +16,10 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StartDate)
+            @Html.DisplayNameFor(model => model.StartTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndDate)
+            @Html.DisplayNameFor(model => model.EndTime)
         </th>
         <th></th>
     </tr>
@@ -33,15 +33,12 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
+            @Html.DisplayFor(modelItem => item.StartTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
+            @Html.DisplayFor(modelItem => item.EndTime)
         </td>
-        <td>
-         
-            @Html.ActionLink("Till aktiviteter","AktivitetsInfo", new {id=item.Id})
-        </td>
+
     </tr>
 }
 
