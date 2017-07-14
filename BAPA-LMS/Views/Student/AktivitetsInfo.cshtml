@@ -4,42 +4,44 @@
     ViewBag.Title = "AktivitetsInfo";
 }
 
-<h2>AktivitetsInfo</h2>
+<h2>Översikt för Modul</h2>
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndTime)
-        </td>
+    <div class="container">
 
-    </tr>
-}
 
-</table>
+   
+        <div class="panel-group" id="accordion">
+            @foreach (var item in Model)
+            {
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse@(item.Id)" href="#collapse@(item.Id)" )>@Html.DisplayFor(model => item.Name)<span> </span>@Html.DisplayFor(model => item.Type.Name)</a>
+                        </h4>
+                    </div>
+                    <div id="collapse@(item.Id)" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            @Html.DisplayFor(model => item.Description)
+                            <br />
+                            @Html.DisplayFor(model => item.StartDate)
+                            <br />
+                            @Html.DisplayFor(model => item.StartTime)
+
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+            
+
+</div>
+
+           
+
+
+
+

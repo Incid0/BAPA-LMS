@@ -22,14 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
-.table-fixed thead {
-    width: 97%;
-}
-
-.table-fixed tbody {
-    height: 330px;
-    overflow-y: auto;
-    width: 100%;
+.course-modules {
+    height: 220px;
+    width: 580px;
+    border-radius: 10px;
+    border: 1px inset groove;
+    overflow-y:scroll;
 }
 
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {

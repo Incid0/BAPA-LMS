@@ -82,8 +82,8 @@ namespace BAPA_LMS.Migrations
                  new Module
                  {
                      Id = 4,
-                     Name = "PHP",
-                     Description = "Grundläggande inom PHP",
+                     Name = "PHP Hello World",
+                     Description = "Världens bästa kodspråk maximeras till fullo",
                      CourseId = 2,
                      StartDate = DateTime.Parse("2017/07/10"),
                      EndDate = DateTime.Parse("2017/07/28")
@@ -92,8 +92,8 @@ namespace BAPA_LMS.Migrations
                 new Module
                 {
                     Id = 5,
-                    Name = "C++",
-                    Description = "Grundläggande inom C++",
+                    Name = "Konspirationsteorier",
+                    Description = "Hur man enklast och smidigast tillverkar en folie hatt av aluminium",
                     CourseId = 2,
                     StartDate = DateTime.Parse("2017/08/10"),
                     EndDate = DateTime.Parse("2017/08/28")
@@ -102,8 +102,8 @@ namespace BAPA_LMS.Migrations
                 new Module
                 {
                     Id = 6,
-                    Name = "Python",
-                    Description = "Grundläggande inom Python",
+                    Name = "Pekpinnefäktning",
+                    Description = "Lär dig prygla till elever som inte förtjänar annat",
                     CourseId = 2,
                     StartDate = DateTime.Parse("2017/09/10"),
                     EndDate = DateTime.Parse("2017/09/28")
@@ -133,7 +133,7 @@ namespace BAPA_LMS.Migrations
 								Id = i++,
 								Name = "Förmiddagsaktivitet " + i,
 								TypeId = 1 + rng.Next(5),
-								ModuleId = 1,
+								ModuleId = 1 + rng.Next(4),
 								Description = bla.ToString(),
 								StartTime = flow + new TimeSpan(0, 8, 30, 0),
 								EndTime = flow + new TimeSpan(0, 12, 0, 0)
@@ -147,7 +147,7 @@ namespace BAPA_LMS.Migrations
 								Id = i++,
 								Name = "Eftermiddagsaktivitet " + i,
 								TypeId = 1 + rng.Next(5),
-								ModuleId = 1,
+								ModuleId = 1 + rng.Next(4),
 								Description = bla.ToString(),
 								StartTime = flow + new TimeSpan(0, 13, 0, 0),
 								EndTime = flow + new TimeSpan(0, 17, 0, 0)
