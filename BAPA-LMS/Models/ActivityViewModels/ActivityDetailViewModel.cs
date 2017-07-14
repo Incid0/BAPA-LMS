@@ -34,19 +34,25 @@ namespace BAPA_LMS.Models.ActivityViewModels
 		[DisplayFormat(DataFormatString = "{0:HH:mm}")]
 		public DateTime EndTime { get; set; }
 
-        [Display(Name = "Aktivitet")]
+        [Display(Name = "Typ av aktivitet")]
         public ActivityType Type { get; set; }
 
-        public static implicit operator ActivityDetailViewModel(Activity model)
+		[Display(Name = "Ingår i modul")]
+		public string ModuleName { get; set; }
+
+		public static implicit operator ActivityDetailViewModel(Activity model)
         {
             return new ActivityDetailViewModel
             {
                 Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
-                StartTime = model.StartTime,
-                EndTime = model.EndTime,
-                Type = model.Type
+				StartDate = model.StartTime,
+				StartTime = model.StartTime,
+				EndDate = model.EndTime,
+				EndTime = model.EndTime,
+                Type = model.Type,
+				ModuleName = model.Module.Name
             };
 
         }
