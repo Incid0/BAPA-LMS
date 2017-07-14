@@ -22,3 +22,40 @@ select,
 textarea {
     max-width: 280px;
 }
+.course-modules {
+    height: 220px;
+    width: 580px;
+    border-radius: 10px;
+    border: 1px inset groove;
+    overflow-y:scroll;
+}
+
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+    display: block;
+}
+
+    .table-fixed tbody td, .table-fixed thead > tr > th {
+        float: left;
+        border-bottom-width: 0;
+    }
+.no-padding{
+    padding-left:0px !important;
+    padding-right:0px !important;
+}
+.fc-title {
+    font-size: 1.3em;
+}
+.fc-title i.glyphicon {
+    padding-right: 3px;
+}
+.fc-time-grid-event .fc-time > span{
+    font-size: 1.2em;
+}
+.fc-time {
+    font-size: 1.1em;
+}
+
+.modal-content {
+    width: 500px;
+    margin: 70px auto;
+}

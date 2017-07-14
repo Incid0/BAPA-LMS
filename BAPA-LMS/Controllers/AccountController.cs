@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BAPA_LMS.Models;
+using BAPA_LMS.Models.DB;
 
 namespace BAPA_LMS.Controllers
 {
@@ -27,7 +28,7 @@ namespace BAPA_LMS.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
-
+        
         public ApplicationSignInManager SignInManager
         {
             get
@@ -57,6 +58,14 @@ namespace BAPA_LMS.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Manage");
+                }
+                return RedirectToAction("Index", "Student");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -86,7 +95,7 @@ namespace BAPA_LMS.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Ogiltigt inloggningsförsök.");
                     return View(model);
             }
         }
@@ -163,7 +172,7 @@ namespace BAPA_LMS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Student");
                 }
                 AddErrors(result);
             }
@@ -392,7 +401,7 @@ namespace BAPA_LMS.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -449,7 +458,7 @@ namespace BAPA_LMS.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Student");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
