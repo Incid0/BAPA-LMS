@@ -41,6 +41,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
         {
             return new ActivityDetailViewModel
             {
+                Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
                 StartTime = model.StartTime,

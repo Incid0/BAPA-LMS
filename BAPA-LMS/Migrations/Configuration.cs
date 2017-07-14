@@ -133,7 +133,7 @@ namespace BAPA_LMS.Migrations
 								Id = i++,
 								Name = "Förmiddagsaktivitet " + i,
 								TypeId = 1 + rng.Next(5),
-								ModuleId = 1,
+								ModuleId = 1 + rng.Next(4),
 								Description = bla.ToString(),
 								StartTime = flow + new TimeSpan(0, 8, 30, 0),
 								EndTime = flow + new TimeSpan(0, 12, 0, 0)
@@ -147,7 +147,7 @@ namespace BAPA_LMS.Migrations
 								Id = i++,
 								Name = "Eftermiddagsaktivitet " + i,
 								TypeId = 1 + rng.Next(5),
-								ModuleId = 1,
+								ModuleId = 1 + rng.Next(4),
 								Description = bla.ToString(),
 								StartTime = flow + new TimeSpan(0, 13, 0, 0),
 								EndTime = flow + new TimeSpan(0, 17, 0, 0)

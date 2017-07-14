@@ -27,7 +27,7 @@ namespace BAPA_LMS.Controllers
         public ActionResult Index()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
-
+         
             Course course = db.Courses.Find(currentUser.CourseId);
             CourseIndexViewModel cdvm = course;
             return View(cdvm);
@@ -71,7 +71,7 @@ namespace BAPA_LMS.Controllers
             List<ActivityDetailViewModel> activityList = new List<ActivityDetailViewModel>();
             foreach (var item in db.Activities)
             {
-                if(item.Id == id)
+                if(item.ModuleId == id)
                 {
                     activityList.Add(item);
                 }
