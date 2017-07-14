@@ -69,7 +69,14 @@
             });
         },
         calUpdate: function () {
-            $('#calendar .modal-link').attr('data-toggle', 'modal').attr('data-target', '#modalContainer');
+            $('#calendar a.modal-link').attr('data-toggle', 'modal').attr('data-target', '#modalContainer');
+            $('#calendar tr.fc-list-item').each(function (idx, elem) {
+                var a = $(elem).find('a');
+                $(elem).attr('href', a.attr('href'));
+                a.replaceWith(a.text());
+            }).attr('data-toggle', 'modal').attr('data-target', '#modalContainer').on('click', function (event) {
+                event.preventDefault();
+            });
         }
     };
 })(jQuery);

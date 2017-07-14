@@ -15,165 +15,165 @@ using System.Data.Entity.Infrastructure;
 
 namespace BAPA_LMS.Controllers
 {
-    [Authorize]
-    public class ActivitiesController : Controller
-    {
-        private LMSDbContext db = new LMSDbContext();
+	[Authorize]
+	public class ActivitiesController : Controller
+	{
+		private LMSDbContext db = new LMSDbContext();
 
-        // GET: Activities
-        [Authorize(Roles = "Admin")]
-        public ActionResult Index()
-        {
-            var activities = db.Activities.Include(a => a.Module);
-            return View(activities.ToList());
-        }
+		// GET: Activities
+		[Authorize(Roles = "Admin")]
+		public ActionResult Index()
+		{
+			var activities = db.Activities.Include(a => a.Module);
+			return View(activities.ToList());
+		}
 
-        // GET: Activities/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Activity activity = db.Activities.Find(id?.Decode());
-            if (activity == null)
-            {
-                return HttpNotFound();
-            }
-            ActivityDetailViewModel advm = activity;
-            return PartialView("_Details", advm);
-        }
+		// GET: Activities/Details/5
+		public ActionResult Details(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Activity activity = db.Activities.Find(id?.Decode());
+			if (activity == null)
+			{
+				return HttpNotFound();
+			}
+			ActivityDetailViewModel advm = activity;
+			return PartialView("_Details", advm);
+		}
 
-        // GET: Activities/Create
-        [Authorize(Roles = "Admin")]
-        public ActionResult Create()
-        {
-            return View();
-        }
+		// GET: Activities/Create
+		[Authorize(Roles = "Admin")]
+		public ActionResult Create()
+		{
+			return View();
+		}
 
-        // POST: Activities/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Create(ActivityCreateViewModel adcm)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    Activity newActivity = new Activity();
-                    if (TryUpdateModel(newActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime", "Type" }))
-                    {
-                        db.Activities.Add(newActivity);
-                        db.SaveChanges();
-                        TempData["alert"] = "success|Aktiviteten är tillagd!";
-                    }
-                    else
-                    {
-                        TempData["alert"] = "danger|Kunde inte lägga till aktivitet";
-                    }
-                }
-            }
-            catch (DataException)
-            {
-                ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
-                TempData["alert"] = "danger|Allvarligt fel!";
-            }
-            
-            return View(adcm);
-        }
+		// POST: Activities/Create
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Admin")]
+		public ActionResult Create(ActivityCreateViewModel adcm)
+		{
+			try
+			{
+				if (ModelState.IsValid)
+				{
+					Activity newActivity = new Activity();
+					if (TryUpdateModel(newActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime", "Type" }))
+					{
+						db.Activities.Add(newActivity);
+						db.SaveChanges();
+						TempData["alert"] = "success|Aktiviteten är tillagd!";
+					}
+					else
+					{
+						TempData["alert"] = "danger|Kunde inte lägga till aktivitet";
+					}
+				}
+			}
+			catch (DataException)
+			{
+				ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
+				TempData["alert"] = "danger|Allvarligt fel!";
+			}
 
-        // GET: Activities/Edit/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Activity activity = db.Activities.Find(id);
-            if (activity == null)
-            {
-                return HttpNotFound();
-            }
-            ActivityEditViewModel aevm = activity;
-            HttpContext.Session["activityid"] = id;
-            return View(aevm);
-        }
+			return View(adcm);
+		}
 
-        // POST: Activities/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Edit()
-        {
-            int? id = (int?)HttpContext.Session["activityid"];
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Activity updatedActivity = null;
-            if (ModelState.IsValid)
-            {
-                updatedActivity = db.Activities.Find(id);
-                if(id != null && TryUpdateModel(updatedActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime", "Type" }))
-                {
-                    try
-                    {
-                        db.SaveChanges();
-                        TempData["alert"] = "success|Aktiviteten är uppdaterad!";
-                        return RedirectToAction("Index");
-                    }
-                    catch (RetryLimitExceededException)
-                    {
-                        ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
-                        TempData["alert"] = "danger|Allvarligt fel!";
-                    }
-                }
-                else
-                {
-                    TempData["alert"] = "danger|Kunde inte uppdatera aktiviteten!";
-                }                
-            }            
-            return View((ActivityEditViewModel)updatedActivity);
-        }
+		// GET: Activities/Edit/5
+		[Authorize(Roles = "Admin")]
+		public ActionResult Edit(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Activity activity = db.Activities.Find(id);
+			if (activity == null)
+			{
+				return HttpNotFound();
+			}
+			ActivityEditViewModel aevm = activity;
+			HttpContext.Session["activityid"] = id;
+			return View(aevm);
+		}
 
-        // GET: Activities/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Activity activity = db.Activities.Find(id);
-        //    if (activity == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(activity);
-        //}
+		// POST: Activities/Edit/5
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Admin")]
+		public ActionResult Edit()
+		{
+			int? id = (int?)HttpContext.Session["activityid"];
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Activity updatedActivity = null;
+			if (ModelState.IsValid)
+			{
+				updatedActivity = db.Activities.Find(id);
+				if (id != null && TryUpdateModel(updatedActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime", "Type" }))
+				{
+					try
+					{
+						db.SaveChanges();
+						TempData["alert"] = "success|Aktiviteten är uppdaterad!";
+						return RedirectToAction("Index");
+					}
+					catch (RetryLimitExceededException)
+					{
+						ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
+						TempData["alert"] = "danger|Allvarligt fel!";
+					}
+				}
+				else
+				{
+					TempData["alert"] = "danger|Kunde inte uppdatera aktiviteten!";
+				}
+			}
+			return View((ActivityEditViewModel)updatedActivity);
+		}
 
-        // POST: Activities/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            try
-            {
-                Activity activity = db.Activities.Find(id);
-                db.Activities.Remove(activity);
-                db.SaveChanges();
-            }
-            catch (RetryLimitExceededException)
-            {
-                // LOg errors here
-                TempData["alert"] = "danger|Det gick inte att ta bort aktiviteten!";
-            }
-            return RedirectToAction("Index");
-        }
+		// GET: Activities/Delete/5
+		//public ActionResult Delete(int? id)
+		//{
+		//    if (id == null)
+		//    {
+		//        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+		//    }
+		//    Activity activity = db.Activities.Find(id);
+		//    if (activity == null)
+		//    {
+		//        return HttpNotFound();
+		//    }
+		//    return View(activity);
+		//}
+
+		// POST: Activities/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Admin")]
+		public ActionResult DeleteConfirmed(int id)
+		{
+			try
+			{
+				Activity activity = db.Activities.Find(id);
+				db.Activities.Remove(activity);
+				db.SaveChanges();
+			}
+			catch (RetryLimitExceededException)
+			{
+				// LOg errors here
+				TempData["alert"] = "danger|Det gick inte att ta bort aktiviteten!";
+			}
+			return RedirectToAction("Index");
+		}
 
 		public JsonResult GetStudentActivities()
 		{
@@ -190,7 +190,7 @@ namespace BAPA_LMS.Controllers
 					title = item.Name,
 					start = item.StartTime,
 					end = item.EndTime,
-					color = item.Type.Color,
+					color = (item.EndTime >= DateTime.Now) || item.Type.Submit ? item.Type.Color : "Gray",
 					url = "/activities/details/" + item.Id.Encode(),
 					className = "modal-link",
 					icon = activityIcons[rng.Next(3)] + (item.Type.Submit ? " exclamation-sign" : "")
@@ -199,13 +199,13 @@ namespace BAPA_LMS.Controllers
 			return Json(actArray, JsonRequestBehavior.AllowGet);
 		}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-    }
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+	}
 }
