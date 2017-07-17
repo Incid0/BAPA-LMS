@@ -1,8 +1,8 @@
 ﻿@model BAPA_LMS.Models.CourseViewModels.CourseIndexViewModel
 @{
-	ViewBag.Title = "Kurskalender";
+    ViewBag.Title = "Kurskalender";
+    ViewBag.Style = "-calendar";
 }
-<link href="~/Content/fullcalendar.min.css" rel="stylesheet" />
 
 <div class="row">
     <h2 class="col-xs-12">Min kurs: <a href="@Url.Action("kursinfo", "student")">@Html.DisplayFor(model => model.Name)</a></h2>
@@ -18,9 +18,3 @@
     <div id="popupContent" class="modal-content">
     </div>
 </div>
-@section scripts {
-	<script src="~/Scripts/moment.min.js"></script>
-	<script src="~/Scripts/fullcalendar/fullcalendar.min.js"></script>
-	<script src="~/Scripts/student.js"></script>
-	<script src="~/Scripts/fullcalendar/locale/sv.js"></script>
-}
