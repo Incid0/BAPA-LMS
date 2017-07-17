@@ -51,6 +51,11 @@
                 $(this).removeData('bs.modal').children('.modal-content').html('');
             });
 
+            // Setting MaxLength automatically according to MVC StringLength
+            $('input[data-val-length-max]').each(function (idx, element) {
+                element.setAttribute('maxlength', element.getAttribute('data-val-length-max'))
+            });
+
             // Initializing DatePicker
             $('.input-group.date').datepicker({
                 weekStart: 1,
