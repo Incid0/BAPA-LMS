@@ -32,7 +32,6 @@ namespace BAPA_LMS.Models.CourseViewModels
 				Name = model.Name,
 				Description = model.Description,
 				StartDate = model.StartDate,
-                StartTime = model.StartDate,
 				Modules = model.Modules,
                 Members = model.Members
 			};
