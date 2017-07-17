@@ -11,13 +11,18 @@ namespace BAPA_LMS.Models.CourseViewModels
 	{
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(40)]
         [Display(Name = "Namn")]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(2000)]
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
 
-        [Display(Name = "Startdatum")]
+        [Required]
+        [Display(Name = "Startdatum")]       
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime StartDate { get; set; }
 
