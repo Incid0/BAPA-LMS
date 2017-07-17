@@ -57,7 +57,7 @@ namespace BAPA_LMS.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles = "Admin")]
-		public ActionResult Create(ActivityCreateViewModel adcm)
+		public ActionResult Create(ActivityEditViewModel aecm)
 		{
 			try
 			{
@@ -82,7 +82,7 @@ namespace BAPA_LMS.Controllers
 				TempData["alert"] = "danger|Allvarligt fel!";
 			}
 
-			return View(adcm);
+			return View(aecm);
 		}
 
 		// GET: Activities/Edit/5
