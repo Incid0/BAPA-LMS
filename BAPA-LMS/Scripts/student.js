@@ -14,6 +14,9 @@
                 start: '08:00',
                 end: '19:00'
             },
+            buttonText: {
+                list: 'Agenda' //Changes default button text for list
+            },
             weekNumberTitle: 'v. ',
             monthNames: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'October', 'November', 'December'], // Custom names to get Pascal casing on months
             views: {

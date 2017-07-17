@@ -169,7 +169,7 @@ namespace BAPA_LMS.Controllers
 			}
 			catch (RetryLimitExceededException)
 			{
-				// LOg errors here
+				// Log errors here
 				TempData["alert"] = "danger|Det gick inte att ta bort aktiviteten!";
 			}
 			return RedirectToAction("Index");

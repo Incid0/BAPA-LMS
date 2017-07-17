@@ -1,0 +1,52 @@
+﻿
+@{
+	ViewBag.Title = "TestingDelete";
+}
+
+<h2>TestingDelete</h2>
+
+<form id="__AjaxAntiForgeryForm" action="#" method="post">
+	@Html.AntiForgeryToken()
+
+	<!-- Trigger the modal with a button -->
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+					<!--{0} = kurs/modul/aktivitet. {1} = Namn på Item i fråga-->
+					<p>Vill du radera {0} {1} permanent?</p>
+				</div>
+				<div class="modal-footer">
+					<button data-course-id="1" type="button" class="btn btn-danger js-submitDelete" value="Delete" data-dismiss="modal">Radera</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Tillbaka</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+@section scripts{
+	<script>
+		$(document).ready(function(){
+			$(".js-submitDelete").click(function (e) {
+				$.post("@Url.Action("DeleteConfirmed", "CourseController")",
+					{ Id: $(e.target).attr("data-course-id") })
+
+					.done(function () {
+						alert("Success!")
+					})
+					.fail(function () {
+						alert("Something failed!")
+					})
+			})
+		});
+	</script>
+	}

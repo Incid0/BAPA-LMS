@@ -13,8 +13,8 @@ using System.Data.Entity.Infrastructure;
 
 namespace BAPA_LMS.Controllers
 {
-    [Authorize]
-	public class CoursesController : Controller
+	[Authorize]
+	public partial class CoursesController : Controller
 	{
 		private LMSDbContext db = new LMSDbContext();
 
@@ -178,6 +178,17 @@ namespace BAPA_LMS.Controllers
 				TempData["alert"] = "danger|Det gick inte att ta bort kursen!";
 			}
 			return RedirectToAction("Index");
+		}
+
+		//Experimental controller and fuctions
+		public ActionResult TestingDelete(int Id = 1)
+		{
+			return View();
+		}
+
+		public class TestingDeleteDto
+		{
+			public int CourseId { get; set; }
 		}
 
 		protected override void Dispose(bool disposing)
