@@ -53,7 +53,7 @@
 
             // Setting MaxLength automatically according to MVC StringLength
             $('input[data-val-length-max]').each(function (idx, element) {
-                element.setAttribute('maxlength', element.getAttribute('data-val-length-max'))
+                element.setAttribute('maxlength', element.getAttribute('data-val-length-max'));
             });
 
             // Initializing DatePicker
@@ -66,7 +66,13 @@
             $('.timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
 
             // Initializing TreeView
-            $('#tree').treeview({ data: getTree() });
+            var tree = $('#tree');
+            if (tree.length) {
+                $.getJSON('/Courses/GetTree/1', function (result) {
+                    console.log(result);
+                    tree.treeview({ data: [result] });
+                });
+            }
         }
     };
 })(jQuery);
