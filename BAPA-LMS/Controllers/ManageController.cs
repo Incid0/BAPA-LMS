@@ -240,7 +240,7 @@ namespace BAPA_LMS.Controllers
                 }
                 return RedirectToAction("Index", "Student", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
-            ModelState.AddModelError("", "Lösenord måste innehålla minst en symbol och ett siffertecken samt minst en stor bokstav ('A'-'Z').");
+            ModelState.AddModelError("", "Lösenord måste innehålla minst ett siffertecken samt minst en stor bokstav ('A'-'Z').");
             return View(model);
         }
 
