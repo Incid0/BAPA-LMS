@@ -34,6 +34,7 @@ namespace BAPA_LMS
 						"~/Scripts/jquery.validate*",
 						"~/Scripts/bootstrap.js",
 						"~/Scripts/respond.js",
+						"~/Scripts/bootstrap-treeview.js",
 						"~/Scripts/bootstrap-datepicker.js",
 						"~/Scripts/bootstrap-datepicker.sv.min.js",
 						"~/Scripts/jquery.timepicker.js",
@@ -42,6 +43,7 @@ namespace BAPA_LMS
 			
 			bundles.Add(new StyleBundle("~/Content/lms").Include(
 						"~/Content/bootstrap.css",
+						"~/Content/bootstrap-treeview.css",
 						"~/Content/bootstrap-datepicker3.css",
 						"~/Content/jquery.timepicker.css",
 						"~/Content/site.css"));

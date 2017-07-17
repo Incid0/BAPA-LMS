@@ -197,6 +197,7 @@
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="DataAccessLayer\LMSDbContext.cs" />
@@ -232,6 +233,7 @@
     <Content Include="Content\bootstrap-datepicker3.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-treeview.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fullcalendar.css" />
@@ -246,6 +248,7 @@
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.sv.min.js" />
+    <Content Include="Scripts\bootstrap-treeview.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -403,6 +406,7 @@
     <Content Include="Views\Student\ModulInfo.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\AktivitetsInfo.cshtml" />
+    <Content Include="Views\Teacher\CourseEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
