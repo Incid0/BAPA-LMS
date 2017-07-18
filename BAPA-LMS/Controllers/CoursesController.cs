@@ -183,15 +183,22 @@ namespace BAPA_LMS.Controllers
 		[Authorize(Roles = "Admin")]
 		public JsonResult GetTree(int id)
 		{
-			// Hardcoded demodata
-			Random rng = new Random();
-			string[] activityIcons = new string[] { "", "file", "file" };
 			Course course = db.Courses.Find(id);
 
 			var actArray = new {
-				Text = course.Name,
-				Nodes = (course.Modules.Select(m => new {
-					Text = m.Name
+				id = "c" + course.Id,
+				text = course.Name,
+				icon = "glyphicon glyphicon-home",
+				nodes = (course.Modules.Select(m => new {
+					id = "m" + m.Id,
+					text = m.Name,
+					icon = "glyphicon glyphicon-book",
+					nodes = (m.Activities.Select(a => new
+					{
+						id = "a" + a.Id,
+						text = a.Name,
+						icon = "glyphicon glyphicon-wrench"
+					}))
 				})).ToArray()
 			};
 

@@ -1,4 +1,4 @@
-﻿@model BAPA_LMS.Models.CourseViewModels.CourseDetailViewModel
+﻿@model BAPA_LMS.Models.CourseViewModels.CourseIndexViewModel
 @{
     ViewBag.Title = "Kurseditor";
 }
@@ -6,7 +6,7 @@
 <h2>Kurseditor - @(Model.Name)</h2>
 
 <div class="row">
-    <div id="tree" class="col-md-4">
+    <div id="tree" data-id="@Model.Id" class="col-md-4">
 
     </div>
     <div id="editarea" class="col-md-8">

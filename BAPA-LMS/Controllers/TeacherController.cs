@@ -23,8 +23,6 @@ namespace BAPA_LMS.Controllers
 
         private LMSDbContext db = new LMSDbContext();
 
-        public object ModuleDetailViewModel { get; private set; }
-
         public ActionResult Index()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
@@ -45,8 +43,8 @@ namespace BAPA_LMS.Controllers
 			{
 				return HttpNotFound();
 			}
-			CourseDetailViewModel cdvm = course;
-			return View(cdvm);
+			CourseIndexViewModel civm = course;
+			return View(civm);
         }
 
         protected override void Dispose(bool disposing)
