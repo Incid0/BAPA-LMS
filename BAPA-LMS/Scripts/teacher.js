@@ -14,11 +14,11 @@
             });
 
             // Initializing DatePicker
-            $('.input-group.date').datepicker({
-                weekStart: 1,
-                language: "sv",
-                calendarWeeks: true
-            });
+            $.fn.datepicker.defaults.weekStart = 1;
+            $.fn.datepicker.defaults.language = "sv";
+            $.fn.datepicker.defaults.calendarWeeks = true;
+            $.fn.datepicker.defaults.todayHighlight = true;
+
             // Initializing TimePicker
             $('.timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
         }

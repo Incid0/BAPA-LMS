@@ -59,3 +59,8 @@ textarea {
     width: 500px;
     margin: 70px auto;
 }
+
+/*Override strange default input bootstrap*/
+.input-group.date > .input-group-addon {
+    width: 0;
+}
