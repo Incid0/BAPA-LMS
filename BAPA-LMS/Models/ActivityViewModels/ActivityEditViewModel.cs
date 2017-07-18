@@ -44,6 +44,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
         [Required]
         [Display(Name = "Typ av aktivitet")]
         public ActivityType Type { get; set; }
+        public IEnumerable<ActivityType> Types { get; set; }
 
         public static implicit operator ActivityEditViewModel(Activity model)
         {
