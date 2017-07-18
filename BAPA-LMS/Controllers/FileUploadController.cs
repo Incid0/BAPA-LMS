@@ -46,15 +46,13 @@ namespace BAPA_LMS.Controllers
         }
     
         [HttpPost]
-        public ActionResult ActivityUploader(HttpPostedFileBase postedFile, int id)
+        public ActionResult ActivityUploader(ActivityUploadViewModel model,HttpPostedFileBase postedFile, int id)
         {
 
             Activity activity = db.Activities.Find(id);
             ActivityUploadViewModel auvm = activity;
 
 
-
-           
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
             
             if (postedFile != null)
@@ -71,5 +69,6 @@ namespace BAPA_LMS.Controllers
 
             return View(auvm);
         }
+        
     }
 }

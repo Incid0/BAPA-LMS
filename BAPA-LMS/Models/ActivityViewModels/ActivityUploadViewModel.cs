@@ -26,6 +26,9 @@ namespace BAPA_LMS.Models.ActivityViewModels
         [Display(Name = "Ingår i modul")]
         public string ModuleName { get; set; }
 
+        public string DocumentName { get; set; }
+        public string MemberName { get; set; }
+
         public static implicit operator ActivityUploadViewModel(Activity model)
         {
             return new ActivityUploadViewModel
@@ -36,6 +39,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
                 EndTime = model.EndTime,
                 Type = model.Type,
                 ModuleName = model.Module.Name
+             
             };
 
         }
