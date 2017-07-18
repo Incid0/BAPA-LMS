@@ -164,11 +164,11 @@ namespace BAPA_LMS.Controllers
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int Id)
 		{
 			try
 			{
-				Course course = db.Courses.Find(id);
+				Course course = db.Courses.Find(Id);
 				db.Courses.Remove(course);
 				db.SaveChanges();				
 			}
