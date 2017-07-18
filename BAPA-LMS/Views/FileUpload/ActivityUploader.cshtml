@@ -1,0 +1,63 @@
+﻿@model BAPA_LMS.Models.ActivityViewModels.ActivityUploadViewModel
+
+@{
+    ViewBag.Title = "ActivityUploader";
+}
+
+<h2>ActivityUploader</h2>
+
+<div>
+    <h4>ActivityUploadViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModuleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModuleName)
+        </dd>
+        <dt>
+            Ladda upp Dokument:
+        </dt>
+        <dd>
+            @using (Html.BeginForm("ActivityUploader", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <span>Select File:</span>
+                <input type="file" name="postedFile" />
+                <hr />
+                <input type="submit" value="Upload" />
+                <br />
+                <span style="color:green">@ViewBag.Message</span>
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+
+    @Html.ActionLink("Back to List", "Index")
+</p>
