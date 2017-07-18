@@ -22,8 +22,8 @@ namespace BAPA_LMS.Models.CourseViewModels
         public string Description { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Startdatum")]       
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime StartDate { get; set; }
 
         public static implicit operator CourseEditViewModel(Course model)
