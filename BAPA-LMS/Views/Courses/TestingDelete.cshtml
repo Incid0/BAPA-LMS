@@ -26,7 +26,7 @@
 					<p>Vill du radera {0} {1} permanent?</p>
 				</div>
 				<div class="modal-footer">
-					<button data-course-id="1" type="button" class="btn btn-danger js-submitDelete" value="Delete" data-dismiss="modal">Radera</button>
+					<button data-courseId="1" type="button" class="btn btn-danger subDel" value="Delete" data-dismiss="modal">Radera</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Tillbaka</button>
 				</div>
 			</div>
@@ -34,19 +34,61 @@
 	</div>
 </form>
 @section scripts{
-	<script>
-		$(document).ready(function(){
-			$(".js-submitDelete").click(function (e) {
-				$.post("@Url.Action("DeleteConfirmed", "CourseController")",
-					{ Id: $(e.target).attr("data-course-id") })
+	@*<script>
+			$(document).ready(function(){
+				$('.js-submitDelete').click(function (e) {
+					$.post
+						("@Url.Action("DeleteConfirmed", "Courses")",
+						{
+							Id: $(e.target).attr("courseId"),
+							Token: _AjaxAntiForgeryToken
+						})
 
-					.done(function () {
-						alert("Success!")
+						.fail(function () {
+							alert("Something failed")
+						})
+						.done(function () {
+							alert("Success!")
+						})
+				})
+			});
+		</script>*@
+	@*<script type="text/javascript">
+			$(document).ready(function () {
+				$('.js-submitDelete').submit(function () {
+					var form = $('#__AjaxAntiForgeryForm');
+					var token = $('input[name="__RequestVerificationToken"]', form).val();
+					$.ajax({
+						url: $(this).data("DeleteConfirmed", "Courses"),
+						type: 'POST',
+						data: {
+							__RequestVerificationToken: token,
+							Id: $(e.target).attr('courseId')
+						},
+						success: function (result) {
+							alert(result.someValue);
+						}
+					});
+					return false;
+				});
+			});
+		</script>*@
+	<script>
+		$(document).ready(function () {
+
+
+			$('subDel').on('click', 'button', function (event) {
+				event.preventDefault();
+				var form = $(this);
+				console.log(form);
+				$.ajax(@Url.Action("DeleteConfirmed", "Courses")			//'/Courses/DeleteConfirmed'
+					{
+						type: 'POST',
+						data: form.serialize(),
+						success: function (result) { alert("Success"); }
 					})
-					.fail(function () {
-						alert("Something failed!")
-					})
+					
 			})
-		});
+		})
 	</script>
-	}
+}

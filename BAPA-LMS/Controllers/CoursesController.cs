@@ -163,7 +163,7 @@ namespace BAPA_LMS.Controllers
 		// POST: Courses/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public ActionResult DeleteConfirmed(int Id)
 		{
 			try
