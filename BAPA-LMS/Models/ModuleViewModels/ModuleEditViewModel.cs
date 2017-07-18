@@ -11,18 +11,24 @@ namespace BAPA_LMS.Models.ModuleViewModels
     {
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(40)]
         [Display(Name = "Namn")]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(2000)]
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
 
-        [Display(Name = "Startdatum")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+        [Required]
+        [Display(Name = "Tidsspan")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
+        [Required]
         [Display(Name = "Slutdatum")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         public DateTime CourseStartDate { get; set; }

@@ -64,3 +64,8 @@ textarea {
 .input-group.date > .input-group-addon {
     width: 0;
 }
+
+
+.input-daterange {
+    width: auto;
+}
