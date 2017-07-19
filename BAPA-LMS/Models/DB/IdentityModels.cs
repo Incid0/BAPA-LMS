@@ -13,7 +13,7 @@ namespace BAPA_LMS.Models.DB
 		public string LastName { get; set; }
 		public string FullName { get { return FirstName + " " + LastName; } }
 
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
 
         public virtual Course Course { get; set; }
 
