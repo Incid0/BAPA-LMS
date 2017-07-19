@@ -59,7 +59,13 @@ textarea {
     width: 500px;
     margin: 70px auto;
 }
-.small-width{
-    width:50%;
-    float:left;
+
+/*Override strange default input bootstrap*/
+.input-group.date > .input-group-addon {
+    width: 0;
+}
+
+
+.input-daterange {
+    width: auto;
 }

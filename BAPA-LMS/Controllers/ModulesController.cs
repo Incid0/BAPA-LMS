@@ -53,7 +53,7 @@ namespace BAPA_LMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create(ModuleCreateViewModel mcvm)
+        public ActionResult Create(ModuleEditViewModel mevm)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace BAPA_LMS.Controllers
                 ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
                 TempData["alert"] = "danger|Allvarligt fel!";
             }            
-            return View(mcvm);
+            return View(mevm);
         }
 
         // GET: Modules/Edit/5
