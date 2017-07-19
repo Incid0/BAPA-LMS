@@ -423,24 +423,12 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\AktivitetsInfo.cshtml" />
     <Content Include="Views\Teacher\CourseEdit.cshtml" />
-    <Content Include="Views\Teacher\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707182100046_init.resx">
-      <DependentUpon>201707182100046_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707182230317_funkadinhora.resx">
-      <DependentUpon>201707182230317_funkadinhora.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707182242544_funkafan.resx">
-      <DependentUpon>201707182242544_funkafan.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
