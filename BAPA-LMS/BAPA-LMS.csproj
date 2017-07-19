@@ -209,9 +209,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707191114460_init.cs" />
-    <Compile Include="Migrations\201707191114460_init.Designer.cs">
-      <DependentUpon>201707191114460_init.cs</DependentUpon>
+    <Compile Include="Migrations\201707191208529_init2.cs" />
+    <Compile Include="Migrations\201707191208529_init2.Designer.cs">
+      <DependentUpon>201707191208529_init2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
