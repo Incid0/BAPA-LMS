@@ -1,8 +1,15 @@
 ﻿var teacher = (function ($) {
+    var lastModule = 0;
     function treeNodeSelect(event, node) {
         var index = node.id, type = index[0], id = index.substr(1);
+        // Limit activity creation
+        $('#btnAddActivity').prop('disabled', (type === 'c'));
+
         if (type === 'a') type = 'activities'
-        else if (type === 'm') type = 'modules'
+        else if (type === 'm') {
+            type = 'modules';
+            lastModule = id;
+        }
         else if (type === 'c') type = 'courses'
         else type = '';
         if (type !== '') {
@@ -13,9 +20,13 @@
             });
         }
     };
-    
+
     function changeEditor(view) {
         $('#editarea').html(view);
+    }
+
+    function addModule() {
+        $.get('/modules/create/' + lastModule, changeEditor);
     }
 
     return {
