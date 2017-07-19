@@ -164,12 +164,12 @@ namespace BAPA_LMS.Controllers
 		[HttpPost, ActionName("Delete")]
 		//[ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult DeleteConfirmed(string Id)
+        public ActionResult DeleteConfirmed(int Id)
 		{
 			try
 			{
-				int NumberId = int.Parse(Id); // Remember to remove if you remove the Ajax Request
-				Course course = db.Courses.Find(NumberId);
+				//int NumberId = int.Parse(Id); // Remember to remove if you remove the Ajax Request
+				Course course = db.Courses.Find(Id);
 				db.Courses.Remove(course);
 				db.SaveChanges();				
 			}
