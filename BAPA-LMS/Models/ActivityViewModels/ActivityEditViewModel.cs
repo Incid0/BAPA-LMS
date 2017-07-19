@@ -27,13 +27,13 @@ namespace BAPA_LMS.Models.ActivityViewModels
         public DateTime StartDate { get; set; }
 
         [Required]
-        [Display(Name = "Starttid")]
-        public string StartTime { get; set; }
-
-        [Required]
         [Display(Name = "Slutdatum")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
+
+        [Required]
+        [Display(Name = "Starttid")]
+        public string StartTime { get; set; }
 
         [Required]
         [Display(Name = "Sluttid")]        

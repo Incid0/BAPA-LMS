@@ -62,7 +62,7 @@ namespace BAPA_LMS.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles = "Admin")]
-		public ActionResult Create(ActivityEditViewModel aecm)
+		public ActionResult Create(ActivityEditViewModel aevm)
 		{
 			try
 			{
@@ -72,7 +72,9 @@ namespace BAPA_LMS.Controllers
 					if (TryUpdateModel(newActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime"  }))
 					{
                         newActivity.ModuleId = (int)Session["moduleid"];
-                        newActivity.TypeId = aecm.Type;
+                        newActivity.TypeId = aevm.Type;
+                        newActivity.StartTime = aevm.StartDate.Date + newActivity.StartTime.TimeOfDay;
+                        newActivity.EndTime = aevm.EndDate.Date + newActivity.EndTime.TimeOfDay;
                         db.Activities.Add(newActivity);
 						db.SaveChanges();
 						TempData["alert"] = "success|Aktiviteten är tillagd!";
@@ -88,8 +90,8 @@ namespace BAPA_LMS.Controllers
 				ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
 				TempData["alert"] = "danger|Allvarligt fel!";
 			}
-            aecm.Types = db.ActivityTypes.ToList();
-			return View(aecm);
+            aevm.Types = db.ActivityTypes.ToList();
+			return View(aevm);
 		}
 
 		// GET: Activities/Edit/5
