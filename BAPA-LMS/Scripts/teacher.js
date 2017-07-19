@@ -1,6 +1,22 @@
 ﻿var teacher = (function ($) {
     function treeNodeSelect(event, node) {
+        var index = node.id, type = index[0], id = index.substr(1);
+        if (type === 'a') type = 'activities'
+        else if (type === 'm') type = 'modules'
+        else if (type === 'c') type = 'courses'
+        else type = '';
+        if (type !== '') {
+            $.ajax({
+                type: 'GET',
+                url: '/' + type + '/details/' + id,
+                success: changeEditor
+            });
+        }
     };
+    
+    function changeEditor(view) {
+        $('#editarea').html(view);
+    }
 
     return {
         init: function () {
