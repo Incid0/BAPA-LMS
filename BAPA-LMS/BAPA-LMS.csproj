@@ -423,8 +423,7 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\AktivitetsInfo.cshtml" />
     <Content Include="Views\Teacher\CourseEdit.cshtml" />
-    <Content Include="Views\FileUpload\ActivityUpload.cshtml" />
-    <Content Include="Views\FileUpload\ActivityUploader.cshtml" />
+    <Content Include="Views\Teacher\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

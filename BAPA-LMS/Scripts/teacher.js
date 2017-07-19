@@ -1,42 +1,6 @@
 ﻿var teacher = (function ($) {
-    var tree = [
-        {
-            text: "Parent 1",
-            nodes: [
-                {
-                    text: "Child 1",
-                    nodes: [
-                        {
-                            text: "Grandchild 1"
-                        },
-                        {
-                            text: "Grandchild 2"
-                        }
-                    ]
-                },
-                {
-                    text: "Child 2"
-                }
-            ]
-        },
-        {
-            text: "Parent 2"
-        },
-        {
-            text: "Parent 3"
-        },
-        {
-            text: "Parent 4"
-        },
-        {
-            text: "Parent 5"
-        }
-    ];
-
-    function getTree() {
-        // Some logic to retrieve, or generate tree structure
-        return tree;
-    }
+    function treeNodeSelect(event, node) {
+    };
 
     return {
         init: function () {
@@ -53,20 +17,26 @@
 
             // Setting MaxLength automatically according to MVC StringLength
             $('input[data-val-length-max]').each(function (idx, element) {
-                element.setAttribute('maxlength', element.getAttribute('data-val-length-max'))
+                element.setAttribute('maxlength', element.getAttribute('data-val-length-max'));
             });
 
             // Initializing DatePicker
-            $('.input-group.date').datepicker({
-                weekStart: 1,
-                language: "sv",
-                calendarWeeks: true
-            });
+            $.fn.datepicker.weekStart = 1;
+            $.fn.datepicker.language = "sv";
+            $.fn.datepicker.calendarWeeks = true;
+            $.fn.datepicker.todayHighlight = true;
+
             // Initializing TimePicker
             $('.timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
 
             // Initializing TreeView
-            $('#tree').treeview({ data: getTree() });
+            var tree = $('#tree');
+            if (tree.length) {
+                $.getJSON('/Courses/GetTree/' + tree.data('id'), function (result) {
+                    tree.treeview({ data: [result] });
+                    tree.on('nodeSelected', treeNodeSelect);
+                });
+            }
         }
     };
 })(jQuery);

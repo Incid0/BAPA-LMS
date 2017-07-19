@@ -180,6 +180,31 @@ namespace BAPA_LMS.Controllers
 			return RedirectToAction("Index");
 		}
 
+		[Authorize(Roles = "Admin")]
+		public JsonResult GetTree(int id)
+		{
+			Course course = db.Courses.Find(id);
+
+			var actArray = new {
+				id = "c" + course.Id,
+				text = course.Name,
+				icon = "glyphicon glyphicon-home",
+				nodes = (course.Modules.Select(m => new {
+					id = "m" + m.Id,
+					text = m.Name,
+					icon = "glyphicon glyphicon-book",
+					nodes = (m.Activities.Select(a => new
+					{
+						id = "a" + a.Id,
+						text = a.Name,
+						icon = "glyphicon glyphicon-wrench"
+					}))
+				})).ToArray()
+			};
+
+			return Json(actArray, JsonRequestBehavior.AllowGet);
+		}
+		
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
