@@ -11,7 +11,6 @@
 {
     @Html.AntiForgeryToken()
 
-<h4>ActivityEditViewModel</h4>
 <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -28,7 +27,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.StartDate, "Datumspann(Startdatum-Slutdatum)", htmlAttributes: new { @class = "control-label" })
+    @Html.LabelFor(model => model.StartDate, "Datumspann (Startdatum - Slutdatum)", htmlAttributes: new { @class = "control-label" })
     <div class="input-daterange input-group " data-provide="datepicker" data-date-start-date="0d">
         @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control  ", placeholder = "åååå-mm-dd", min = DateTime.Today.ToString("yyyy-MM-dd") } })
         <span class="input-group-addon">till</span>
@@ -39,7 +38,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.StartTime, "Tidsspann(Starttid-Sluttid)", htmlAttributes: new { @class = "control-label" })
+    @Html.LabelFor(model => model.StartTime, "Tidsspann (Starttid - Sluttid)", htmlAttributes: new { @class = "control-label" })
     <div class="input-daterange input-group">
         @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control timepicker", placeholder = "HH:mm" } })
         <span class="input-group-addon">till</span>
