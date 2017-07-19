@@ -28,8 +28,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
 
         [Required]
         [Display(Name = "Starttid")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
-        public DateTime StartTime { get; set; }
+        public string StartTime { get; set; }
 
         [Required]
         [Display(Name = "Slutdatum")]
@@ -37,14 +36,20 @@ namespace BAPA_LMS.Models.ActivityViewModels
         public DateTime EndDate { get; set; }
 
         [Required]
-        [Display(Name = "Sluttid")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
-        public DateTime EndTime { get; set; }
+        [Display(Name = "Sluttid")]        
+        public string EndTime { get; set; }
 
         [Required]
         [Display(Name = "Typ av aktivitet")]
-        public ActivityType Type { get; set; }
-        public IEnumerable<ActivityType> Types { get; set; }
+        public int Type { get; set; }
+
+        public List<ActivityType> Types { get; set; }
+
+        public ActivityEditViewModel()
+        {
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
+        }
 
         public static implicit operator ActivityEditViewModel(Activity model)
         {
@@ -53,10 +58,10 @@ namespace BAPA_LMS.Models.ActivityViewModels
                 Id = model.Id,
                 Description = model.Description,
                 StartDate = model.StartTime,
-                StartTime = model.StartTime,
+                StartTime = model.StartTime.ToString("HH:mm"),
                 EndDate = model.EndTime,
-                EndTime = model.EndTime,
-                Type = model.Type
+                EndTime = model.EndTime.ToString("HH:mm"),
+                Type = model.Type.Id
             };
 
         }
