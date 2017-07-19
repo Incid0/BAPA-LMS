@@ -26,7 +26,7 @@
 					<p>Vill du radera {0} {1} permanent?</p>
 				</div>
 				<div class="modal-footer">
-					<button data-courseId="1" type="button" class="btn btn-danger subDel" value="Delete" data-dismiss="modal">Radera</button>
+					<button Id="delBtn" data-id="1" type="button" class="btn btn-danger subDel" value="Delete" data-dismiss="modal">Radera</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Tillbaka</button>
 				</div>
 			</div>
@@ -75,18 +75,22 @@
 		</script>*@
 	<script>
 		$(document).ready(function () {
-			$('subDel').on('click', 'button', function (event) {
+			$('.subDel').on('click', function (event) {
 				event.preventDefault();
-				var form = $(this);
-				console.log(form);
-				$.ajax(@Url.Action("DeleteConfirmed", "Courses")			//'/Courses/DeleteConfirmed'
+				var Id = $(this).data('id');			
+				$.ajax('/Courses/Delete',
 					{
 						type: 'POST',
-						data: form.serialize(),
-						success: function (result) { alert("Success"); }
+						data: { 'Id': Id }
+					})
+					.done(function () {
+						alert("Success!")
+					})
+					.fail(function (e) {
+						alert(e.responseText)
 					})
 					
+				})
 			})
-		})
 	</script>
 }

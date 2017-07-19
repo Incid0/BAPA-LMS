@@ -162,33 +162,29 @@ namespace BAPA_LMS.Controllers
 
 		// POST: Courses/Delete/5
 		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
+		//[ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult DeleteConfirmed(int Id)
+        public ActionResult DeleteConfirmed(string Id)
 		{
 			try
 			{
-				Course course = db.Courses.Find(Id);
+				int NumberId = int.Parse(Id); // Remember to remove if you remove the Ajax Request
+				Course course = db.Courses.Find(NumberId);
 				db.Courses.Remove(course);
 				db.SaveChanges();				
 			}
 			catch (RetryLimitExceededException)
 			{
-				// Log errors here				
+				// Log errors here
 				TempData["alert"] = "danger|Det gick inte att ta bort kursen!";
 			}
 			return RedirectToAction("Index");
 		}
 
 		//Experimental controller and fuctions
-		public ActionResult TestingDelete(int Id = 1)
+		public ActionResult TestingDelete(int Id)
 		{
 			return View();
-		}
-
-		public class TestingDeleteDto
-		{
-			public int CourseId { get; set; }
 		}
 
 		protected override void Dispose(bool disposing)
