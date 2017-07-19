@@ -1,4 +1,6 @@
 ﻿var teacher = (function ($) {
+    function treeNodeSelect(event, node) {
+    };
 
     return {
         init: function () {
@@ -13,6 +15,11 @@
                 $(this).removeData('bs.modal').children('.modal-content').html('');
             });
 
+            // Setting MaxLength automatically according to MVC StringLength
+            $('input[data-val-length-max]').each(function (idx, element) {
+                element.setAttribute('maxlength', element.getAttribute('data-val-length-max'));
+            });
+
             // Initializing DatePicker
             $.fn.datepicker.defaults.weekStart = 1;
             $.fn.datepicker.defaults.language = "sv";
@@ -21,6 +28,15 @@
 
             // Initializing TimePicker
             $('.timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
+
+            // Initializing TreeView
+            var tree = $('#tree');
+            if (tree.length) {
+                $.getJSON('/Courses/GetTree/' + tree.data('id'), function (result) {
+                    tree.treeview({ data: [result] });
+                    tree.on('nodeSelected', treeNodeSelect);
+                });
+            }
         }
     };
 })(jQuery);

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<BAPA_LMS.Models.CourseViewModels.CourseListViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>
+                Moduler för för @Html.DisplayNameFor(model => model.Name)
+            </h4>
+        </div>
+        <table class="table table-fixed">
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="col-xs-12"><a href="@Url.Action("CourseEdit","Teacher",new {id=item.Id })">@Html.DisplayFor(modelItem => item.Name)</a></td>
+                </tr>
+            }
+
+
+        </table>
+        
+    </div>
+    @Html.ActionLink("Lägg till lärare", "RegisterTeacher")
+</div>
