@@ -46,9 +46,14 @@ namespace BAPA_LMS.Controllers
 
 		// GET: Activities/Create
 		[Authorize(Roles = "Admin")]
-		public ActionResult Create()
+		public ActionResult Create(int id)
 		{
-			return View();
+             var viewModel = new ActivityEditViewModel
+            {
+                Types = db.ActivityTypes.ToList()
+            };
+            Session["moduleid"] = id;
+            return View(viewModel);
 		}
 
 		// POST: Activities/Create
@@ -57,16 +62,20 @@ namespace BAPA_LMS.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles = "Admin")]
-		public ActionResult Create(ActivityCreateViewModel adcm)
+		public ActionResult Create(ActivityEditViewModel aevm)
 		{
 			try
 			{
 				if (ModelState.IsValid)
 				{
 					Activity newActivity = new Activity();
-					if (TryUpdateModel(newActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime", "Type" }))
+					if (TryUpdateModel(newActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime"  }))
 					{
-						db.Activities.Add(newActivity);
+                        newActivity.ModuleId = (int)Session["moduleid"];
+                        newActivity.TypeId = aevm.Type;
+                        newActivity.StartTime = aevm.StartDate.Date + newActivity.StartTime.TimeOfDay;
+                        newActivity.EndTime = aevm.EndDate.Date + newActivity.EndTime.TimeOfDay;
+                        db.Activities.Add(newActivity);
 						db.SaveChanges();
 						TempData["alert"] = "success|Aktiviteten är tillagd!";
 					}
@@ -81,25 +90,28 @@ namespace BAPA_LMS.Controllers
 				ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
 				TempData["alert"] = "danger|Allvarligt fel!";
 			}
-
-			return View(adcm);
+            aevm.Types = db.ActivityTypes.ToList();
+			return View(aevm);
 		}
 
 		// GET: Activities/Edit/5
 		[Authorize(Roles = "Admin")]
 		public ActionResult Edit(int? id)
-		{
+		{            
 			if (id == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
+
 			Activity activity = db.Activities.Find(id);
+
 			if (activity == null)
 			{
 				return HttpNotFound();
 			}
 			ActivityEditViewModel aevm = activity;
 			HttpContext.Session["activityid"] = id;
+            aevm.Types = db.ActivityTypes.ToList();
 			return View(aevm);
 		}
 

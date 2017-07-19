@@ -1,0 +1,79 @@
+﻿@model BAPA_LMS.Models.ActivityViewModels.ActivityEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.Type, new SelectList(Model.Types, "Id", "Name"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate, "Datumspann (Startdatum - Slutdatum)", htmlAttributes: new { @class = "control-label" })
+            <div class="input-daterange input-group " data-provide="datepicker" data-date-start-date="0d">
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control ", placeholder = "åååå-mm-dd", min = DateTime.Today.ToString("yyyy-MM-dd") } })
+                <span class="input-group-addon">till</span>
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd" } })
+            </div>
+            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartTime, "Tidsspann (Starttid - Sluttid)", htmlAttributes: new { @class = "control -label" })
+            <div class="input-daterange input-group">
+                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control timepicker" } })
+                <span class="input-group-addon">till</span>
+                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control timepicker" } })
+            </div>
+            @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "4" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

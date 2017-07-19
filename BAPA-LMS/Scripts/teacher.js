@@ -37,10 +37,10 @@
             });
 
             // Initializing DatePicker
-            $.fn.datepicker.weekStart = 1;
-            $.fn.datepicker.language = "sv";
-            $.fn.datepicker.calendarWeeks = true;
-            $.fn.datepicker.todayHighlight = true;
+            $.fn.datepicker.defaults.weekStart = 1;
+            $.fn.datepicker.defaults.language = "sv";
+            $.fn.datepicker.defaults.calendarWeeks = true;
+            $.fn.datepicker.defaults.todayHighlight = true;
 
             // Initializing TimePicker
             $('.timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
