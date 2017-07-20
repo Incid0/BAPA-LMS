@@ -1,19 +1,19 @@
 ﻿@model BAPA_LMS.Models.ModuleViewModels.ModuleEditViewModel
 
-@{
-    ViewBag.Title = "Edit";
-}
+<h4>Skapa ny modul</h4>
 
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
+@using (Ajax.BeginForm(null, null,
+    new AjaxOptions
+    {
+        HttpMethod = "post",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "editarea"
+    }, new { id = "formEdit" }))
 {
     @Html.AntiForgeryToken()
-    
+    @Html.Hidden("result", TempData["alert"], new { id = "formResult" })
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
@@ -21,34 +21,27 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "4" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.StartDate, "Datumspann (Startdatum - Slutdatum)", htmlAttributes: new { @class = "control-label" })
             <div class="input-daterange input-group " data-provide="datepicker" data-date-start-date="0d">
                 @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control ", placeholder = "åååå-mm-dd", min = DateTime.Today.ToString("yyyy-MM-dd") } })
                 <span class="input-group-addon">till</span>
+
                 @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd" } })
             </div>
             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
             @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>
 
-        
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "4" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+                <input type="submit" value="Skapa modul" id="btnSave" class="btn btn-primary" />
         </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<script>
+    teacher.initForm();
+</script>

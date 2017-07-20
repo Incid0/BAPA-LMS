@@ -1,5 +1,4 @@
 ﻿var teacher = (function ($) {
-    var lastModule = 0;
     var alertbox;
     var tree;
 
@@ -18,9 +17,6 @@
         return tree.treeview('getEnabled').find(function (node) {
             return node.id === id;
         });
-        //for (var i = 0; i < nodes.length; i++) {
-//            if (nodes[i].id === id) return (nodes[i]);
-  //      };
     }
 
     function loadTree(id) {
@@ -42,32 +38,37 @@
 
     function treeNodeSelect(event, node) {
         var index = node.id, ctrl = index[0], id = index.substr(1);
+        var btnA = $('#btnActivity'), btnM = $('#btnModule');
         // Limit activity creation to modules and activities
-        $('#btnActivity').prop('disabled', (ctrl === 'c'));
+        btnA.prop('disabled', (ctrl === 'c'));
 
         if (ctrl === 'a') {
             ctrl = 'activities';
-            lastModule = $('#tree').treeview('getParent', node).id.substr(1);
+            btnA.data('parent', tree.treeview('getParent', node).id.substr(1));
         }
         else if (ctrl === 'm') {
             ctrl = 'modules';
-            lastModule = id;
+            btnA.data('parent', id);
+            btnM.data('parent', tree.treeview('getParent', node).id.substr(1));
         }
-        else if (ctrl === 'c') ctrl = 'courses'
+        else if (ctrl === 'c') {
+            ctrl = 'courses'
+            btnM.data('parent', id);
+        }
         else ctrl = '';
         if (ctrl !== '') changeEditor('edit', ctrl, id);
     };
 
     function changeEditor(action, ctrl, id) {
         var url = '/' + ctrl + '/' + action + '/' + (id ? id : '');
-        $.get(url,
-            function (view) {
-                $('#editarea').html(view);
-            });
+        $.get(url, function (view) {
+            $('#editarea').html(view);
+        });
     }
 
     function createAction() {
-        changeEditor('create', $(this).data('controller'), lastModule);
+        var btn = $(this);
+        changeEditor('create', btn.data('controller'), btn.data('parent'));
     }
 
     return {
@@ -129,7 +130,6 @@
                 localAlert(data[1], data[0]);
                 if (data[0] === 'success') {
                     loadTree(data[2]);
-                    //$('#modalContainer').modal('hide');
                 }
             }
             input.remove();

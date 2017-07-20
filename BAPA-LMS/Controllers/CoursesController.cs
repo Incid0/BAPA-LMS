@@ -187,7 +187,7 @@ namespace BAPA_LMS.Controllers
 			Course course = db.Courses.Find(id);
 
 			var actArray = new {
-				id = "c" + course.Id,
+				id = "c" + course.Id.Encode(),
 				text = course.Name,
 				icon = "glyphicon glyphicon-home",
 				nodes = (course.Modules.Select(m => new {

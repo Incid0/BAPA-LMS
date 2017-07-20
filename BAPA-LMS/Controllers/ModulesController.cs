@@ -10,6 +10,7 @@ using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ModuleViewModels;
 using System.Data.Entity.Infrastructure;
+using BAPA_LMS.Models;
 
 namespace BAPA_LMS.Controllers
 {
@@ -33,7 +34,7 @@ namespace BAPA_LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            Module module = db.Modules.Find(id?.Decode());
             if (module == null)
             {
                 return HttpNotFound();
@@ -44,9 +45,20 @@ namespace BAPA_LMS.Controllers
 
         // GET: Modules/Create
         [Authorize(Roles = "Admin")]
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            return View();
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Find(id?.Decode());
+			if (course == null)
+			{
+				return HttpNotFound();
+			}
+			ModuleEditViewModel mevm = new ModuleEditViewModel();
+			Session["courseid"] = course.Id;
+			return PartialView("_Create", mevm);
         }
 
         // POST: Modules/Create
@@ -55,19 +67,24 @@ namespace BAPA_LMS.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create(ModuleEditViewModel mevm)
         {
-            try
-            {
+			string returnView = "_Create";
+			try
+			{
                 if (ModelState.IsValid)
                 {
                     Module newModule = new Module();
                     // Match up fieldnames and update the model.
                     if(TryUpdateModel(newModule, "", new string[] { "Name", "Description", "StartDate", "EndDate" }))
                     {
-                        db.Modules.Add(newModule);
+						newModule.CourseId = (int)Session["courseid"];
+						db.Modules.Add(newModule);
                         db.SaveChanges();
-                        TempData["alert"] = "success|Modulen är tillagd!";
-                    }
-                    else
+						mevm = newModule; // ModuleEditViewModel
+						Session["moduleid"] = newModule.Id;
+						TempData["alert"] = "success|Modulen är tillagd!|m" + newModule.Id.Encode();
+						returnView = "_Edit";
+					}
+					else
                     {
                         TempData["alert"] = "danger|Kunde inte lägga till modul!";
                     }
@@ -80,7 +97,7 @@ namespace BAPA_LMS.Controllers
                 ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
                 TempData["alert"] = "danger|Allvarligt fel!";
             }            
-            return View(mevm);
+            return PartialView(returnView, mevm);
         }
 
         // GET: Modules/Edit/5
@@ -91,39 +108,38 @@ namespace BAPA_LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
+            Module module = db.Modules.Find(id?.Decode());
             if (module == null)
             {
                 return HttpNotFound();
             }
             ModuleEditViewModel mevm = module;
-            HttpContext.Session["moduleid"] = id;
-            return View(mevm);
+            Session["moduleid"] = module.Id;
+            return PartialView("_Edit", mevm);
         }
 
         // POST: Modules/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit()
+        public ActionResult Edit(ModuleEditViewModel mevm)
         {
-            int? id = (int?)HttpContext.Session["moduleid"];
+            int? id = (int?)Session["moduleid"];
             if(id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module updatedModule = null;
             if (ModelState.IsValid)
             {
-                updatedModule = db.Modules.Find(id);
+				Module updatedModule = db.Modules.Find(id);
                 // Match up fieldnames and update the model.
-                if(id != null && TryUpdateModel(updatedModule, "", new string[] { "Name", "Description", "StartDate", "EndDate" }))
+                if(updatedModule != null && TryUpdateModel(updatedModule, "", new string[] { "Name", "Description", "StartDate", "EndDate" }))
                 {
                     try
                     {
                         db.SaveChanges();
-                        TempData["alert"] = "success|Modulen är uppdaterad!";
-                        return RedirectToAction("Index");
+						mevm = updatedModule; // ModuleEditViewModel
+						TempData["alert"] = "success|Modulen är uppdaterad!|m" + updatedModule.Id.Encode();
                     }
                     catch (RetryLimitExceededException)
                     {
@@ -137,7 +153,7 @@ namespace BAPA_LMS.Controllers
                     TempData["alert"] = "danger|Kunde inte uppdatera modulen";
                 }
             }
-            return View((ModuleEditViewModel)updatedModule);
+            return PartialView("_Edit", mevm);
         }
 
         // GET: Modules/Delete/5
