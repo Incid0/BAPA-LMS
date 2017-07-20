@@ -30,6 +30,7 @@
                 if (node) {
                     tree.treeview('selectNode', [node, { silent: true }]);
                     tree.treeview('revealNode', [node, { silent: true }]);
+                    $('html, body').scrollTop(tree.find('.node-selected').offset().top - $('.navbar').height());
                 }
             }
             tree.on('nodeSelected', treeNodeSelect);
