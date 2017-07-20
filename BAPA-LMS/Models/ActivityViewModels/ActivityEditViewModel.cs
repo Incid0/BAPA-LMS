@@ -56,6 +56,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
             return new ActivityEditViewModel
             {
                 Id = model.Id,
+				Name = model.Name,
                 Description = model.Description,
                 StartDate = model.StartTime,
                 StartTime = model.StartTime.ToString("HH:mm"),

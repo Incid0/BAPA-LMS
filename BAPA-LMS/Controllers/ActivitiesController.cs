@@ -103,23 +103,23 @@ namespace BAPA_LMS.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			Activity activity = db.Activities.Find(id);
+			Activity activity = db.Activities.Find(((int)id).Decode());
 
 			if (activity == null)
 			{
 				return HttpNotFound();
 			}
 			ActivityEditViewModel aevm = activity;
-			HttpContext.Session["activityid"] = id;
+			HttpContext.Session["activityid"] = activity.Id;
             aevm.Types = db.ActivityTypes.ToList();
-			return View(aevm);
+			return PartialView("_Edit", aevm);
 		}
 
 		// POST: Activities/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles = "Admin")]
-		public ActionResult Edit()
+		public ActionResult Edit(ActivityEditViewModel aevm)
 		{
 			int? id = (int?)HttpContext.Session["activityid"];
 			if (id == null)
@@ -130,13 +130,16 @@ namespace BAPA_LMS.Controllers
 			if (ModelState.IsValid)
 			{
 				updatedActivity = db.Activities.Find(id);
-				if (id != null && TryUpdateModel(updatedActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime", "Type" }))
+				if (updatedActivity != null && TryUpdateModel(updatedActivity, "", new string[] { "Name", "Description", "StartTime", "EndTime" }))
 				{
 					try
 					{
+						updatedActivity.TypeId = aevm.Type;
+						updatedActivity.StartTime = aevm.StartDate.Date + updatedActivity.StartTime.TimeOfDay;
+						updatedActivity.EndTime = aevm.EndDate.Date + updatedActivity.EndTime.TimeOfDay;
 						db.SaveChanges();
+						aevm = (ActivityEditViewModel)updatedActivity;
 						TempData["alert"] = "success|Aktiviteten är uppdaterad!";
-						return RedirectToAction("Index");
 					}
 					catch (RetryLimitExceededException)
 					{
@@ -149,7 +152,8 @@ namespace BAPA_LMS.Controllers
 					TempData["alert"] = "danger|Kunde inte uppdatera aktiviteten!";
 				}
 			}
-			return View((ActivityEditViewModel)updatedActivity);
+			aevm.Types = db.ActivityTypes.ToList();
+			return PartialView("_Edit", aevm);
 		}
 
 		// GET: Activities/Delete/5

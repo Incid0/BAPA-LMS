@@ -1,32 +1,30 @@
 ﻿var teacher = (function ($) {
     var lastModule = 0;
     function treeNodeSelect(event, node) {
-        var index = node.id, type = index[0], id = index.substr(1);
-        // Limit activity creation
-        $('#btnAddActivity').prop('disabled', (type === 'c'));
+        var index = node.id, ctrl = index[0], id = index.substr(1);
+        // Limit activity creation to modules and activities
+        $('#btnAddActivity').prop('disabled', (ctrl === 'c'));
 
-        if (type === 'a') type = 'activities'
-        else if (type === 'm') {
-            type = 'modules';
+        if (ctrl === 'a') ctrl = 'activities'
+        else if (ctrl === 'm') {
+            ctrl = 'modules';
             lastModule = id;
         }
-        else if (type === 'c') type = 'courses'
-        else type = '';
-        if (type !== '') {
-            $.ajax({
-                type: 'GET',
-                url: '/' + type + '/details/' + id,
-                success: changeEditor
-            });
-        }
+        else if (ctrl === 'c') ctrl = 'courses'
+        else ctrl = '';
+        if (ctrl !== '') changeEditor('edit', ctrl, id);
     };
 
-    function changeEditor(view) {
-        $('#editarea').html(view);
+    function changeEditor(action, ctrl, id) {
+        var url = '/' + ctrl + '/' + action + '/' + (id ? id : '');
+        $.get(url,
+            function (view) {
+                $('#editarea').html(view);
+            });
     }
 
     function addModule() {
-        $.get('/modules/create/' + lastModule, changeEditor);
+        changeEditor('create', 'modules', lastModule);
     }
 
     return {
@@ -64,7 +62,17 @@
                     tree.on('nodeSelected', treeNodeSelect);
                 });
             }
+        },
+        initForm: function () {
+            $.validator.unobtrusive.parse('#formEdit');
+            $('#btnSave').click(function () {
+                if (!$('#formEdit').valid()) {
+                    return false;
+                }
+            });
+            $('#formEdit .timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
         }
+
     };
 })(jQuery);
 
