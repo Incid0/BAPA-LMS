@@ -205,19 +205,21 @@
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
+    <Compile Include="Controllers\UploadDocumentController.cs" />
     <Compile Include="DataAccessLayer\LMSDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707191208529_init2.cs" />
-    <Compile Include="Migrations\201707191208529_init2.Designer.cs">
-      <DependentUpon>201707191208529_init2.cs</DependentUpon>
+    <Compile Include="Migrations\201707201234264_init.cs" />
+    <Compile Include="Migrations\201707201234264_init.Designer.cs">
+      <DependentUpon>201707201234264_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityCreateViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityDetailViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityEditViewModel.cs" />
+    <Compile Include="Models\ActivityViewModels\ActivityUploadViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseDetailViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseEditViewModel.cs" />
@@ -226,6 +228,7 @@
     <Compile Include="Models\DB\Activity.cs" />
     <Compile Include="Models\DB\ActivityType.cs" />
     <Compile Include="Models\DB\Course.cs" />
+    <Compile Include="Models\DB\FileDocument.cs" />
     <Compile Include="Models\DB\IdentityModels.cs" />
     <Compile Include="Models\DB\Module.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -423,6 +426,9 @@
     <Content Include="Views\Teacher\CourseEdit.cshtml" />
     <Content Include="Views\Teacher\RegisterTeacher.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\UploadDocument\ActivityUpload.cshtml" />
+    <Content Include="Views\UploadDocument\ActivityUploader.cshtml" />
+    <Content Include="Views\UploadDocument\ListDocuments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -435,6 +441,11 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>CustomDateMessages.Designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201707201234264_init.resx">
+      <DependentUpon>201707201234264_init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -16,7 +16,7 @@ namespace BAPA_LMS.Models.DB
         public int? CourseId { get; set; }
 
         public virtual Course Course { get; set; }
-
+         public virtual ICollection<FileDocument> Files { get; set; }
     
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

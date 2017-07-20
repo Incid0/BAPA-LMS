@@ -20,9 +20,11 @@ namespace BAPA_LMS.Models.DB
 		public DateTime EndTime { get; set; }
 		public int TypeId { get; set; }
 		public int ModuleId { get; set; }
+        public int? FileId { get; set; }
 
         public virtual ActivityType Type { get; set; }
 		public virtual Module Module { get; set; }
+     
   
   
     }
