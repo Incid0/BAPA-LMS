@@ -5,6 +5,8 @@ using BAPA_LMS.Models.DB;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
@@ -136,9 +138,39 @@ namespace BAPA_LMS.Controllers
 			// If we got this far, something failed, redisplay form
 			return View(model);
 		}
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser delObj = db.Users.SingleOrDefault(u => u.Id == id);
+            if (delObj == null)
+            {
+                return HttpNotFound();
+            }
+            return View(delObj);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]   
+        public ActionResult DeleteConfirmed(string id)
+        {
+            try
+            {
+                ApplicationUser delObj = db.Users.SingleOrDefault(u => u.Id == id);
+                db.Users.Remove(delObj);
+                db.SaveChanges();
+            }
+            catch (RetryLimitExceededException)
+            {
+                // Log errors here				
+                TempData["alert"] = "danger|Det gick inte att ta bort kursen!";
+            }
+            return RedirectToAction("KursInfo");
+        }
 
-		private void AddErrors(IdentityResult result)
+        private void AddErrors(IdentityResult result)
 		{
 			foreach (var error in result.Errors)
 			{

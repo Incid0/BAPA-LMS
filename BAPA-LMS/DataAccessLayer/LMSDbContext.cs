@@ -22,5 +22,7 @@ namespace BAPA_LMS.DataAccessLayer
 		{
 			return new LMSDbContext();
 		}
-	}
+
+     
+    }
 }
