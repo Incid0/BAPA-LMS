@@ -24,6 +24,7 @@ namespace BAPA_LMS.Controllers
 
         public object ModuleDetailViewModel { get; private set; }
 
+        [Authorize(Roles = "Member")]
         public ActionResult Index()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
@@ -33,6 +34,7 @@ namespace BAPA_LMS.Controllers
             return View(cdvm);
         }
 
+        [Authorize(Roles = "Member")]
         public ActionResult KursInfo()
         {
           

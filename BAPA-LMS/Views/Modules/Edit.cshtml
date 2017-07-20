@@ -34,6 +34,7 @@
                 @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd" } })
             </div>
             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>
 
         

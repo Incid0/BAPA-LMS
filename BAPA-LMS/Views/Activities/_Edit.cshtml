@@ -35,6 +35,7 @@
                 @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd" } })
             </div>
             @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
@@ -45,6 +46,7 @@
                 @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control timepicker" } })
             </div>
             @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
         </div>
 
         @*<div class="form-group">
