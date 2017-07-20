@@ -1,6 +1,7 @@
 ﻿var teacher = (function ($) {
     var lastModule = 0;
     var alertbox;
+    var tree;
 
     function localAlert(message, style) {
         var parent = alertbox.parent();
@@ -13,12 +14,41 @@
         }, 2000);
     }
 
+    function findNode(id) {
+        return tree.treeview('getEnabled').find(function (node) {
+            return node.id === id;
+        });
+        //for (var i = 0; i < nodes.length; i++) {
+//            if (nodes[i].id === id) return (nodes[i]);
+  //      };
+    }
+
+    function loadTree(id) {
+        $.getJSON('/Courses/GetTree/' + tree.data('id'), function (result) {
+            tree.treeview({
+                data: [result],
+                levels: 3
+            });
+            if (id) {
+                var node = findNode(id);
+                if (node) {
+                    tree.treeview('selectNode', [node, { silent: true }]);
+                    tree.treeview('revealNode', [node, { silent: true }]);
+                }
+            }
+            tree.on('nodeSelected', treeNodeSelect);
+        });
+    }
+
     function treeNodeSelect(event, node) {
         var index = node.id, ctrl = index[0], id = index.substr(1);
         // Limit activity creation to modules and activities
-        $('#btnAddActivity').prop('disabled', (ctrl === 'c'));
+        $('#btnActivity').prop('disabled', (ctrl === 'c'));
 
-        if (ctrl === 'a') ctrl = 'activities'
+        if (ctrl === 'a') {
+            ctrl = 'activities';
+            lastModule = $('#tree').treeview('getParent', node).id.substr(1);
+        }
         else if (ctrl === 'm') {
             ctrl = 'modules';
             lastModule = id;
@@ -36,8 +66,8 @@
             });
     }
 
-    function addModule() {
-        changeEditor('create', 'modules', lastModule);
+    function createAction() {
+        changeEditor('create', $(this).data('controller'), lastModule);
     }
 
     return {
@@ -54,6 +84,7 @@
             $('body').on('click', '.modal-close-btn', function () {
                 $('#modalContainer').modal('hide');
             });
+
             //clear modal cache, so that new content can be loaded and clear old content so it won't show before new
             $('#modalContainer').on('hidden.bs.modal', function () {
                 $(this).removeData('bs.modal').children('.modal-content').html('');
@@ -74,13 +105,13 @@
             $('.timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
 
             // Initializing TreeView
-            var tree = $('#tree');
+            tree = $('#tree');
             if (tree.length) {
-                $.getJSON('/Courses/GetTree/' + tree.data('id'), function (result) {
-                    tree.treeview({ data: [result] });
-                    tree.on('nodeSelected', treeNodeSelect);
-                });
+                loadTree();
             }
+
+            // Connecting buttons
+            $('button.add').on('click', createAction);
         },
         showAlert: function (message) {
             localAlert(message)
@@ -97,12 +128,15 @@
             if (result) {
                 localAlert(data[1], data[0]);
                 if (data[0] === 'success') {
-                    // refresh tree
+                    loadTree(data[2]);
                     //$('#modalContainer').modal('hide');
                 }
             }
+            input.remove();
+        },
+        debugTree: function (x) {
+            return findNode(x);
         }
-
     };
 })(jQuery);
 

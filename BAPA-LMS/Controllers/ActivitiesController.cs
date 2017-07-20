@@ -46,14 +46,21 @@ namespace BAPA_LMS.Controllers
 
 		// GET: Activities/Create
 		[Authorize(Roles = "Admin")]
-		public ActionResult Create(int id)
+		public ActionResult Create(int? id)
 		{
-             var viewModel = new ActivityEditViewModel
-            {
-                Types = db.ActivityTypes.ToList()
-            };
-            Session["moduleid"] = id;
-            return View(viewModel);
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Module module = db.Modules.Find(id?.Decode());
+			if (module == null)
+			{
+				return HttpNotFound();
+			}
+			ActivityEditViewModel aevm = new ActivityEditViewModel();
+            Session["moduleid"] = module.Id;
+			aevm.Types = db.ActivityTypes.ToList();
+			return PartialView("_Create", aevm);
 		}
 
 		// POST: Activities/Create
@@ -64,6 +71,7 @@ namespace BAPA_LMS.Controllers
 		[Authorize(Roles = "Admin")]
 		public ActionResult Create(ActivityEditViewModel aevm)
 		{
+			string returnView = "_Create";
 			try
 			{
 				if (ModelState.IsValid)
@@ -77,21 +85,24 @@ namespace BAPA_LMS.Controllers
                         newActivity.EndTime = aevm.EndDate.Date + newActivity.EndTime.TimeOfDay;
                         db.Activities.Add(newActivity);
 						db.SaveChanges();
-						TempData["alert"] = "success|Aktiviteten är tillagd!";
+						aevm = newActivity; // ActivityEditViewModel
+						Session["activityid"] = newActivity.Id;
+						TempData["alert"] = "success|Aktiviteten är tillagd!|a" + newActivity.Id.Encode();
+						returnView = "_Edit";
 					}
 					else
 					{
 						TempData["alert"] = "danger|Kunde inte lägga till aktivitet";
 					}
 				}
-			}
+ 			}
 			catch (DataException)
 			{
 				ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
 				TempData["alert"] = "danger|Allvarligt fel!";
 			}
-            aevm.Types = db.ActivityTypes.ToList();
-			return View(aevm);
+			aevm.Types = db.ActivityTypes.ToList();
+			return PartialView(returnView, aevm);
 		}
 
 		// GET: Activities/Edit/5
@@ -103,14 +114,14 @@ namespace BAPA_LMS.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			Activity activity = db.Activities.Find(((int)id).Decode());
+			Activity activity = db.Activities.Find(id?.Decode());
 
 			if (activity == null)
 			{
 				return HttpNotFound();
 			}
 			ActivityEditViewModel aevm = activity;
-			HttpContext.Session["activityid"] = activity.Id;
+			Session["activityid"] = activity.Id;
             aevm.Types = db.ActivityTypes.ToList();
 			return PartialView("_Edit", aevm);
 		}
@@ -138,8 +149,8 @@ namespace BAPA_LMS.Controllers
 						updatedActivity.StartTime = aevm.StartDate.Date + updatedActivity.StartTime.TimeOfDay;
 						updatedActivity.EndTime = aevm.EndDate.Date + updatedActivity.EndTime.TimeOfDay;
 						db.SaveChanges();
-						aevm = (ActivityEditViewModel)updatedActivity;
-						TempData["alert"] = "success|Aktiviteten är uppdaterad!";
+						aevm = updatedActivity; // ActivityEditViewModel
+						TempData["alert"] = "success|Aktiviteten är uppdaterad!|a" + updatedActivity.Id.Encode();
 					}
 					catch (RetryLimitExceededException)
 					{
