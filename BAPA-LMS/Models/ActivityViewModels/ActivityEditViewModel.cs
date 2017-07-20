@@ -64,7 +64,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
                 StartTime = model.StartTime.ToString("HH:mm"),
                 EndDate = model.EndTime,
                 EndTime = model.EndTime.ToString("HH:mm"),
-                Type = model.Type.Id
+                Type = model.TypeId
             };
 
         }
