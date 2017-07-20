@@ -191,7 +191,7 @@ namespace BAPA_LMS.Controllers
 				text = course.Name,
 				icon = "glyphicon glyphicon-home",
 				nodes = (course.Modules.Select(m => new {
-					id = "m" + m.Id,
+					id = "m" + m.Id.Encode(),
 					text = m.Name,
 					icon = "glyphicon glyphicon-book",
 					nodes = (m.Activities.Select(a => new

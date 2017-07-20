@@ -14,10 +14,10 @@
 
         </div>
         <div class="buttonbar">
-            <button id="btnAddModule" class="btn btn-default">Skapa modul</button>
-            <button id="btnAddActivity" class="btn btn-default">Skapa aktivitet</button>
+            @Html.ActionLink("Lägg till kursdeltagare", "Register", new { id = Model.Id }, new { @class = "btn btn-default" })
+            <button class="btn btn-default add" data-controller="modules">Ny modul</button>
+            <button id="btnActivity" class="btn btn-default add" data-controller="activities" disabled="disabled">Ny aktivitet</button>
             <button id="btnDel" class="btn btn-default" href="">Ta bort</button>
         </div>
-    </div>  
-    @Html.ActionLink("Lägg till kursdeltagare", "Register", new { id = Model.Id})
+    </div>
 </div>
