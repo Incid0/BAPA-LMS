@@ -190,11 +190,11 @@ namespace BAPA_LMS.Controllers
 				id = "c" + course.Id.Encode(),
 				text = course.Name,
 				icon = "glyphicon glyphicon-home",
-				nodes = (course.Modules.Select(m => new {
+				nodes = (course.Modules.OrderBy(m => m.StartDate).Select(m => new {
 					id = "m" + m.Id.Encode(),
 					text = m.Name,
 					icon = "glyphicon glyphicon-book",
-					nodes = (m.Activities.Select(a => new
+					nodes = (m.Activities.OrderBy(a => a.StartTime).Select(a => new
 					{
 						id = "a" + a.Id.Encode(),
 						text = a.Name,
