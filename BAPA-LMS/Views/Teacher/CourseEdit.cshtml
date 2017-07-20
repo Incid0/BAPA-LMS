@@ -9,8 +9,15 @@
     <div id="tree" data-id="@Model.Id" class="col-md-4">
 
     </div>
-    <div id="editarea" class="col-md-8">
+    <div class="col-md-8">
+        <div id="editarea">
 
-    </div>
+        </div>
+        <div class="buttonbar">
+            <button id="btnAddModule" class="btn btn-default">Skapa modul</button>
+            <button id="btnAddActivity" class="btn btn-default">Skapa aktivitet</button>
+            <button id="btnDel" class="btn btn-default" href="">Ta bort</button>
+        </div>
+    </div>  
     @Html.ActionLink("Lägg till kursdeltagare", "Register", new { id = Model.Id})
 </div>

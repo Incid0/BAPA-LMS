@@ -411,7 +411,7 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\AktivitetsInfo.cshtml" />
     <Content Include="Views\Activities\Create.cshtml" />
-    <Content Include="Views\Activities\Edit.cshtml" />
+    <Content Include="Views\Activities\_Edit.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Modules\Create.cshtml" />
