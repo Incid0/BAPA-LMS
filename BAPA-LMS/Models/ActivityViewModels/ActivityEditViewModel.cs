@@ -27,18 +27,20 @@ namespace BAPA_LMS.Models.ActivityViewModels
         public DateTime StartDate { get; set; }
 
         [Required]
-        [Display(Name = "Starttid")]
-        public string StartTime { get; set; }
-
-        [Required]
         [Display(Name = "Slutdatum")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         [Required]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "Fel tidsformat (hh:mm)")]
+        [Display(Name = "Starttid")]
+        public string StartTime { get; set; }
+
+        [Required]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "Fel tidsformat (hh:mm)")]
         [Display(Name = "Sluttid")]        
         public string EndTime { get; set; }
-
+        
         [Required]
         [Display(Name = "Typ av aktivitet")]
         public int Type { get; set; }
@@ -56,12 +58,13 @@ namespace BAPA_LMS.Models.ActivityViewModels
             return new ActivityEditViewModel
             {
                 Id = model.Id,
+				Name = model.Name,
                 Description = model.Description,
                 StartDate = model.StartTime,
                 StartTime = model.StartTime.ToString("HH:mm"),
                 EndDate = model.EndTime,
                 EndTime = model.EndTime.ToString("HH:mm"),
-                Type = model.Type.Id
+                Type = model.TypeId
             };
 
         }

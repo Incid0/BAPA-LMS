@@ -10,6 +10,7 @@ using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.CourseViewModels;
 using System.Data.Entity.Infrastructure;
+using BAPA_LMS.Models;
 
 namespace BAPA_LMS.Controllers
 {
@@ -190,12 +191,12 @@ namespace BAPA_LMS.Controllers
 				text = course.Name,
 				icon = "glyphicon glyphicon-home",
 				nodes = (course.Modules.Select(m => new {
-					id = "m" + m.Id,
+					id = "m" + m.Id.Encode(),
 					text = m.Name,
 					icon = "glyphicon glyphicon-book",
 					nodes = (m.Activities.Select(a => new
 					{
-						id = "a" + a.Id,
+						id = "a" + a.Id.Encode(),
 						text = a.Name,
 						icon = "glyphicon glyphicon-wrench"
 					}))

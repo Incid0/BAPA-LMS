@@ -56,9 +56,9 @@ namespace BAPA_LMS
             {
                 RequiredLength = 6,
                 RequireNonLetterOrDigit = false,                
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             // Configure user lockout defaults

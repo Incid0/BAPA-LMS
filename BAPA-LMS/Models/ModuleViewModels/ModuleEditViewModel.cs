@@ -22,7 +22,7 @@ namespace BAPA_LMS.Models.ModuleViewModels
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Tidsspan")]
+        [Display(Name = "Startdatum")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
