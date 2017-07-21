@@ -1,4 +1,5 @@
-﻿using BAPA_LMS.DataAccessLayer;
+﻿using BAPA_LMS;
+using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models;
 using BAPA_LMS.Models.ActivityViewModels;
 using BAPA_LMS.Models.CourseViewModels;
@@ -9,6 +10,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Runtime.Remoting.Contexts;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 
@@ -24,29 +30,29 @@ namespace BAPA_LMS.Controllers
 
         public object ModuleDetailViewModel { get; private set; }
 
-        [Authorize(Roles = "Member")]
+     
         public ActionResult Index()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
-         
+
             Course course = db.Courses.Find(currentUser.CourseId);
             CourseIndexViewModel cdvm = course;
             return View(cdvm);
         }
 
-        [Authorize(Roles = "Member")]
+    
         public ActionResult KursInfo()
         {
-          
+
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
 
             Course course = db.Courses.Find(currentUser.CourseId);
-            if(course == null)
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            CourseDetailViewModel cdvm = course; 
-            
+            CourseDetailViewModel cdvm = course;
+
             return View(cdvm);
         }
         public ActionResult ModulInfo()
@@ -80,6 +86,9 @@ namespace BAPA_LMS.Controllers
             }
             return View(activityList);
         }
+
+
+
 
         protected override void Dispose(bool disposing)
         {
