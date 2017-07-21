@@ -60,6 +60,8 @@ namespace BAPA_LMS.Controllers
 			ActivityEditViewModel aevm = new ActivityEditViewModel();
             Session["moduleid"] = module.Id;
 			aevm.Types = db.ActivityTypes.ToList();
+			aevm.ModuleStartDate = module.StartDate.ToString("yyyy-MM-dd");
+			aevm.ModuleEndDate = module.EndDate.ToString("yyyy-MM-dd");
 			return PartialView("_Create", aevm);
 		}
 
@@ -123,6 +125,8 @@ namespace BAPA_LMS.Controllers
 			ActivityEditViewModel aevm = activity;
 			Session["activityid"] = activity.Id;
             aevm.Types = db.ActivityTypes.ToList();
+			aevm.ModuleStartDate = activity.Module.StartDate.ToString("yyyy-MM-dd");
+			aevm.ModuleEndDate = activity.Module.EndDate.ToString("yyyy-MM-dd");
 			return PartialView("_Edit", aevm);
 		}
 

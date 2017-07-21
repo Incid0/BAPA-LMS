@@ -58,6 +58,7 @@ namespace BAPA_LMS.Controllers
 			}
 			ModuleEditViewModel mevm = new ModuleEditViewModel();
 			Session["courseid"] = course.Id;
+			mevm.CourseStartDate = course.StartDate.ToString("yyyy-MM-dd");
 			return PartialView("_Create", mevm);
         }
 
@@ -115,6 +116,7 @@ namespace BAPA_LMS.Controllers
             }
             ModuleEditViewModel mevm = module;
             Session["moduleid"] = module.Id;
+			mevm.CourseStartDate = module.Course.StartDate.ToString("yyyy-MM-dd");
             return PartialView("_Edit", mevm);
         }
 
