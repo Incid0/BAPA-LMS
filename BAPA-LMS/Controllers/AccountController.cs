@@ -62,7 +62,7 @@ namespace BAPA_LMS.Controllers
             {
                 if (User.IsInRole("Admin"))
                 {
-                    return RedirectToAction("Index", "Manage");
+                    return RedirectToAction("Index", "Teacher");
                 }
                 return RedirectToAction("Index", "Student");
             }

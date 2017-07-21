@@ -22,6 +22,17 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Haxxored alertviewer on top*/
+body > div.alert {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000
+}
+
 .course-modules {
     height: 220px;
     width: 580px;
@@ -33,11 +44,10 @@ textarea {
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
     display: block;
 }
-
-    .table-fixed tbody td, .table-fixed thead > tr > th {
-        float: left;
-        border-bottom-width: 0;
-    }
+.table-fixed tbody td, .table-fixed thead > tr > th {
+    float: left;
+    border-bottom-width: 0;
+}
 .no-padding{
     padding-left:0px !important;
     padding-right:0px !important;

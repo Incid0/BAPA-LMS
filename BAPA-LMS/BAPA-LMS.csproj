@@ -210,9 +210,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707201502129_init.cs" />
-    <Compile Include="Migrations\201707201502129_init.Designer.cs">
-      <DependentUpon>201707201502129_init.cs</DependentUpon>
+    <Compile Include="Migrations\201707202312430_init.cs" />
+    <Compile Include="Migrations\201707202312430_init.Designer.cs">
+      <DependentUpon>201707202312430_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -417,8 +417,8 @@
     <Content Include="Views\Student\ModulInfo.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\AktivitetsInfo.cshtml" />
-    <Content Include="Views\Activities\Create.cshtml" />
-    <Content Include="Views\Activities\Edit.cshtml" />
+    <Content Include="Views\Activities\_Create.cshtml" />
+    <Content Include="Views\Activities\_Edit.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Modules\Create.cshtml" />
@@ -429,6 +429,8 @@
     <Content Include="Views\UploadDocument\ActivityUpload.cshtml" />
     <Content Include="Views\UploadDocument\ActivityUploader.cshtml" />
     <Content Include="Views\UploadDocument\ListDocuments.cshtml" />
+    <Content Include="Views\Teacher\Delete.cshtml" />
+    <Content Include="Views\Teacher\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -443,8 +445,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707201502129_init.resx">
-      <DependentUpon>201707201502129_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707202312430_init.resx">
+      <DependentUpon>201707202312430_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
