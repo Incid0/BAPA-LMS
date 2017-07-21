@@ -217,6 +217,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityCreateViewModel.cs" />
+    <Compile Include="Models\ActivityViewModels\ActivityDeleteViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityDetailViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityEditViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityUploadViewModel.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Models\DB\Module.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModelExtensions.cs" />
+    <Compile Include="Models\ModuleViewModels\ModuleDeleteViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleCreateViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleDetailViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleEditViewModel.cs" />
@@ -421,8 +423,8 @@
     <Content Include="Views\Activities\_Edit.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
-    <Content Include="Views\Modules\Create.cshtml" />
-    <Content Include="Views\Modules\Edit.cshtml" />
+    <Content Include="Views\Modules\_Create.cshtml" />
+    <Content Include="Views\Modules\_Edit.cshtml" />
     <Content Include="Views\Teacher\CourseEdit.cshtml" />
     <Content Include="Views\Teacher\RegisterTeacher.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
@@ -431,6 +433,8 @@
     <Content Include="Views\UploadDocument\ListDocuments.cshtml" />
     <Content Include="Views\Teacher\Delete.cshtml" />
     <Content Include="Views\Teacher\Register.cshtml" />
+    <Content Include="Views\Activities\_Delete.cshtml" />
+    <Content Include="Views\Modules\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -443,11 +447,6 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>CustomDateMessages.Designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707202312430_init.resx">
-      <DependentUpon>201707202312430_init.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

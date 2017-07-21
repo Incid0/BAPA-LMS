@@ -23,8 +23,8 @@ namespace BAPA_LMS.Migrations
 			int i;
 
 			context.ActivityTypes.AddOrUpdate(
-				new ActivityType { Id = 1, Name = "E-Learning", Color = "DarkRed", Submit = false },
-				new ActivityType { Id = 2, Name = "Föreläsning", Color = "DarkGreen", Submit = false },
+				new ActivityType { Id = 1, Name = "E-Learning", Color = "DeepPink", Submit = false },
+				new ActivityType { Id = 2, Name = "Föreläsning", Color = "MediumTurquoise", Submit = false },
 				new ActivityType { Id = 3, Name = "Inlämningsuppgift", Color = "Orange", Submit = true },
 				new ActivityType { Id = 4, Name = "Övningstillfälle", Color = "DarkBlue", Submit = false },
 				new ActivityType { Id = 5, Name = "Annat", Color = "Purple", Submit = false });

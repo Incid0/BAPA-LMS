@@ -31,9 +31,15 @@ namespace BAPA_LMS.Models.ModuleViewModels
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
-        public DateTime CourseStartDate { get; set; }
+        public string CourseStartDate { get; set; }
 
-        public static implicit operator ModuleEditViewModel(Module model)
+		public ModuleEditViewModel()
+		{
+			StartDate = DateTime.Today;
+			EndDate = DateTime.Today;
+		}
+
+		public static implicit operator ModuleEditViewModel(Module model)
         {
             return new ModuleEditViewModel
             {
