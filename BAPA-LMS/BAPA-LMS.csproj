@@ -212,6 +212,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityCreateViewModel.cs" />
+    <Compile Include="Models\ActivityViewModels\ActivityDeleteViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityDetailViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityEditViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseCreateViewModel.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Models\DB\Module.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModelExtensions.cs" />
+    <Compile Include="Models\ModuleViewModels\ModuleDeleteViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleCreateViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleDetailViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleEditViewModel.cs" />
@@ -419,6 +421,8 @@
     <Content Include="Views\Teacher\CourseEdit.cshtml" />
     <Content Include="Views\Teacher\RegisterTeacher.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\Activities\_Delete.cshtml" />
+    <Content Include="Views\Modules\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

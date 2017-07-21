@@ -156,39 +156,46 @@ namespace BAPA_LMS.Controllers
             return PartialView("_Edit", mevm);
         }
 
-        // GET: Modules/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Module module = db.Modules.Find(id);
-        //    if (module == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(module);
-        //}
+		// GET: Modules/Delete/5
+		public ActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Module module = db.Modules.Find(id?.Decode());
+			if (module == null)
+			{
+				return HttpNotFound();
+			}
+			Session["activityid"] = module.Id;
+			return PartialView("_Delete", (ModuleDeleteViewModel)module);
+		}
 
-        // POST: Modules/Delete/5
-        [HttpPost, ActionName("Delete")]
+		// POST: Modules/Delete/5
+		[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(ModuleDeleteViewModel mdvm)
         {
-            try
-            {
+			int? id = (int?)Session["moduleid"];
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			try
+			{
                 Module module = db.Modules.Find(id);
                 db.Modules.Remove(module);
                 db.SaveChanges();
-            }
-            catch (RetryLimitExceededException)
+				TempData["alert"] = "success|Modulen togs bort!";
+			}
+			catch (RetryLimitExceededException)
             {
                 // Log errors here
                 TempData["alert"] = "danger|Det gick inte att ta bort modulen";
-            }           
-            return RedirectToAction("Index");
+            }
+			return PartialView("_Delete", mdvm);
         }
 
         protected override void Dispose(bool disposing)

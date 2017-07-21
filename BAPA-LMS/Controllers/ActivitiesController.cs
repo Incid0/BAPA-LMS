@@ -168,38 +168,45 @@ namespace BAPA_LMS.Controllers
 		}
 
 		// GET: Activities/Delete/5
-		//public ActionResult Delete(int? id)
-		//{
-		//    if (id == null)
-		//    {
-		//        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-		//    }
-		//    Activity activity = db.Activities.Find(id);
-		//    if (activity == null)
-		//    {
-		//        return HttpNotFound();
-		//    }
-		//    return View(activity);
-		//}
+		public ActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Activity activity = db.Activities.Find(id?.Decode());
+			if (activity == null)
+			{
+				return HttpNotFound();
+			}
+			Session["activityid"] = activity.Id;
+			return PartialView("_Delete", (ActivityDeleteViewModel)activity);
+		}
 
 		// POST: Activities/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles = "Admin")]
-		public ActionResult DeleteConfirmed(int id)
+		public ActionResult DeleteConfirmed(ActivityDeleteViewModel advm)
 		{
+			int? id = (int?)Session["activityid"];
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
 			try
 			{
 				Activity activity = db.Activities.Find(id);
 				db.Activities.Remove(activity);
 				db.SaveChanges();
+				TempData["alert"] = "success|Aktiviteten togs bort!";
 			}
 			catch (RetryLimitExceededException)
 			{
-				// LOg errors here
+				// Log errors here
 				TempData["alert"] = "danger|Det gick inte att ta bort aktiviteten!";
 			}
-			return RedirectToAction("Index");
+			return PartialView("_Delete", advm);
 		}
 
 		public JsonResult GetStudentActivities()

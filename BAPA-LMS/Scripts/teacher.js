@@ -1,6 +1,7 @@
 ﻿var teacher = (function ($) {
     var alertbox;
     var tree;
+    var skipEditor = false;
 
     function localAlert(message, style) {
         var parent = alertbox.parent();
@@ -25,39 +26,42 @@
                 data: [result],
                 levels: 3
             });
+            tree.on('nodeSelected', treeNodeSelect);
             if (id) {
                 var node = findNode(id);
                 if (node) {
-                    tree.treeview('selectNode', [node, { silent: true }]);
+                    tree.treeview('selectNode', [node]);
                     tree.treeview('revealNode', [node, { silent: true }]);
                     $('html, body').scrollTop(tree.find('.node-selected').offset().top - $('.navbar').height());
                 }
             }
-            tree.on('nodeSelected', treeNodeSelect);
         });
     }
 
     function treeNodeSelect(event, node) {
         var index = node.id, ctrl = index[0], id = index.substr(1);
-        var btnA = $('#btnActivity'), btnM = $('#btnModule');
+        var btnA = $('#btnActivity'), btnD = $('#btnDel');
         // Limit activity creation to modules and activities
         btnA.prop('disabled', (ctrl === 'c'));
+        // Limit deletion to modules and activities
+        btnD.prop('disabled', (ctrl === 'c'));
 
         if (ctrl === 'a') {
             ctrl = 'activities';
             btnA.data('parent', tree.treeview('getParent', node).id.substr(1));
+            btnD.attr('href', '/activities/delete/' + id);
         }
         else if (ctrl === 'm') {
             ctrl = 'modules';
             btnA.data('parent', id);
-            btnM.data('parent', tree.treeview('getParent', node).id.substr(1));
+            btnD.attr('href', '/modules/delete/' + id);
         }
         else if (ctrl === 'c') {
             ctrl = 'courses'
-            btnM.data('parent', id);
         }
         else ctrl = '';
-        if (ctrl !== '') changeEditor('edit', ctrl, id);
+        if (!skipEditor && ctrl !== '') changeEditor('edit', ctrl, id);
+        skipEditor = false;
     };
 
     function changeEditor(action, ctrl, id) {
@@ -92,11 +96,6 @@
                 $(this).removeData('bs.modal').children('.modal-content').html('');
             });
 
-            // Setting MaxLength automatically according to MVC StringLength
-            $('input[data-val-length-max]').each(function (idx, element) {
-                element.setAttribute('maxlength', element.getAttribute('data-val-length-max'));
-            });
-
             // Initializing DatePicker
             $.fn.datepicker.defaults.weekStart = 1;
             $.fn.datepicker.defaults.language = "sv";
@@ -126,17 +125,31 @@
                 }
             });
             $('#formEdit .timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
+            // Setting MaxLength automatically according to MVC StringLength
+            $('input[data-val-length-max]').each(function (idx, element) {
+                element.setAttribute('maxlength', element.getAttribute('data-val-length-max'));
+            });
             var input = $('#formResult'), result = input.val(), data = result.split('|');
             if (result) {
                 localAlert(data[1], data[0]);
                 if (data[0] === 'success') {
+                    skipEditor = true;
                     loadTree(data[2]);
                 }
             }
             input.remove();
         },
-        debugTree: function (x) {
-            return findNode(x);
+        initPopup: function () {
+            var input = $('#popupResult'), result = input.val(), data = result.split('|');
+            if (result) {
+                localAlert(data[1], data[0]);
+                if (data[0] === 'success') {
+                    $('#modalContainer').modal('hide');
+                    $('#editarea').html('');
+                    $('#btnDel').prop('disabled', true);
+                    loadTree();
+                }
+            }
         }
     };
 })(jQuery);
