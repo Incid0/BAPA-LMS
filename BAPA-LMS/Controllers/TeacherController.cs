@@ -81,6 +81,16 @@ namespace BAPA_LMS.Controllers
 			return View();
 		}
 
+        public ActionResult StudentList(int? id)
+        {
+            Course course = db.Courses.Find(id?.Decode());
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            CourseDetailViewModel cdvm = course;
+            return PartialView("_StudenList", cdvm);
+        }
 		//
 		// POST: /Account/Register
 		[HttpPost]

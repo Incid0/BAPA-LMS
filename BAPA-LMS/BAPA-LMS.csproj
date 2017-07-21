@@ -210,9 +210,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707202312430_init.cs" />
-    <Compile Include="Migrations\201707202312430_init.Designer.cs">
-      <DependentUpon>201707202312430_init.cs</DependentUpon>
+    <Compile Include="Migrations\201707210750339_init.cs" />
+    <Compile Include="Migrations\201707210750339_init.Designer.cs">
+      <DependentUpon>201707210750339_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -435,6 +435,7 @@
     <Content Include="Views\Teacher\Register.cshtml" />
     <Content Include="Views\Activities\_Delete.cshtml" />
     <Content Include="Views\Modules\_Delete.cshtml" />
+    <Content Include="Views\Teacher\_StudentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -447,6 +448,11 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>CustomDateMessages.Designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201707210750339_init.resx">
+      <DependentUpon>201707210750339_init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
