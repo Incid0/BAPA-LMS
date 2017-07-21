@@ -89,9 +89,9 @@ namespace BAPA_LMS.Controllers
                 return HttpNotFound();
             }
             CourseDetailViewModel cdvm = course;
-            return PartialView("_StudenList", cdvm);
+            return PartialView("_StudentList", cdvm);
         }
-		//
+		
 		// POST: /Account/Register
 		[HttpPost]
 		[AllowAnonymous]
@@ -166,10 +166,12 @@ namespace BAPA_LMS.Controllers
         [ValidateAntiForgeryToken]   
         public ActionResult DeleteConfirmed(string id)
         {
-            try
+			int? courseId = null;
+			try
             {
                 ApplicationUser delObj = db.Users.SingleOrDefault(u => u.Id == id);
-                db.Users.Remove(delObj);
+				courseId = delObj.CourseId;
+				db.Users.Remove(delObj);
                 db.SaveChanges();
             }
             catch (RetryLimitExceededException)
@@ -177,7 +179,7 @@ namespace BAPA_LMS.Controllers
                 // Log errors here				
                 TempData["alert"] = "danger|Det gick inte att ta bort kursen!";
             }
-            return RedirectToAction("KursInfo");
+            return RedirectToAction("CourseEdit", new { id = courseId });
         }
 
         private void AddErrors(IdentityResult result)

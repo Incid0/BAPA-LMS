@@ -47,12 +47,12 @@
 
     </dl>
 
-    @using (Html.BeginForm("DeleteConfirmed","Student", new { id = Model.Id })) {
+    @using (Html.BeginForm("DeleteConfirmed","Teacher", new { id = Model.Id })) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "KursInfo")
+            @Html.ActionLink("Back to List", "CourseEdit", new { id = Model.CourseId } )
         </div>
     }
 </div>
