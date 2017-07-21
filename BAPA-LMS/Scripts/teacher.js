@@ -39,7 +39,7 @@
     }
 
     function treeNodeSelect(event, node) {
-        var index = node.id, ctrl = index[0], id = index.substr(1);
+        var index = node.id, ctrl = index[0], action = 'edit', id = index.substr(1);
         var btnA = $('#btnActivity'), btnD = $('#btnDel');
         // Limit activity creation to modules and activities
         btnA.prop('disabled', (ctrl === 'c'));
@@ -57,10 +57,11 @@
             btnD.attr('href', '/modules/delete/' + id);
         }
         else if (ctrl === 'c') {
-            ctrl = 'courses'
+            action = 'studentlist';
+            ctrl = 'teacher';
         }
         else ctrl = '';
-        if (!skipEditor && ctrl !== '') changeEditor('edit', ctrl, id);
+        if (!skipEditor && ctrl !== '') changeEditor(action, ctrl, id);
         skipEditor = false;
     };
 
