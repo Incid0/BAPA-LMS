@@ -46,8 +46,10 @@ namespace BAPA_LMS.Models.ActivityViewModels
         public int Type { get; set; }
 
         public List<ActivityType> Types { get; set; }
+		public string ModuleStartDate { get; set; }
+		public string ModuleEndDate { get; set; }
 
-        public ActivityEditViewModel()
+		public ActivityEditViewModel()
         {
             StartDate = DateTime.Now;
             EndDate = DateTime.Now;

@@ -205,6 +205,7 @@
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
+    <Compile Include="Controllers\UploadDocumentController.cs" />
     <Compile Include="DataAccessLayer\LMSDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -212,8 +213,10 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityCreateViewModel.cs" />
+    <Compile Include="Models\ActivityViewModels\ActivityDeleteViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityDetailViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityEditViewModel.cs" />
+    <Compile Include="Models\ActivityViewModels\ActivityUploadViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseDetailViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseEditViewModel.cs" />
@@ -222,10 +225,12 @@
     <Compile Include="Models\DB\Activity.cs" />
     <Compile Include="Models\DB\ActivityType.cs" />
     <Compile Include="Models\DB\Course.cs" />
+    <Compile Include="Models\DB\FileDocument.cs" />
     <Compile Include="Models\DB\IdentityModels.cs" />
     <Compile Include="Models\DB\Module.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModelExtensions.cs" />
+    <Compile Include="Models\ModuleViewModels\ModuleDeleteViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleCreateViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleDetailViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleEditViewModel.cs" />
@@ -414,11 +419,19 @@
     <Content Include="Views\Activities\_Edit.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
-    <Content Include="Views\Modules\Create.cshtml" />
-    <Content Include="Views\Modules\Edit.cshtml" />
+    <Content Include="Views\Modules\_Create.cshtml" />
+    <Content Include="Views\Modules\_Edit.cshtml" />
     <Content Include="Views\Teacher\CourseEdit.cshtml" />
     <Content Include="Views\Teacher\RegisterTeacher.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\UploadDocument\ActivityUpload.cshtml" />
+    <Content Include="Views\UploadDocument\ActivityUploader.cshtml" />
+    <Content Include="Views\UploadDocument\ListDocuments.cshtml" />
+    <Content Include="Views\Teacher\Delete.cshtml" />
+    <Content Include="Views\Teacher\Register.cshtml" />
+    <Content Include="Views\Activities\_Delete.cshtml" />
+    <Content Include="Views\Modules\_Delete.cshtml" />
+    <Content Include="Views\Teacher\_StudentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

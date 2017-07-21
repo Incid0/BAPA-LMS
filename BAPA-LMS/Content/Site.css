@@ -79,3 +79,7 @@ body > div.alert {
 .input-daterange {
     width: auto;
 }
+
+.editarea-fixed {
+    position: fixed;
+}

@@ -52,7 +52,7 @@
                 @foreach (var item in Model.Members)
                 {
                     <tr>
-                        <td class="col-xs-12">@Html.DisplayFor(modelItem => item.FullName)</td>
+                        <td class="col-xs-12">@Html.DisplayFor(modelItem => item.FullName) @Html.ActionLink("Ta Bort Student","Delete", new { id = item.Id })</td> 
                     </tr>
                 }
             </table>
