@@ -3,42 +3,31 @@
     ViewBag.Title = "ActivityUpload";
 }
 <h2>ActivityUpload</h2>
-<div>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModuleName)
-            </th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModuleName)
-                </td>
-                <td>
+
+<div class="panel-group" id="accordion">
+    @foreach (var item in Model)
+            {
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse@(item.Id)" href="#collapse@(item.Id)" )>@Html.DisplayFor(model => item.Name)<span> </span>@Html.DisplayFor(model => item.Type.Name)</a>
+                </h4>
+            </div>
+            <div id="collapse@(item.Id)" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @Html.DisplayFor(model => item.Name)
+                    <br />
+                    @Html.DisplayFor(model => item.EndDate)
+                    <br />
+                    @Html.DisplayFor(model => item.EndTime)
+                    <br />
+                    @*@Html.DisplayFor(model => item.FileSubmitted)*@
+                    <br />
                     @Html.ActionLink("Ladda upp dokument", "ActivityUploader", new { id = item.Id })
-                </td>
-            </tr>
-        }
-    </table>
+                </div>
+            </div>
+        </div>
+
+    }
 </div>
