@@ -7,30 +7,31 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using BAPA_LMS.DataAccessLayer;
 
 namespace BAPA_LMS.Controllers
 {
     public class UploadDocumentController : Controller
     {
-        private DataAccessLayer.LMSDbContext db = new DataAccessLayer.LMSDbContext();
+        private LMSDbContext db = new LMSDbContext();
         public ActionResult ActivityUpload()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
             Course course = db.Courses.Find(currentUser.CourseId);
             List<ActivityUploadViewModel> activityList = new List<ActivityUploadViewModel>();
-            foreach (var item in db.Modules)
+            foreach (var activity in db.Activities)
             {
-                if (course.Id == item.CourseId)
+                if (activity.Type.Id == 3 && activity.Module.CourseId == course.Id)
                 {
-                    foreach (var item2 in db.Activities)
+                    
+                    foreach (var file in db.Files)
                     {
-                        if (item2.ModuleId == item.Id && item2.Type.Id == 3)
+                        if (file.Email == currentUser.Email && file.ActivityName == activity.Name)
                         {
-                            activityList.Add(item2);
+                            activity.DocumentIsUploaded = true;
                         }
-
                     }
-
+                    activityList.Add(activity);
                 }
             }
             return View(activityList);
@@ -64,7 +65,7 @@ namespace BAPA_LMS.Controllers
                 file.ActivityName = auvm.Name;
                 file.Email = currentUser.Email;
                 file.CourseName = currentUser.Course.Name;
-             
+
                 file.Name = postedFile.FileName;
                 //file.PostedFile = postedFile;
 
@@ -80,7 +81,7 @@ namespace BAPA_LMS.Controllers
                 postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
                 ViewBag.Message = "File uploaded successfully.";
             }
-           
+
             return View(auvm);
         }
         public ActionResult ListDocuments()
@@ -99,8 +100,8 @@ namespace BAPA_LMS.Controllers
             FileDocument fileDocument = db.Files.Find(id);
             string file = "~/Uploads/" + fileDocument.CourseName + "/" + fileDocument.ActivityName + "/" + fileDocument.Email + "/" + fileDocument.Name;
             string contentType = ".jpg";
-            
-            return File(file,contentType,Path.GetFileName(file));
+
+            return File(file, contentType, Path.GetFileName(file));
         }
 
         protected override void Dispose(bool disposing)

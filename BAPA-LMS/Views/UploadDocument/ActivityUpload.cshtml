@@ -22,7 +22,10 @@
                     <br />
                     @Html.DisplayFor(model => item.EndTime)
                     <br />
-                    @*@Html.DisplayFor(model => item.FileSubmitted)*@
+                    @if(item.FileSubmitted == true)
+                    {
+                      <strong>Uppgiften är redan inlämnad.</strong>
+                    }
                     <br />
                     @Html.ActionLink("Ladda upp dokument", "ActivityUploader", new { id = item.Id })
                 </div>

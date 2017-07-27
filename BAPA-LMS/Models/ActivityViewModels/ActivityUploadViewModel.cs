@@ -25,6 +25,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
 
         [Display(Name = "Ingår i modul")]
         public string ModuleName { get; set; }
+        public bool FileSubmitted { get; set; }
 
         public static implicit operator ActivityUploadViewModel(Activity model)
         {
@@ -35,7 +36,8 @@ namespace BAPA_LMS.Models.ActivityViewModels
                 EndDate = model.EndTime,
                 EndTime = model.EndTime,
                 Type = model.Type,
-                ModuleName = model.Module.Name
+                ModuleName = model.Module.Name,
+                FileSubmitted = model.DocumentIsUploaded
             };
 
         }
