@@ -1,28 +1,28 @@
-﻿@model IEnumerable<BAPA_LMS.Models.CourseViewModels.CourseListViewModel>
+﻿@model IEnumerable<BAPA_LMS.Models.DB.Course>
 
 @{
     ViewBag.Title = "Kurser";
 }
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/filter.js"></script>
+}
 
-<div class="row">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4>
-                Kurser
-            </h4>
-        </div>
-        <table class="table table-fixed">
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td class="col-xs-12"><a href="@Url.Action("CourseEdit","Teacher",new {id=item.Id })">@Html.DisplayFor(modelItem => item.Name)</a></td>
-                </tr>
-            }
-
-
-        </table>
+@using (Ajax.BeginForm(
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "get",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "vehicleList"
+                                }))
+{
+    <label for="vehiclefilter" class="control-label">Filtrera: </label>
+    <input id="vehiclefilter" type="search" name="filter" class="form-control" />
+    <p></p>
+    @Html.Partial("_TeacherIndex", Model)
+}
         
-    </div>
+    <div>
     @Html.ActionLink("Lägg till lärare", "RegisterTeacher")
+        @Html.ActionLink("Lägg till kurs", "Create","Courses")
 </div>

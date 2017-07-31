@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BAPA_LMS.Models.DB.Course>
+
+@helper SortHeader(string fieldname, string labelname)
+{
+   
+    @Ajax.ActionLink(labelname, "Index",
+                    new { filter = ViewBag.Filter, sort = fieldname + (ViewBag.SortParam == fieldname ? "_desc" : "") },
+                    new AjaxOptions
+                    {
+                        HttpMethod = "get",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "vehicleList"
+                    })
+}
+
+
+<div id="vehicleList">
+    <input type="hidden" name="sort" value="@ViewBag.SortParam" />
+    <table class="table table-striped table-responsive">
+        <tr>
+            <th>
+                @SortHeader("RegNr", Html.DisplayNameFor(model => model.Name).ToString())
+            </th>
+            <th>
+                @SortHeader("Type", Html.DisplayNameFor(model => model.StartDate).ToString())
+            </th>            
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("CourseEdit", "Teacher", new { id=item.Id})">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                
+            </tr>
+        }
+    </table>
+
+
+</div>
