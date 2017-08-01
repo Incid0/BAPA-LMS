@@ -12,10 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BAPA_LMS.Utils;
-
-
-
-
+using BAPA_LMS.Models.ActivityViewModels;
 
 namespace BAPA_LMS.Controllers
 {
@@ -75,6 +72,21 @@ namespace BAPA_LMS.Controllers
             return View(result);
 
         }
+
+        public ActionResult ActivityUploads(int id)
+        {
+            List<ActivityUploadViewModel> activityList = new List<ActivityUploadViewModel>();
+            foreach (var item in db.Activities)
+            {
+                if (item.Type.Id == 3 && item.Module.Course.Id == id)
+                {
+                    activityList.Add(item);
+                }
+            }
+            return View(activityList);
+        }
+
+
 
         public ActionResult CourseEdit(int? id)
         {

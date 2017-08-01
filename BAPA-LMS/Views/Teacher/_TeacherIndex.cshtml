@@ -34,7 +34,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.StartDate)
                 </td>
-                
+                <td>
+                    @Html.ActionLink("Inlämningsuppgifter", "ActivityUploads", new { id = item.Id })
+                </td>
             </tr>
         }
     </table>
