@@ -51,15 +51,22 @@ namespace BAPA_LMS.Controllers
         {
             ViewBag.Filter = filter;
             ViewBag.SortParam = sort;
-            IQueryable<Course> result = db.Courses;
+            var result = db.Courses.Select(c => new CourseListViewModel { Name = c.Name, StartDate = c.StartDate });
+            //List<Course> result = db.Courses.ToList();
             string[] filters = (filter ?? "").Trim().Split();
             for (int i = 0; i < filters.Length; i++)
             {
+                int tmpYear = 0;
                 string tmpfilter = filters[i];
+                int.TryParse(tmpfilter, out tmpYear);
                 if (tmpfilter != "")
                 {
                     result = result.Where(c => (
-                    c.Name.Contains(tmpfilter)));
+                    c.Name.Contains(tmpfilter) ||
+                    (tmpYear != 0 &&
+                        (c.StartDate.Year == tmpYear ||
+                         c.StartDate.Month == tmpYear ||
+                         c.StartDate.Day == tmpYear))));
                 }
             }
             string[] sortdir = sort.Split('_');

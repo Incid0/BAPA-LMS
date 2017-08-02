@@ -74,7 +74,6 @@ namespace BAPA_LMS.Controllers
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
-
                 }
                 db.Files.Add(file);
                 db.SaveChanges();
@@ -91,8 +90,6 @@ namespace BAPA_LMS.Controllers
             {
                 fileList.Add(item);
             }
-
-
             return View(fileList);
         }
         public ActionResult DownloadFile(int id)

@@ -1,8 +1,9 @@
-﻿@model IEnumerable<BAPA_LMS.Models.DB.Course>
+﻿@model IEnumerable<BAPA_LMS.Models.CourseViewModels.CourseListViewModel>
 
 @helper SortHeader(string fieldname, string labelname)
 {
-   
+    @Html.Raw((ViewBag.SortParam == fieldname ? "<span class=\"glyphicon glyphicon-triangle-bottom\"></span>&nbsp;" : ""))
+    @Html.Raw((ViewBag.SortParam == fieldname + "_desc" ? "<span class=\"glyphicon glyphicon-triangle-top\"></span>&nbsp;" : ""))
     @Ajax.ActionLink(labelname, "Index",
                     new { filter = ViewBag.Filter, sort = fieldname + (ViewBag.SortParam == fieldname ? "_desc" : "") },
                     new AjaxOptions
@@ -19,10 +20,10 @@
     <table class="table table-striped table-responsive">
         <tr>
             <th>
-                @SortHeader("RegNr", Html.DisplayNameFor(model => model.Name).ToString())
+                @SortHeader("Name", Html.DisplayNameFor(model => model.Name).ToString())
             </th>
             <th>
-                @SortHeader("Type", Html.DisplayNameFor(model => model.StartDate).ToString())
+                @SortHeader("StartDate", Html.DisplayNameFor(model => model.StartDate).ToString())
             </th>            
         </tr>
         @foreach (var item in Model)
@@ -33,6 +34,7 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.StartDate)
+                    
                 </td>
                 <td>
                     @Html.ActionLink("Inlämningsuppgifter", "ActivityUploads", new { id = item.Id })
