@@ -61,12 +61,9 @@ namespace BAPA_LMS.Controllers
 
             Course course = db.Courses.Find(currentUser.CourseId);
             List<ModuleDetailViewModel> moduleList = new List<ModuleDetailViewModel>();
-            foreach (var item in db.Modules)
-            {
-                if(item.CourseId == course.Id)
-                {
-                    moduleList.Add(item);
-                }
+            foreach (var item in course.Modules)
+            {          
+                    moduleList.Add(item);             
             }                       
             return View(moduleList);
 
@@ -75,14 +72,11 @@ namespace BAPA_LMS.Controllers
         public ActionResult AktivitetsInfo(int id)
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
-            Course course = db.Courses.Find(currentUser.CourseId);
+            Module module = db.Modules.Find(id);
             List<ActivityDetailViewModel> activityList = new List<ActivityDetailViewModel>();
-            foreach (var item in db.Activities)
-            {
-                if(item.ModuleId == id)
-                {
-                    activityList.Add(item);
-                }
+            foreach (var item in module.Activities)
+            {   
+                    activityList.Add(item);               
             }
             return View(activityList);
         }

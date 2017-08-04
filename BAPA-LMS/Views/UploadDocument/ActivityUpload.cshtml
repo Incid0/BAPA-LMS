@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BAPA_LMS.Models.ActivityViewModels.ActivityUploadViewModel>
+﻿@model IEnumerable<BAPA_LMS.Models.ActivityViewModels.ActivitySubmitViewModel>
 @{
     ViewBag.Title = "ActivityUpload";
 }
@@ -22,10 +22,10 @@
                     <br />
                     @Html.DisplayFor(model => item.EndTime)
                     <br />
-                    @if(item.FileSubmitted == true)
+                    @*@if(item.FileSubmitted == true)
                     {
                       <strong>Uppgiften är redan inlämnad.</strong>
-                    }
+                    }*@
                     <br />
                     @Html.ActionLink("Ladda upp dokument", "ActivityUploader", new { id = item.Id })
                 </div>

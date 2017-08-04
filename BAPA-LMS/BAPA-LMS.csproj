@@ -210,9 +210,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708011636258_nigger.cs" />
-    <Compile Include="Migrations\201708011636258_nigger.Designer.cs">
-      <DependentUpon>201708011636258_nigger.cs</DependentUpon>
+    <Compile Include="Migrations\201708041751029_init.cs" />
+    <Compile Include="Migrations\201708041751029_init.Designer.cs">
+      <DependentUpon>201708041751029_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -220,7 +220,8 @@
     <Compile Include="Models\ActivityViewModels\ActivityDeleteViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityDetailViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityEditViewModel.cs" />
-    <Compile Include="Models\ActivityViewModels\ActivityUploadViewModel.cs" />
+    <Compile Include="Models\ActivityViewModels\ActivitySubmitViewModel.cs" />
+    <Compile Include="Models\ActivityViewModels\StudentUploadViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseDetailViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseEditViewModel.cs" />
@@ -453,8 +454,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708011636258_nigger.resx">
-      <DependentUpon>201708011636258_nigger.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708041751029_init.resx">
+      <DependentUpon>201708041751029_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

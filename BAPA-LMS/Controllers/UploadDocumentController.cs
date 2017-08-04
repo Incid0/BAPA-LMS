@@ -8,6 +8,7 @@ using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using BAPA_LMS.DataAccessLayer;
+using System.Linq;
 
 namespace BAPA_LMS.Controllers
 {
@@ -18,20 +19,16 @@ namespace BAPA_LMS.Controllers
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
             Course course = db.Courses.Find(currentUser.CourseId);
-            List<ActivityUploadViewModel> activityList = new List<ActivityUploadViewModel>();
-            foreach (var activity in db.Activities)
+                     
+            List<ActivitySubmitViewModel> activityList = new List<ActivitySubmitViewModel>();
+            foreach (var module in course.Modules)
             {
-                if (activity.Type.Id == 3 && activity.Module.CourseId == course.Id)
+                foreach (var activity in module.Activities)
                 {
-                    
-                    foreach (var file in db.Files)
+                    if(activity.Type.Submit) 
                     {
-                        if (file.Email == currentUser.Email && file.ActivityName == activity.Name)
-                        {
-                            activity.DocumentIsUploaded = true;
-                        }
+                        activityList.Add(activity);
                     }
-                    activityList.Add(activity);
                 }
             }
             return View(activityList);
@@ -40,37 +37,28 @@ namespace BAPA_LMS.Controllers
         public ActionResult ActivityUploader(int id)
         {
             Activity activity = db.Activities.Find(id);
-            ActivityUploadViewModel auvm = activity;
-
-
-
-            return View(auvm);
+            ActivitySubmitViewModel asvm = activity;
+            return View(asvm);
         }
 
         [HttpPost]
         public ActionResult ActivityUploader(HttpPostedFileBase postedFile, int id)
         {
-
             Activity activity = db.Activities.Find(id);
-            ActivityUploadViewModel auvm = activity;
-
-
-
-
+            ActivitySubmitViewModel asvm = activity;
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
 
             if (postedFile != null)
             {
-                FileDocument file = new FileDocument();
-                file.ActivityName = auvm.Name;
+                FileDocument file = new FileDocument();     
                 file.Email = currentUser.Email;
                 file.CourseName = currentUser.Course.Name;
-
                 file.Name = postedFile.FileName;
-                //file.PostedFile = postedFile;
+                file.ActivityId = id;
+                file.ActivityName = asvm.Name;
+                file.MemberId = currentUser.Id;
 
-
-                string path = Server.MapPath("~/Uploads/" + currentUser.Course.Name + "/" + auvm.Name + "/" + currentUser.Email + "/");
+                string path = Server.MapPath("~/Uploads/" + currentUser.Course.Name + "/" + asvm.Name + "/" + currentUser.Email + "/");
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
@@ -81,7 +69,7 @@ namespace BAPA_LMS.Controllers
                 ViewBag.Message = "File uploaded successfully.";
             }
 
-            return View(auvm);
+            return View(asvm);
         }
         public ActionResult ListDocuments()
         {
