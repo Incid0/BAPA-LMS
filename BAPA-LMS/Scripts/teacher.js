@@ -2,6 +2,7 @@
     var alertbox;
     var tree;
     var skipEditor = false;
+    var filterhandler;
 
     function localAlert(message, style) {
         var parent = alertbox.parent();
@@ -77,6 +78,15 @@
         changeEditor('create', btn.data('controller'), btn.data('parent'));
     }
 
+    function updateCourseList() {
+        var filter = $(this);
+        if (filterhandler) clearTimeout(filterhandler);
+        filterhandler = setTimeout(function () {
+            filter.parents('form').submit();
+            filterhandler = null;
+        }, 300);
+    }
+
     return {
         init: function () {
             console.log('init started');
@@ -102,6 +112,7 @@
             $.fn.datepicker.defaults.language = "sv";
             $.fn.datepicker.defaults.calendarWeeks = true;
             $.fn.datepicker.defaults.todayHighlight = true;
+            $.fn.datepicker.defaults.autoclose = true;
 
             // Initializing TimePicker
             $('.timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
@@ -111,6 +122,10 @@
             if (tree.length) {
                 loadTree();
             }
+
+            // Connecting filterinput
+            $('#coursefilter').on('input', updateCourseList);
+            $('#StartRange, #EndRange').on('change', updateCourseList);
 
             // Connecting buttons
             $('button.add').on('click', createAction);

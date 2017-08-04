@@ -38,8 +38,7 @@ namespace BAPA_LMS
 						"~/Scripts/bootstrap-datepicker.js",
 						"~/Scripts/bootstrap-datepicker.sv.min.js",
 						"~/Scripts/jquery.timepicker.js",
-						"~/Scripts/teacher.js",
-                        "~/Scripts/filter.js"
+						"~/Scripts/teacher.js"
                         ));
 			
 			bundles.Add(new StyleBundle("~/Content/lms").Include(

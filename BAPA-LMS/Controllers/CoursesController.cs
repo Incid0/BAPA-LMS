@@ -23,12 +23,8 @@ namespace BAPA_LMS.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index(string filter, string sort = "")
 		{
-			var result = new List<CourseListViewModel>();
+            var result = db.Courses.Select(c => new CourseListRow { Name = c.Name, Description = c.Description, StartDate = c.StartDate }).ToList();
             
-			foreach(var course in db.Courses)
-			{
-				result.Add(course);
-			}
 			return View(result);
 		}
 

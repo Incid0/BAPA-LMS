@@ -7,7 +7,22 @@ using System.Web;
 
 namespace BAPA_LMS.Models.CourseViewModels
 {
-	public class CourseListViewModel
+    public class CourseListViewModel
+    {
+        public IEnumerable<CourseListRow> Courses { get; set; }
+
+        public string SortParam { get; set; }
+
+        [Display(Name = "Sökord:")]
+        public string Filter { get; set; }
+
+        public string StartRange { get; set; }
+
+        public string EndRange { get; set; }
+        
+    }
+
+	public class CourseListRow
 	{
 		public int Id { get; set; }
 
@@ -21,16 +36,16 @@ namespace BAPA_LMS.Models.CourseViewModels
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime StartDate { get; set; }
 
-		public static implicit operator CourseListViewModel(Course model)
-		{
-			return new CourseListViewModel
-			{
-				Id = model.Id,
-				Name = model.Name,
-				Description = model.Description,
-				StartDate = model.StartDate,
-			};
+	//	public static implicit operator CourseListViewModel(Course model)
+	//	{
+	//		return new CourseListViewModel
+	//		{
+	//			Id = model.Id,
+	//			Name = model.Name,
+	//			Description = model.Description,
+	//			StartDate = model.StartDate,
+	//		};
 
-		}
+	//	}
 	}
 }
