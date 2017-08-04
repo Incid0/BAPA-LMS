@@ -69,44 +69,44 @@ namespace BAPA_LMS.Migrations
 					EndDate = DateTime.Parse("2017/08/28")
 				},
 
-                new Module
-                {
-                    Id = 3,
-                    Name = "AngularJS",
-                    Description = "Grundläggande inom AngularJS",
-                    CourseId = 1,
-                    StartDate = DateTime.Parse("2017/09/10"),
-                    EndDate = DateTime.Parse("2017/09/28")
-                
-                },
-                 new Module
-                 {
-                     Id = 4,
-                     Name = "PHP Hello World",
-                     Description = "Världens bästa kodspråk maximeras till fullo",
-                     CourseId = 2,
-                     StartDate = DateTime.Parse("2017/07/10"),
-                     EndDate = DateTime.Parse("2017/07/28")
-                 },
+				new Module
+				{
+					Id = 3,
+					Name = "AngularJS",
+					Description = "Grundläggande inom AngularJS",
+					CourseId = 1,
+					StartDate = DateTime.Parse("2017/09/10"),
+					EndDate = DateTime.Parse("2017/09/28")
 
-                new Module
-                {
-                    Id = 5,
-                    Name = "Konspirationsteorier",
-                    Description = "Hur man enklast och smidigast tillverkar en folie hatt av aluminium",
-                    CourseId = 2,
-                    StartDate = DateTime.Parse("2017/08/10"),
-                    EndDate = DateTime.Parse("2017/08/28")
-                },
+				},
+				 new Module
+				 {
+					 Id = 4,
+					 Name = "PHP Hello World",
+					 Description = "Världens bästa kodspråk maximeras till fullo",
+					 CourseId = 2,
+					 StartDate = DateTime.Parse("2017/07/10"),
+					 EndDate = DateTime.Parse("2017/07/28")
+				 },
 
-                new Module
-                {
-                    Id = 6,
-                    Name = "Pekpinnefäktning",
-                    Description = "Lär dig prygla till elever som inte förtjänar annat",
-                    CourseId = 2,
-                    StartDate = DateTime.Parse("2017/09/10"),
-                    EndDate = DateTime.Parse("2017/09/28")
+				new Module
+				{
+					Id = 5,
+					Name = "Konspirationsteorier",
+					Description = "Hur man enklast och smidigast tillverkar en folie hatt av aluminium",
+					CourseId = 2,
+					StartDate = DateTime.Parse("2017/08/10"),
+					EndDate = DateTime.Parse("2017/08/28")
+				},
+
+				new Module
+				{
+					Id = 6,
+					Name = "Pekpinnefäktning",
+					Description = "Lär dig prygla till elever som inte förtjänar annat",
+					CourseId = 2,
+					StartDate = DateTime.Parse("2017/09/10"),
+					EndDate = DateTime.Parse("2017/09/28")
 
 				}
 				);
@@ -217,6 +217,27 @@ namespace BAPA_LMS.Migrations
 			foreach (ApplicationUser user in userManager.Users.ToList().Where(u => u.Email != "admin@bapa.se"))
 			{
 				userManager.AddToRole(user.Id, "Member");
+			}
+			context.SaveChanges();
+
+			string[] courseNames = new[] { "Basic", "Pascal", "Cobol", "C++", "C#", "Javascript", "Html5", "Python", "PHP", "Ruby", "med John", "med Dimitris", "Grund", ".Net", "Classic", "FullStack" };
+			string[] courseHashes = new[] { "#nybörjare", "#medelsvår", "#avancerad", "#1337h4xx0r", "#historik", "#teori", "#praktik", "#e-learning", "#föreläsning", "#verktyg", "#projekt", "#grupparbete", "#nivåer" };
+			string[] courseCities = new[] { "Stockholm", "Göteborg", "Malmö", "Linköping", "Kiruna", "Östersund", "Hudiksvall", "Jönköping", "Uppsala", "Västerås", "Sundsvall", "Gävle", "Umeå" };
+			for (i = 3; i < 20000; i++)
+			{
+				context.Courses.AddOrUpdate(
+					new Course
+					{
+						Id = i,
+						Name = string.Format("{0} {1}", courseNames[rng.Next(10)], courseNames[10 + rng.Next(6)]),
+						Description = string.Format("Ort: {0}\nNyckelord: {1} {2} {3}",
+							courseCities[rng.Next(courseCities.Length)],
+							courseHashes[rng.Next(courseHashes.Length)],
+							courseHashes[rng.Next(courseHashes.Length)],
+							courseHashes[rng.Next(courseHashes.Length)]),
+						StartDate = DateTime.Today - new TimeSpan(365, 0, 0, 0) + new TimeSpan(rng.Next(365 * 3), 0, 0, 0)
+					});
+				if (i % 100 == 0) context.SaveChanges();
 			}
 			context.SaveChanges();
 		}
