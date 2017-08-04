@@ -55,7 +55,7 @@ namespace BAPA_LMS.Controllers
 
             clvm.Filter = filter;
             clvm.SortParam = sort;
-            var result = db.Courses.Select(c => new CourseListRow { Name = c.Name, Description = c.Description, StartDate = c.StartDate });
+            var result = db.Courses.Select(c => new CourseListRow { Name = c.Name, Description = c.Description, StartDate = c.StartDate, Id = c.Id });
             //List<Course> result = db.Courses.ToList();
             // Define a regular expression for dates.
             Regex rx = new Regex(@"(\d+)(-(\d+))?(-(\d+))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
