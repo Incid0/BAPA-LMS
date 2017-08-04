@@ -1,4 +1,4 @@
-﻿@model BAPA_LMS.Models.ActivityViewModels.ActivityUploadViewModel
+﻿@model BAPA_LMS.Models.ActivityViewModels.ActivitySubmitViewModel
 @{
     ViewBag.Title = "ActivityUploader";
 }
@@ -24,12 +24,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.EndTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModuleName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModuleName)
         </dd>
         <dt>
             Ladda upp Dokument:

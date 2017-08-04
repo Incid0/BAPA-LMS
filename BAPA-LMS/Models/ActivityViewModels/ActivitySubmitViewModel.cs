@@ -1,16 +1,22 @@
 ﻿using BAPA_LMS.Models.DB;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
 namespace BAPA_LMS.Models.ActivityViewModels
 {
-    public class ActivityUploadViewModel
+    public class ActivitySubmitViewModel
     {
         [Key]
         public int Id { get; set; }
 
         [Display(Name = "Namn")]
         public string Name { get; set; }
+
+        [Display(Name = "Beskrivning")]
+        public string Description { get; set; }
 
         [Display(Name = "Slutdatum")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
@@ -19,27 +25,20 @@ namespace BAPA_LMS.Models.ActivityViewModels
         [Display(Name = "Sluttid")]
         [DisplayFormat(DataFormatString = "{0:HH:mm}")]
         public DateTime EndTime { get; set; }
-
         [Display(Name = "Typ av aktivitet")]
         public ActivityType Type { get; set; }
 
-        [Display(Name = "Ingår i modul")]
-        public string ModuleName { get; set; }
-        public bool FileSubmitted { get; set; }
-
-        public static implicit operator ActivityUploadViewModel(Activity model)
+        public static implicit operator ActivitySubmitViewModel(Activity model)
         {
-            return new ActivityUploadViewModel
+            return new ActivitySubmitViewModel
             {
                 Id = model.Id,
                 Name = model.Name,
+                Description = model.Description,  
                 EndDate = model.EndTime,
                 EndTime = model.EndTime,
-                Type = model.Type,
-                ModuleName = model.Module.Name,
-                FileSubmitted = model.DocumentIsUploaded
+                Type = model.Type
             };
-
         }
     }
 }

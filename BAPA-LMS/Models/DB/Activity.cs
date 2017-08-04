@@ -20,12 +20,13 @@ namespace BAPA_LMS.Models.DB
 		public DateTime EndTime { get; set; }
 		public int TypeId { get; set; }
 		public int ModuleId { get; set; }
-        public bool DocumentIsUploaded { get; set; }
+        public bool FileSubmitted { get; set; }
 
         public virtual ActivityType Type { get; set; }
 		public virtual Module Module { get; set; }
-     
-  
-  
+        public virtual ICollection<FileDocument> Files { get; set; }
+
+
+
     }
 }
