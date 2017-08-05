@@ -9,9 +9,7 @@ namespace BAPA_LMS.Models.CourseViewModels
 {
     public class CourseListViewModel
     {
-        public IEnumerable<CourseListRow> Courses { get; set; }
-
-        public string SortParam { get; set; }
+        public CourseListRow[] Courses { get; set; }
 
         [Display(Name = "Sökord:")]
         public string Filter { get; set; }
@@ -19,7 +17,14 @@ namespace BAPA_LMS.Models.CourseViewModels
         public string StartRange { get; set; }
 
         public string EndRange { get; set; }
-        
+
+        public string SortParam { get; set; }
+
+        public int Count { get; set; }
+
+        public int Offset { get; set; }
+
+        public const int PageSize = 10;
     }
 
 	public class CourseListRow

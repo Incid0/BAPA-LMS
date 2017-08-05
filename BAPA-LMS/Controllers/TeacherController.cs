@@ -5,6 +5,7 @@ using BAPA_LMS.Models.DB;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -49,41 +50,58 @@ namespace BAPA_LMS.Controllers
 
         private LMSDbContext db = new LMSDbContext();
 
-        public ActionResult Index(string filter, string sort = "", string startrange = "", string endrange = "")
+        public ActionResult Index(CourseListViewModel clvm)
         {
-            var clvm = new CourseListViewModel();
+            var result = db.Courses
+                .AsNoTracking()
+                .Select(c => new CourseListRow { Id = c.Id, Name = c.Name, Description = c.Description, StartDate = c.StartDate });
 
-            clvm.Filter = filter;
-            clvm.SortParam = sort;
-            var result = db.Courses.Select(c => new CourseListRow { Name = c.Name, Description = c.Description, StartDate = c.StartDate, Id = c.Id });
-            //List<Course> result = db.Courses.ToList();
-            // Define a regular expression for dates.
-            Regex rx = new Regex(@"(\d+)(-(\d+))?(-(\d+))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-            string[] filters = (filter ?? "").Trim().Split();
+            // Filter based on words
+            string[] filters = (clvm.Filter ?? "").Trim().Split();
             for (int i = 0; i < filters.Length; i++)
             {
                 string tmpFilter = filters[i].Trim();
-                if (tmpFilter != "")
+                if (tmpFilter.Length > 2)
                 {
                     result = result.Where(c => (
                         c.Name.Contains(tmpFilter) ||
                         c.Description.Contains(tmpFilter)));
                 }
-                DateTime startDate = DateTime.Today, endDate = startDate;
-                if (DateTime.TryParse(startrange, out startDate))
+            }
+            // Filter based on dates
+            if (DateTime.TryParse(clvm.StartRange, out DateTime startDate))
+            {
+                result = result.Where(c => c.StartDate >= startDate);
+            }
+            if (DateTime.TryParse(clvm.EndRange, out DateTime endDate))
+            {
+                endDate += new TimeSpan(23, 59, 59);
+                result = result.Where(c => c.StartDate <= endDate);
+            }
+            // Order by parameter
+            string[] sortdir = (clvm.SortParam ?? "").Split('_');
+            if(sortdir.Length == 1)
+            {
+                switch (sortdir[0])
                 {
-                    result = result.Where(c => c.StartDate >= startDate);
-                }
-                if (DateTime.TryParse(endrange, out endDate))
-                {
-                    endDate += new TimeSpan(23, 59, 59);
-                    result = result.Where(c => c.StartDate <= endDate);
+                    default: result = result.OrderBy(c => c.Name); break;
+                    case "StartDate": result = result.OrderBy(c => c.StartDate); break;
                 }
             }
-            string[] sortdir = sort.Split('_');
-            result = result.OrderBy(sortdir[0], sortdir.Length == 1);
-            clvm.Courses = result;
+            else
+            {
+                switch (sortdir[0])
+                {
+                    default: result = result.OrderByDescending(c => c.Name); break;
+                    case "StartDate": result = result.OrderByDescending(c => c.StartDate); break;
+                }
+            }
+            // Paginate the result
+            clvm.Count = result.Count();
+            clvm.Courses = result
+                .Skip(() => clvm.Offset)
+                .Take(() => CourseListViewModel.PageSize)
+                .ToArray();
 
             if (Request.IsAjaxRequest())
             {
