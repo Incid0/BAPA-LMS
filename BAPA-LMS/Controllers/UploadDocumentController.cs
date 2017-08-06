@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using BAPA_LMS.DataAccessLayer;
 using System.Linq;
+using BAPA_LMS.Models;
 
 namespace BAPA_LMS.Controllers
 {
@@ -19,13 +20,13 @@ namespace BAPA_LMS.Controllers
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
             Course course = db.Courses.Find(currentUser.CourseId);
-                     
+
             List<ActivitySubmitViewModel> activityList = new List<ActivitySubmitViewModel>();
             foreach (var module in course.Modules)
             {
                 foreach (var activity in module.Activities)
                 {
-                    if(activity.Type.Submit) 
+                    if (activity.Type.Submit)
                     {
                         activityList.Add(activity);
                     }
@@ -71,14 +72,43 @@ namespace BAPA_LMS.Controllers
 
             return View(asvm);
         }
-        public ActionResult ListDocuments()
+        public ActionResult ListUploadActivities(int id)
         {
+        
+            Course course = db.Courses.Find(id);
+
+            List<ActivitySubmitViewModel> activityList = new List<ActivitySubmitViewModel>();
+            foreach (var module in course.Modules)
+            {
+                foreach (var activity in module.Activities)
+                {
+                    if (activity.Type.Submit)
+                    {
+                        activityList.Add(activity);
+                    }
+                }
+            }
+            return View(activityList);
+        }
+
+        public ActionResult ListDocuments(int id)
+        {
+        
+            Activity activity = db.Activities.Find(id);     
+            List<ApplicationUser> classList = new List<ApplicationUser>();
+            foreach (var item in db.Users.Where(u => u.Course.Id == activity.Module.Course.Id))
+            {
+                
+                classList.Add(item);             
+            }
+
             List<FileDocument> fileList = new List<FileDocument>();
-            foreach (var item in db.Files)
+            foreach (var item in db.Files.Where(a => a.Activity.Id == id))
             {
                 fileList.Add(item);
             }
-            return View(fileList);
+            var tuple = new Tuple<List<ApplicationUser>, List<FileDocument>>(classList, fileList);
+            return View(tuple);
         }
         public ActionResult DownloadFile(int id)
         {
