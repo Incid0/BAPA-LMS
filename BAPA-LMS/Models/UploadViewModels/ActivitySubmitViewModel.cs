@@ -1,9 +1,6 @@
 ﻿using BAPA_LMS.Models.DB;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace BAPA_LMS.Models.ActivityViewModels
 {
@@ -26,6 +23,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
         [DisplayFormat(DataFormatString = "{0:HH:mm}")]
         public DateTime EndTime { get; set; }
         [Display(Name = "Typ av aktivitet")]
+        
         public ActivityType Type { get; set; }
 
         public static implicit operator ActivitySubmitViewModel(Activity model)
@@ -38,6 +36,7 @@ namespace BAPA_LMS.Models.ActivityViewModels
                 EndDate = model.EndTime,
                 EndTime = model.EndTime,
                 Type = model.Type
+                
             };
         }
     }

@@ -1,0 +1,46 @@
+﻿@model BAPA_LMS.Models.UploadViewModels.TeacherUploadViewModel
+
+<div>
+    <h4>@Html.DisplayFor(model => model.ActivityName) tillhörande <bold>@Html.DisplayFor(model => model.CourseName)</bold></h4>
+
+   
+    
+        
+        @using (Html.BeginForm("TeacherUploader", "UploadDocument", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+           
+                <input type="file" name="postedFile"/>
+               <br/>
+                <input type="submit" value="Ladda upp" />
+                <br />
+                <span style="color:green">@ViewBag.Message</span>
+        }
+    <table class="table">
+        <tr>
+            <th>
+               
+            </th>
+
+            <th>
+            
+            </th>
+        </tr>
+
+        @foreach (var file in Model.Files)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => file.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => file.Member.FullName)
+
+                </td>
+            </tr>
+        }
+       
+    </table>
+
+</div>
+
