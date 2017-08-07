@@ -24,7 +24,8 @@
     function loadTree(id) {
         $.getJSON('/Courses/GetTree/' + tree.data('id'), function (result) {
             tree.treeview({
-                data: [result]
+                data: [result],
+                showTags: true
             });
             tree.on('nodeSelected', treeNodeSelect);
             if (id) {
@@ -35,10 +36,16 @@
                     $('html, body').scrollTop(tree.find('.node-selected').offset().top - $('.navbar').height());
                 }
             }
+            // Testing edit click
+            tree.on('click', 'span.glyphicon-pencil', function () {
+                console.log(tree.treeview('getNode', $(this).parents('li').data('nodeid')).id);
+                return false;
+            });
         });
     }
 
     function treeNodeSelect(event, node) {
+        tree.find('li:first').append('<span style="float: right" class="editme glyphicon glyphicon-pencil"></span>');
         var index = node.id, ctrl = index[0], action = 'edit', id = index.substr(1);
         var btnA = $('#btnActivity'), btnD = $('#btnDel');
         // Limit activity creation to modules and activities
@@ -142,12 +149,11 @@
                 }
             });
 
-            //Return to courselist
+            // Return to courselist
             $('#btnReturn').on('click', function () {
                 $('#courseeditor').slideUp();
                 $('#courses').slideDown();
             });
-
         },
         showAlert: function (message) {
             localAlert(message)

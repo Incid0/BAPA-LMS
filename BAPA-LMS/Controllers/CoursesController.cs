@@ -186,6 +186,7 @@ namespace BAPA_LMS.Controllers
 				id = "c" + course.Id.Encode(),
 				text = course.Name,
 				icon = "glyphicon glyphicon-home",
+				tags = new string[] { "<span class=\"glyphicon glyphicon-pencil\"><span>" },
 				nodes = (course.Modules.OrderBy(m => m.StartDate).Select(m => new {
 					id = "m" + m.Id.Encode(),
 					text = m.Name,
