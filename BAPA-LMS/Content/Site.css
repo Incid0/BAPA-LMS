@@ -83,3 +83,7 @@ body > div.alert {
 .editarea-fixed {
     position: fixed;
 }
+
+#courseeditor {
+    display: none;
+}

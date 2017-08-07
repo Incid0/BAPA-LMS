@@ -24,8 +24,7 @@
     function loadTree(id) {
         $.getJSON('/Courses/GetTree/' + tree.data('id'), function (result) {
             tree.treeview({
-                data: [result],
-                levels: 3
+                data: [result]
             });
             tree.on('nodeSelected', treeNodeSelect);
             if (id) {
@@ -107,6 +106,9 @@
                 $(this).removeData('bs.modal').children('.modal-content').html('');
             });
 
+            // Initializing tooltips
+            $('[data-toggle="tooltip"]').tooltip(); 
+
             // Initializing DatePicker
             $.fn.datepicker.defaults.weekStart = 1;
             $.fn.datepicker.defaults.language = "sv";
@@ -119,9 +121,6 @@
 
             // Initializing TreeView
             tree = $('#tree');
-            if (tree.length) {
-                loadTree();
-            }
 
             // Connecting filterinput
             $('#coursefilter').on('input', updateCourseList);
@@ -129,6 +128,26 @@
 
             // Connecting buttons
             $('button.add').on('click', createAction);
+
+            // Clicking course
+            $('#courseList').on('click', 'tr[data-id]', function () {
+                var row = $(this);
+                $('#courses').slideUp();
+                $('#courseeditor').slideDown();
+                $('#coursename').text(row.find('td:first').text());
+                if (tree.length) {
+                    tree.data('id', row.data('id'));
+                    $('#editarea').empty();
+                    loadTree();
+                }
+            });
+
+            //Return to courselist
+            $('#btnReturn').on('click', function () {
+                $('#courseeditor').slideUp();
+                $('#courses').slideDown();
+            });
+
         },
         showAlert: function (message) {
             localAlert(message)

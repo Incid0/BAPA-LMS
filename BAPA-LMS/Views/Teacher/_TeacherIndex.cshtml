@@ -20,7 +20,7 @@
     @:<div id="courseList">
         <p>Antal träffar: @Model.Count</p>
         <input type="hidden" name="sortparam" value="@Model.SortParam" />
-        @:<table class="table table-striped table-responsive">
+        @:<table class="table table-striped table-responsive table-hover">
             <tr>
                 <th>
                     @SortHeader("Name", "Namn")
@@ -34,13 +34,12 @@
 }
 @foreach (var item in Model.Courses)
 {
-    <tr>
+    <tr data-id="@item.Id">
         <td>
-            <a href="@Url.Action("CourseEdit", "Teacher", new { id = item.Id })">@Html.DisplayFor(modelItem => item.Name)</a>
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StartDate)
-
         </td>
         <td>
             @Html.ActionLink("Inlämningsuppgifter", "ActivityUploads", new { id = item.Id })
