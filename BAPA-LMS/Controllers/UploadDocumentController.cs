@@ -1,6 +1,6 @@
 ﻿using BAPA_LMS.Models.ActivityViewModels;
 using BAPA_LMS.Models.DB;
-
+using BAPA_LMS.Models;
 using BAPA_LMS.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using BAPA_LMS.DataAccessLayer;
 using System.Linq;
+using System.Net;
+using System.Data.Entity.Infrastructure;
 
 namespace BAPA_LMS.Controllers
 {
@@ -87,6 +89,48 @@ namespace BAPA_LMS.Controllers
             string contentType = ".jpg";
 
             return File(file, contentType, Path.GetFileName(file));
+        }
+
+        // GET: Activities/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            FileDocument file = db.Files.Find(id?.Decode());
+            if (file == null)
+            {
+                return HttpNotFound();
+            }
+            Session["fileid"] = file.Id;
+            return PartialView();
+        }
+
+        // POST: Activities/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteConfirmed()
+        {
+            int? id = (int?)Session["fileid"];
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            try
+            {
+                FileDocument file = db.Files.Find(id);
+                db.Files.Remove(file);
+                db.SaveChanges();
+                TempData["alert"] = "success|Dokumentet togs bort!";
+            }
+            catch (RetryLimitExceededException)
+            {
+                // Log errors here
+                TempData["alert"] = "danger|Det gick inte att ta bort Dokumentet!";
+            }
+            return PartialView();
         }
 
         protected override void Dispose(bool disposing)

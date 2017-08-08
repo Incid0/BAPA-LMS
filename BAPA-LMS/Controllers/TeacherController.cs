@@ -110,20 +110,7 @@ namespace BAPA_LMS.Controllers
             return View(clvm);
 
         }
-
-        //public ActionResult ActivityUploads(int id)
-        //{
-        //    List<StudentUploadViewModel> activityList = new List<StudentUploadViewModel>();
-        //    foreach (var item in db.Activities)
-        //    {
-        //        if (item.Type.Id == 3 && item.Module.Course.Id == id)
-        //        {
-        //            activityList.Add(item);
-        //        }
-        //    }
-        //    return View(activityList);
-        //}
-
+        
 
 
         public ActionResult CourseEdit(int? id)
