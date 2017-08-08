@@ -18,7 +18,7 @@
 @if (Model.Offset == 0)
 {
     @:<div id="courseList">
-        <p>Antal träffar: @Model.Count</p>
+        <div class="panel-body">Antal träffar: @Model.Count</div>
         <input type="hidden" name="sortparam" value="@Model.SortParam" />
         @:<table class="table table-striped table-responsive table-hover">
             <tr>

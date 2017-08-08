@@ -15,8 +15,7 @@
             },
             new { @class = "form-inline" }))
         {
-            <div class="panel-heading">Panel heading</div>
-            <div class="panel-body">
+            <div class="panel-heading">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Filter, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Filter, new { htmlAttributes = new { id = "coursefilter", @class = "form-control" } })
