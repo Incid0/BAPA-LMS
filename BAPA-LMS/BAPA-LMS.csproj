@@ -420,7 +420,7 @@
     <Content Include="Views\Activities\_Create.cshtml" />
     <Content Include="Views\Activities\_Edit.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
-    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\_Edit.cshtml" />
     <Content Include="Views\Modules\_Create.cshtml" />
     <Content Include="Views\Modules\_Edit.cshtml" />
     <Content Include="Views\Teacher\CourseEdit.cshtml" />

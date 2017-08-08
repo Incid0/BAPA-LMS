@@ -4,6 +4,7 @@
     var skipEditor = false;
     var filterhandler;
 
+    // Show temporary message at the top of page
     function localAlert(message, style) {
         var parent = alertbox.parent();
         if (message) alertbox.text(message);
@@ -15,6 +16,7 @@
         }, 2000);
     }
 
+    // Returns a node from TreeView if id matches
     function findNode(id) {
         return tree.treeview('getEnabled').find(function (node) {
             return node.id === id;
@@ -36,16 +38,20 @@
                     $('html, body').scrollTop(tree.find('.node-selected').offset().top - $('.navbar').height());
                 }
             }
+            // Initializing tooltips
+            tree.find('[data-toggle="tooltip"]').tooltip();
+
             // Testing edit click
-            tree.on('click', 'span.glyphicon-pencil', function () {
-                console.log(tree.treeview('getNode', $(this).parents('li').data('nodeid')).id);
+            tree.on('click', '.editnode', function () {
+                var nodeid = tree.treeview('getNode', $(this).parents('li').data('nodeid')).id;
+                if (nodeid) changeEditor('edit', 'courses', nodeid.substr(1));
+                //console.log();
                 return false;
             });
         });
     }
 
     function treeNodeSelect(event, node) {
-        tree.find('li:first').append('<span style="float: right" class="editme glyphicon glyphicon-pencil"></span>');
         var index = node.id, ctrl = index[0], action = 'edit', id = index.substr(1);
         var btnA = $('#btnActivity'), btnD = $('#btnDel');
         // Limit activity creation to modules and activities
@@ -153,6 +159,7 @@
             $('#btnReturn').on('click', function () {
                 $('#courseeditor').slideUp();
                 $('#courses').slideDown();
+                $('#coursefilter').trigger('input');
             });
         },
         showAlert: function (message) {
@@ -186,7 +193,7 @@
                 localAlert(data[1], data[0]);
                 if (data[0] === 'success') {
                     $('#modalContainer').modal('hide');
-                    $('#editarea').html('');
+                    $('#editarea').empty();
                     $('#btnDel').prop('disabled', true);
                     loadTree();
                 }
