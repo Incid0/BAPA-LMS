@@ -24,6 +24,7 @@ namespace BAPA_LMS.Models.CourseViewModels
         [Display(Name = "Modullista")]
 		public ICollection<Module> Modules { get; set; }
         public ICollection<ApplicationUser> Members { get; set; }
+        public ICollection<FileDocument> Files { get; set; }
 
 		public static implicit operator CourseDetailViewModel(Course model)
 		{
@@ -33,7 +34,8 @@ namespace BAPA_LMS.Models.CourseViewModels
 				Description = model.Description,
 				StartDate = model.StartDate,
 				Modules = model.Modules,
-                Members = model.Members
+                Members = model.Members,
+                Files = model.Files
 			};
 
 		}

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<BAPA_LMS.Models.DB.FileDocument>
+
+<div class="panel panel-default col-md-6 no-padding ">
+    <div class="panel-heading">
+        <h4>
+            Dokument
+        </h4>
+    </div>
+    <table class="table table-fixed">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="col-xs-12">@Html.DisplayFor(modelItem => item.Name) @Html.ActionLink("Ladda ner", "DownloadFile", "UploadDocument", new { id = item.Id }, null)</td>
+            </tr>
+        }
+    </table>
+</div>
+

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BAPA_LMS.Models.ActivityViewModels.ActivityDetailViewModel>
+﻿@model BAPA_LMS.Models.ModuleViewModels.ModuleDetailViewModel
 
 @{
     ViewBag.Title = "AktivitetsInfo";
@@ -8,12 +8,39 @@
 
 
 
-    <div class="container">
+<div class="container">
+    <div class="row">
 
 
-   
-        <div class="panel-group" id="accordion">
-            @foreach (var item in Model)
+        <div class="panel panel-default col-md-6 no-padding">
+            <div class="panel-heading">
+                <h3 class="panel-title">@Html.DisplayFor(model => model.Name)</h3>
+            </div>
+            <div class="panel-body">
+                @Html.DisplayFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)<br />
+
+            </div>
+           
+
+            @*<div class="panel panel-default col-md-6 no-padding ">*@
+            <hr/>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Dokument för @Html.DisplayFor(model => model.Name)</h3>
+                </div>
+                <table class="table table-fixed">
+
+                    @foreach (var item in Model.Files)
+            {
+                        <tr>
+                            <td class="col-xs-12">@Html.DisplayFor(modelItem => item.Name) @Html.ActionLink("Ladda ner", "DownloadFile", "UploadDocument", new { id = item.Id }, null)</td>
+                        </tr>
+                    }
+                </table>
+            @*</div>*@
+        </div>
+        <div class="panel-group col-md-6 no-padding" id="accordion">
+            @foreach (var item in Model.Activities)
             {
 
                 <div class="panel panel-default">
@@ -26,22 +53,29 @@
                         <div class="panel-body">
                             @Html.DisplayFor(model => item.Description)
                             <br />
-                            @Html.DisplayFor(model => item.StartDate)
-                            <br />
                             @Html.DisplayFor(model => item.StartTime)
-
+                            <br />
+                            @Html.DisplayFor(model => item.EndTime)
+                            <br/>
+                            @foreach(var file in item.Files)
+                            {
+                                if(file.Activity.Id == item.Id)
+                                {
+                                    @Html.DisplayFor(model => file.Name) @Html.ActionLink("Ladda ner", "DownloadFile", "UploadDocument", new { id = file.Id }, null)
+                                }
+                            }
                         </div>
                     </div>
                 </div>
 
             }
         </div>
-            
+    </div>
+ 
+ 
+
+
+
+
 
 </div>
-
-           
-
-
-
-
