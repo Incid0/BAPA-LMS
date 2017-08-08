@@ -63,6 +63,7 @@ namespace BAPA_LMS.Controllers
                 file.ActivityId = id;
                 file.ActivityName = asvm.Name;
                 file.MemberId = currentUser.Id;
+                file.TimeStamp = DateTime.Now;
 
                 string path = Server.MapPath("~/Uploads/");
                 if (!Directory.Exists(path))
@@ -124,6 +125,7 @@ namespace BAPA_LMS.Controllers
                 {
                     FileDocument file = new FileDocument();
                     file.MemberId = currentUser.Id;
+                    file.TimeStamp = DateTime.Now;
                     switch (id[0])
                     {
                         case 'a':
