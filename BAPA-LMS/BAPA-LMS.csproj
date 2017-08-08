@@ -210,6 +210,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708081223513_basse.cs" />
+    <Compile Include="Migrations\201708081223513_basse.Designer.cs">
+      <DependentUpon>201708081223513_basse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityCreateViewModel.cs" />
@@ -451,6 +455,11 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>CustomDateMessages.Designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708081223513_basse.resx">
+      <DependentUpon>201708081223513_basse.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

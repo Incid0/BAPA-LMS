@@ -22,4 +22,5 @@ namespace BAPA_LMS.Models.DB
         public virtual Activity Activity { get; set; }
 
     }
+
 }

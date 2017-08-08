@@ -90,21 +90,21 @@ namespace BAPA_LMS.Controllers
                         Activity activity = db.Activities.Find(intId);
                         tuvm.ActivityName = activity.Name;
                         tuvm.Files = activity.Files;
-                        tuvm.toxicId = id;
+                        tuvm.Id = id;
                         tuvm.CourseName = activity.Module.Course.Name;
                         break;
                     case 'm':
                         Module module = db.Modules.Find(intId);
                         tuvm.Files = module.Files;
                         tuvm.ModuleName = module.Name;
-                        tuvm.toxicId = id;
+                        tuvm.Id = id;
                         tuvm.CourseName = module.Course.Name;
                         break;
                     case 'c':
                         Course course = db.Courses.Find(intId);
                         tuvm.Files = course.Files;
                         tuvm.CourseName = course.Name;
-                        tuvm.toxicId = id;
+                        tuvm.Id = id;
                         break;
                 }
             }
@@ -131,21 +131,21 @@ namespace BAPA_LMS.Controllers
                             file.ActivityId = activity.Id;
                             tuvm.ActivityName = activity.Name;
                             tuvm.Files = activity.Files;
-                            tuvm.toxicId = id;
+                            tuvm.Id = id;
                             break;
                         case 'm':
                             Module module = db.Modules.Find(intId);
                             file.ModuleId = module.Id;
                             tuvm.ModuleName = module.Name;
                             tuvm.Files = module.Files;
-                            tuvm.toxicId = id;
+                            tuvm.Id = id;
                             break;
                         case 'c':
                             Course course = db.Courses.Find(intId);
                             file.CourseId = course.Id;
                             tuvm.CourseName = course.Name;
                             tuvm.Files = course.Files;
-                            tuvm.toxicId = id;
+                            tuvm.Id = id;
                             break;
                         default:
                             break;
