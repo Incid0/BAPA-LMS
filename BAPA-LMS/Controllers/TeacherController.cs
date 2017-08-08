@@ -112,7 +112,6 @@ namespace BAPA_LMS.Controllers
         }
         
 
-
         public ActionResult CourseEdit(int? id)
         {
             if (id == null)
@@ -127,6 +126,7 @@ namespace BAPA_LMS.Controllers
             CourseIndexViewModel civm = course;
             return View(civm);
         }
+
         [AllowAnonymous]
         public ActionResult RegisterTeacher()
         {
@@ -146,7 +146,6 @@ namespace BAPA_LMS.Controllers
 
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, int id)
         {
@@ -170,8 +169,8 @@ namespace BAPA_LMS.Controllers
 
             return View(model);
         }
+
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterTeacher(RegisterViewModel model)
         {

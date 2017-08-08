@@ -37,6 +37,7 @@
                     @Html.DisplayFor(modelItem => file.Member.FullName)
 
                 </td>
+                <td>@Html.ActionLink("Delete", "Delete", new { id = file.Id })</td>
             </tr>
         }
        

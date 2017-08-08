@@ -10,16 +10,17 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BAPA_LMS.DataAccessLayer;
-using System.Linq;
 using System.Net;
 using System.Data.Entity.Infrastructure;
+using System.Data;
 
 namespace BAPA_LMS.Controllers
 {
+    [Authorize]
     public class UploadDocumentController : Controller
     {
         private LMSDbContext db = new LMSDbContext();
+
         public ActionResult ActivityUpload()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
@@ -36,6 +37,7 @@ namespace BAPA_LMS.Controllers
                     }
                 }
             }
+
             List<FileDocument> fileList = new List<FileDocument>();
             foreach (var file in db.Files.Where(u => u.Member.Id == currentUser.Id))
             {
@@ -59,30 +61,41 @@ namespace BAPA_LMS.Controllers
             ActivitySubmitViewModel asvm = activity;
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
 
-            if (postedFile != null)
+            try
             {
-                FileDocument file = new FileDocument();
-                file.Email = currentUser.Email;
-                file.CourseName = currentUser.Course.Name;
-                file.Name = postedFile.FileName;
-                file.ActivityId = id;
-                file.ActivityName = asvm.Name;
-                file.MemberId = currentUser.Id;
-
-                string path = Server.MapPath("~/Uploads/" + currentUser.Course.Name + "/" + asvm.Name + "/" + currentUser.Email + "/");
-                if (!Directory.Exists(path))
+                if (postedFile != null)
                 {
-                    Directory.CreateDirectory(path);
-                }
-                db.Files.Add(file);
-                db.SaveChanges();
-                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-                ViewBag.Message = "File uploaded successfully.";
-            }
+                    FileDocument file = new FileDocument();
+                    file.Email = currentUser.Email;
+                    file.CourseName = currentUser.Course.Name;
+                    file.Name = postedFile.FileName;
+                    file.ActivityId = id;
+                    file.ActivityName = asvm.Name;
+                    file.MemberId = currentUser.Id;
 
+                    string path = Server.MapPath("~/Uploads/" + currentUser.Course.Name + "/" + asvm.Name + "/" + currentUser.Email + "/");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    db.Files.Add(file);
+                    db.SaveChanges();
+                    postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                    TempData["alert"] = "success|Filen är uppladdad!";
+                }
+                else
+                {
+                    TempData["alert"] = "danger|Kunde inte lägga till dokument";
+                }
+            }
+            catch (DataException)
+            {
+                // Log errors here
+                TempData["alert"] = "danger|Allvarligt fel!";
+            }
             return View(asvm);
         }
-
+        
         public ActionResult TeacherUploader(string id)
         {
             TeacherUploadViewModel tuvm = new TeacherUploadViewModel();
@@ -215,35 +228,34 @@ namespace BAPA_LMS.Controllers
         public ActionResult DownloadFile(int id)
         {
             FileDocument fileDocument = db.Files.Find(id);
-            string file = "~/Uploads/" + fileDocument.CourseName + "/" + fileDocument.ActivityName + "/" + fileDocument.Email + "/" + fileDocument.Name;
+            string file = "~/Uploads/";
             string contentType = ".jpg";
 
             return File(file, contentType, Path.GetFileName(file));
         }
 
-        // GET: Activities/Delete/5
+        // GET: Document/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FileDocument file = db.Files.Find(id?.Decode());
+            FileDocument file = db.Files.Find(id);
             if (file == null)
             {
                 return HttpNotFound();
             }
             Session["fileid"] = file.Id;
-            return PartialView();
+            return PartialView("_Delete", (DocumentDeleteViewModel)file);
         }
 
-        // POST: Activities/Delete/5
+        // POST: Document/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed()
         {
             int? id = (int?)Session["fileid"];
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -251,8 +263,14 @@ namespace BAPA_LMS.Controllers
             try
             {
                 FileDocument file = db.Files.Find(id);
+                
+                string path = Server.MapPath("~/Uploads/" + file.Name);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }                
                 db.Files.Remove(file);
-                db.SaveChanges();
+                db.SaveChanges();                
                 TempData["alert"] = "success|Dokumentet togs bort!";
             }
             catch (RetryLimitExceededException)
@@ -260,7 +278,7 @@ namespace BAPA_LMS.Controllers
                 // Log errors here
                 TempData["alert"] = "danger|Det gick inte att ta bort Dokumentet!";
             }
-            return PartialView();
+            return PartialView("_Delete");
         }
 
         protected override void Dispose(bool disposing)
