@@ -71,9 +71,10 @@ namespace BAPA_LMS.Controllers
                     file.Name = postedFile.FileName;
                     file.ActivityId = id;
                     file.ActivityName = asvm.Name;
-                    file.MemberId = currentUser.Id;
+                    file.MemberId = currentUser.Id;           
+                file.TimeStamp = DateTime.Now;
 
-                    string path = Server.MapPath("~/Uploads/" + currentUser.Course.Name + "/" + asvm.Name + "/" + currentUser.Email + "/");
+                    string path = Server.MapPath("~/Uploads/");
                     if (!Directory.Exists(path))
                     {
                         Directory.CreateDirectory(path);
@@ -108,21 +109,21 @@ namespace BAPA_LMS.Controllers
                         Activity activity = db.Activities.Find(intId);
                         tuvm.ActivityName = activity.Name;
                         tuvm.Files = activity.Files;
-                        tuvm.toxicId = id;
+                        tuvm.Id = id;
                         tuvm.CourseName = activity.Module.Course.Name;
                         break;
                     case 'm':
                         Module module = db.Modules.Find(intId);
                         tuvm.Files = module.Files;
                         tuvm.ModuleName = module.Name;
-                        tuvm.toxicId = id;
+                        tuvm.Id = id;
                         tuvm.CourseName = module.Course.Name;
                         break;
                     case 'c':
                         Course course = db.Courses.Find(intId);
                         tuvm.Files = course.Files;
                         tuvm.CourseName = course.Name;
-                        tuvm.toxicId = id;
+                        tuvm.Id = id;
                         break;
                 }
             }
@@ -142,6 +143,7 @@ namespace BAPA_LMS.Controllers
                 {
                     FileDocument file = new FileDocument();
                     file.MemberId = currentUser.Id;
+                    file.TimeStamp = DateTime.Now;
                     switch (id[0])
                     {
                         case 'a':
@@ -149,21 +151,21 @@ namespace BAPA_LMS.Controllers
                             file.ActivityId = activity.Id;
                             tuvm.ActivityName = activity.Name;
                             tuvm.Files = activity.Files;
-                            tuvm.toxicId = id;
+                            tuvm.Id = id;
                             break;
                         case 'm':
                             Module module = db.Modules.Find(intId);
                             file.ModuleId = module.Id;
                             tuvm.ModuleName = module.Name;
                             tuvm.Files = module.Files;
-                            tuvm.toxicId = id;
+                            tuvm.Id = id;
                             break;
                         case 'c':
                             Course course = db.Courses.Find(intId);
                             file.CourseId = course.Id;
                             tuvm.CourseName = course.Name;
                             tuvm.Files = course.Files;
-                            tuvm.toxicId = id;
+                            tuvm.Id = id;
                             break;
                         default:
                             break;
@@ -225,10 +227,10 @@ namespace BAPA_LMS.Controllers
             return View(tuple);
         }
 
-        public ActionResult DownloadFile(int id)
+        public FileResult DownloadFile(int id)
         {
             FileDocument fileDocument = db.Files.Find(id);
-            string file = "~/Uploads/";
+            string file = "~/Uploads/" + fileDocument.Name;
             string contentType = ".jpg";
 
             return File(file, contentType, Path.GetFileName(file));

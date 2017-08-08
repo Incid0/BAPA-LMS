@@ -416,9 +416,7 @@
     <Content Include="Views\Modules\Details.cshtml" />
     <Content Include="Views\Activities\_Details.cshtml" />
     <Content Include="Views\Student\KursInfo.cshtml" />
-    <Content Include="Views\Student\ModulInfo.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\Student\AktivitetsInfo.cshtml" />
     <Content Include="Views\Activities\_Create.cshtml" />
     <Content Include="Views\Activities\_Edit.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
@@ -441,6 +439,8 @@
     <Content Include="Views\UploadDocument\ListUploadActivities.cshtml" />
     <Content Include="Views\UploadDocument\TeacherUploader.cshtml" />
     <Content Include="Views\UploadDocument\_Delete.cshtml" />
+    <Content Include="Views\Student\AktivitetsInfo.cshtml" />
+    <Content Include="Views\Student\_ActivityFileList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

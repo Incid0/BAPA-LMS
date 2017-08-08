@@ -1,5 +1,5 @@
 ﻿@using BAPA_LMS.Models.DB;
-@model Tuple<List<ApplicationUser>,List<FileDocument>>
+@model Tuple<List<ApplicationUser>, List<FileDocument>>
 
 @{
     ViewBag.Title = "ListDocuments";
@@ -11,29 +11,45 @@
 <table class="table">
     <tr>
         <th>
-           <p>Full Name</p>
+            <p>Full Name</p>
         </th>
 
         <th></th>
     </tr>
 
-@foreach (var user in Model.Item1) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => user.FullName)
-        </td>
-       
-        <td>
-         @foreach (var file in Model.Item2)
-         {
-             if (file.MemberId == user.Id)
-             {
-                @Html.ActionLink("Ladda ner dokument", "DownloadFile", new { id = file.Id })
-             }
-         }
-        
-        </td>
-    </tr>
-}
+    @foreach (var user in Model.Item1)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => user.FullName)
+            </td>
+
+
+            @foreach (var file in Model.Item2)
+            {
+
+                if (file.MemberId == user.Id)
+
+                {
+                    <td>
+                        @Html.ActionLink("Ladda ner dokument", "DownloadFile", new { id = file.Id })
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => file.TimeStamp)
+                    </td>
+                }
+                else
+                {
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                }
+            }
+        </tr>
+    }
 
 </table>
