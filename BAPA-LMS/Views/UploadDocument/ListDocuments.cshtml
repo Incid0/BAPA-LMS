@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BAPA_LMS.Models.DB.FileDocument>
+﻿@using BAPA_LMS.Models.DB;
+@model Tuple<List<ApplicationUser>,List<FileDocument>>
 
 @{
     ViewBag.Title = "ListDocuments";
@@ -6,42 +7,31 @@
 
 <h2>ListDocuments</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+           <p>Full Name</p>
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActivityName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var user in Model.Item1) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => user.FullName)
         </td>
+       
         <td>
-            @Html.DisplayFor(modelItem => item.ActivityName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Ladda ner dokument", "DownloadFile", new { id = item.Id})
+         @foreach (var file in Model.Item2)
+         {
+             if (file.MemberId == user.Id)
+             {
+                @Html.ActionLink("Ladda ner dokument", "DownloadFile", new { id = file.Id })
+             }
+         }
+        
         </td>
     </tr>
 }

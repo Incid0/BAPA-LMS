@@ -1,11 +1,13 @@
-﻿@model IEnumerable<BAPA_LMS.Models.ActivityViewModels.ActivitySubmitViewModel>
+﻿@using BAPA_LMS.Models.DB;
+@model Tuple<List<BAPA_LMS.Models.ActivityViewModels.ActivitySubmitViewModel>,ApplicationUser, List<FileDocument>>
+
 @{
     ViewBag.Title = "ActivityUpload";
 }
 <h2>ActivityUpload</h2>
 
 <div class="panel-group" id="accordion">
-    @foreach (var item in Model)
+    @foreach (var item in Model.Item1)
             {
 
         <div class="panel panel-default">
@@ -22,12 +24,16 @@
                     <br />
                     @Html.DisplayFor(model => item.EndTime)
                     <br />
-                    @*@if(item.FileSubmitted == true)
+                    @if(Model.Item3.Exists(e => e.Member.Id == Model.Item2.Id) && Model.Item3.Exists(f => f.ActivityId == item.Id))
                     {
                       <strong>Uppgiften är redan inlämnad.</strong>
-                    }*@
-                    <br />
-                    @Html.ActionLink("Ladda upp dokument", "ActivityUploader", new { id = item.Id })
+                    }
+                    else
+                    {
+                        <br />
+                        @Html.ActionLink("Ladda upp dokument", "ActivityUploader", new { id = item.Id })
+                    }
+                   
                 </div>
             </div>
         </div>

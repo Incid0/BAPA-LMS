@@ -224,27 +224,27 @@ namespace BAPA_LMS.Migrations
 				}
 				context.SaveChanges();
 
-				string[] courseNames = new[] { "Basic", "Pascal", "Cobol", "C++", "C#", "Javascript", "Html5", "Python", "PHP", "Ruby", "med John", "med Dimitris", "Grund", ".Net", "Classic", "FullStack" };
-				string[] courseHashes = new[] { "#nybörjare", "#medelsvår", "#avancerad", "#1337h4xx0r", "#historik", "#teori", "#praktik", "#e-learning", "#föreläsning", "#verktyg", "#projekt", "#grupparbete", "#nivåer" };
-				string[] courseCities = new[] { "Stockholm", "Göteborg", "Malmö", "Linköping", "Kiruna", "Östersund", "Hudiksvall", "Jönköping", "Uppsala", "Västerås", "Sundsvall", "Gävle", "Umeå" };
-				for (i = 3; i < 20000; i++)
-				{
-					context.Courses.AddOrUpdate(
-						new Course
-						{
-							Id = i,
-							Name = string.Format("{0} {1}", courseNames[rng.Next(10)], courseNames[10 + rng.Next(6)]),
-							Description = string.Format("Ort: {0}\nNyckelord: {1} {2} {3}",
-								courseCities[rng.Next(courseCities.Length)],
-								courseHashes[rng.Next(courseHashes.Length)],
-								courseHashes[rng.Next(courseHashes.Length)],
-								courseHashes[rng.Next(courseHashes.Length)]),
-							StartDate = DateTime.Today - new TimeSpan(365, 0, 0, 0) + new TimeSpan(rng.Next(365 * 3), 0, 0, 0)
-						});
-					if (i % 100 == 0) context.SaveChanges();
-				}
-				context.SaveChanges();
-			}
+                string[] courseNames = new[] { "Basic", "Pascal", "Cobol", "C++", "C#", "Javascript", "Html5", "Python", "PHP", "Ruby", "med John", "med Dimitris", "Grund", ".Net", "Classic", "FullStack" };
+                string[] courseHashes = new[] { "#nybörjare", "#medelsvår", "#avancerad", "#1337h4xx0r", "#historik", "#teori", "#praktik", "#e-learning", "#föreläsning", "#verktyg", "#projekt", "#grupparbete", "#nivåer" };
+                string[] courseCities = new[] { "Stockholm", "Göteborg", "Malmö", "Linköping", "Kiruna", "Östersund", "Hudiksvall", "Jönköping", "Uppsala", "Västerås", "Sundsvall", "Gävle", "Umeå" };
+                for (i = 3; i < 20000; i++)
+                {
+                    context.Courses.AddOrUpdate(
+                        new Course
+                        {
+                            Id = i,
+                            Name = string.Format("{0} {1}", courseNames[rng.Next(10)], courseNames[10 + rng.Next(6)]),
+                            Description = string.Format("Ort: {0}\nNyckelord: {1} {2} {3}",
+                                courseCities[rng.Next(courseCities.Length)],
+                                courseHashes[rng.Next(courseHashes.Length)],
+                                courseHashes[rng.Next(courseHashes.Length)],
+                                courseHashes[rng.Next(courseHashes.Length)]),
+                            StartDate = DateTime.Today - new TimeSpan(365, 0, 0, 0) + new TimeSpan(rng.Next(365 * 3), 0, 0, 0)
+                        });
+                    if (i % 100 == 0) context.SaveChanges();
+                }
+                context.SaveChanges();
+            }
 			finally
 			{
 				context.Configuration.AutoDetectChangesEnabled = true;
