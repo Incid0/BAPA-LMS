@@ -64,7 +64,7 @@ namespace BAPA_LMS.Controllers
                 file.ActivityName = asvm.Name;
                 file.MemberId = currentUser.Id;
 
-                string path = Server.MapPath("~/Uploads/" + currentUser.Course.Name + "/" + asvm.Name + "/" + currentUser.Email + "/");
+                string path = Server.MapPath("~/Uploads/");
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
@@ -207,15 +207,15 @@ namespace BAPA_LMS.Controllers
             return View(tuple);
         }
 
-        public ActionResult DownloadFile(int id)
+        public FileResult DownloadFile(int id)
         {
             FileDocument fileDocument = db.Files.Find(id);
-            string file = "~/Uploads/" + fileDocument.CourseName + "/" + fileDocument.ActivityName + "/" + fileDocument.Email + "/" + fileDocument.Name;
+            string file = "~/Uploads/" + fileDocument.Name;
             string contentType = ".jpg";
 
             return File(file, contentType, Path.GetFileName(file));
         }
-
+     
         protected override void Dispose(bool disposing)
         {
             if (disposing)

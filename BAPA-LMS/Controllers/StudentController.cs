@@ -1,20 +1,10 @@
-﻿using BAPA_LMS;
-using BAPA_LMS.DataAccessLayer;
-using BAPA_LMS.Models;
-using BAPA_LMS.Models.ActivityViewModels;
+﻿using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models.CourseViewModels;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ModuleViewModels;
 using BAPA_LMS.Utils;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Runtime.Remoting.Contexts;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 
@@ -55,33 +45,23 @@ namespace BAPA_LMS.Controllers
 
             return View(cdvm);
         }
-        public ActionResult ModulInfo()
-        {
-            var currentUser = UserUtils.GetCurrentUser(HttpContext);
-
-            Course course = db.Courses.Find(currentUser.CourseId);
-            List<ModuleDetailViewModel> moduleList = new List<ModuleDetailViewModel>();
-            foreach (var item in course.Modules)
-            {          
-                    moduleList.Add(item);             
-            }                       
-            return View(moduleList);
-
-        }
 
         public ActionResult AktivitetsInfo(int id)
         {
-            var currentUser = UserUtils.GetCurrentUser(HttpContext);
             Module module = db.Modules.Find(id);
-            List<ActivityDetailViewModel> activityList = new List<ActivityDetailViewModel>();
-            foreach (var item in module.Activities)
-            {   
-                    activityList.Add(item);               
-            }
-            return View(activityList);
+            ModuleDetailViewModel mdvm = module;
+            return View(mdvm);
         }
 
-
+        public ActionResult ActivityFileList(int id)
+        {
+            List<FileDocument> fileList = new List<FileDocument>();
+            foreach (var file in db.Files.Where(f => f.Activity.Id == id))
+            {
+                fileList.Add(file);
+            }
+            return PartialView(fileList);
+        }
 
 
         protected override void Dispose(bool disposing)
