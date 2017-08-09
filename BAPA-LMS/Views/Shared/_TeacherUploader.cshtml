@@ -1,0 +1,38 @@
+﻿@using BAPA_LMS.Models
+@model BAPA_LMS.Models.UploadViewModels.TeacherUploadViewModel
+
+<div id="uploadWindow" style="margin-top:10px;">
+
+
+
+
+
+    @using (Html.BeginForm("TeacherUploader", "UploadDocument", FormMethod.Post, new { id = "formUpload", enctype = "multipart/form-data" }))
+    {
+        @Html.Hidden("result", TempData["alert"], new { id = "uploadResult" })
+        <input type="file" name="postedFile" />
+                <br />
+                <input id="btnUpload" class="btn btn-primary" type="submit" value="Ladda upp" />
+                <br />
+    }
+    
+
+
+        <table class="table" style="max-width: 500px; margin-top:10px;">
+        
+
+            @foreach (var file in Model.Files)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => file.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => file.Member.FullName)</td>
+                    <td>@Html.ActionLink("Ta bort", "Delete", "UploadDocument", new { id = file.Id.Encode() }, null)</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+<script>
+    teacher.initUpload();
+</script>
