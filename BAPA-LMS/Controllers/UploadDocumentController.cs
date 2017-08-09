@@ -104,33 +104,33 @@ namespace BAPA_LMS.Controllers
         {
             TeacherUploadViewModel tuvm = new TeacherUploadViewModel();
             int intId;
-                if (int.TryParse(id.Substring(1), out intId))
-                {                
-                    switch (id[0])
-                    {
-                        case 'a':
-                            Activity activity = db.Activities.Find(intId);
-                            tuvm.ActivityName = activity.Name;
-                            tuvm.Files = activity.Files;
-                            tuvm.Id = id;
-                            tuvm.CourseName = activity.Module.Course.Name;
-                            break;
-                        case 'm':
-                            Module module = db.Modules.Find(intId);
-                            tuvm.Files = module.Files;
-                            tuvm.ModuleName = module.Name;
-                            tuvm.Id = id;
-                            tuvm.CourseName = module.Course.Name;
-                            break;
-                        case 'c':
-                            Course course = db.Courses.Find(intId);                            
-                            tuvm.Files = course.Files;
-                            tuvm.CourseName = course.Name;
-                            tuvm.Id = id;
-                            break;
-                    }
+            if (int.TryParse(id.Substring(1), out intId))
+            {
+                switch (id[0])
+                {
+                    case 'a':
+                        Activity activity = db.Activities.Find(intId);
+                        tuvm.ActivityName = activity.Name;
+                        tuvm.Files = activity.Files;
+                        tuvm.Id = id;
+                        tuvm.CourseName = activity.Module.Course.Name;
+                        break;
+                    case 'm':
+                        Module module = db.Modules.Find(intId);
+                        tuvm.Files = module.Files;
+                        tuvm.ModuleName = module.Name;
+                        tuvm.Id = id;
+                        tuvm.CourseName = module.Course.Name;
+                        break;
+                    case 'c':
+                        Course course = db.Courses.Find(intId);
+                        tuvm.Files = course.Files;
+                        tuvm.CourseName = course.Name;
+                        tuvm.Id = id;
+                        break;
                 }
-            return View(tuvm);
+            }
+            return PartialView("_TeacherUploader", tuvm);
         }
 
         [HttpPost]
@@ -199,7 +199,7 @@ namespace BAPA_LMS.Controllers
             {
                 TempData["alert"] = "danger|Allvarligt fel!";
             }
-            return View(tuvm);
+            return PartialView("_TeacherUploader", tuvm);
         }
 
         public ActionResult ListUploadActivities(int id)

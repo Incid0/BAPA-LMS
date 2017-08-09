@@ -359,6 +359,7 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery.form.min.js" />
     <Content Include="Scripts\jquery.timepicker.js" />
     <Content Include="Scripts\jquery.timepicker.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -441,6 +442,7 @@
     <Content Include="Views\UploadDocument\_Delete.cshtml" />
     <Content Include="Views\Student\AktivitetsInfo.cshtml" />
     <Content Include="Views\Student\_ActivityFileList.cshtml" />
+    <Content Include="Views\Shared\_TeacherUploader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
