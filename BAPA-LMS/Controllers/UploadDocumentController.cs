@@ -43,6 +43,7 @@ namespace BAPA_LMS.Controllers
             {
                 fileList.Add(file);
             }
+            
             var tuple = new Tuple<List<ActivitySubmitViewModel>, ApplicationUser, List<FileDocument>>(activityList, currentUser, fileList);
             return View(tuple);
         }
@@ -54,8 +55,9 @@ namespace BAPA_LMS.Controllers
             return View(asvm);
         }
 
+        //Studentupload
         [HttpPost]
-        public ActionResult ActivityUploader(HttpPostedFileBase postedFile, int id) //Studentupload
+        public ActionResult ActivityUploader(HttpPostedFileBase postedFile, int id) 
         {
             Activity activity = db.Activities.Find(id);
             ActivitySubmitViewModel asvm = activity;
@@ -72,7 +74,7 @@ namespace BAPA_LMS.Controllers
                     file.ActivityId = id;
                     file.ActivityName = asvm.Name;
                     file.MemberId = currentUser.Id;           
-                file.TimeStamp = DateTime.Now;
+                    file.TimeStamp = DateTime.Now;
 
                     string path = Server.MapPath("~/Uploads/");
                     if (!Directory.Exists(path))
@@ -81,8 +83,9 @@ namespace BAPA_LMS.Controllers
                     }
                     db.Files.Add(file);
                     db.SaveChanges();
-                    postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-                    TempData["alert"] = "success|Filen är uppladdad!";
+                    file.Id.Encode().ToString();
+                    postedFile.SaveAs(path + file.Id.Encode().ToString());
+                    TempData["alert"] = "success|Dokumentet är uppladdad!";
                 }
                 else
                 {
@@ -101,32 +104,32 @@ namespace BAPA_LMS.Controllers
         {
             TeacherUploadViewModel tuvm = new TeacherUploadViewModel();
             int intId;
-            if (int.TryParse(id.Substring(1), out intId))
-            {
-                switch (id[0])
-                {
-                    case 'a':
-                        Activity activity = db.Activities.Find(intId);
-                        tuvm.ActivityName = activity.Name;
-                        tuvm.Files = activity.Files;
-                        tuvm.Id = id;
-                        tuvm.CourseName = activity.Module.Course.Name;
-                        break;
-                    case 'm':
-                        Module module = db.Modules.Find(intId);
-                        tuvm.Files = module.Files;
-                        tuvm.ModuleName = module.Name;
-                        tuvm.Id = id;
-                        tuvm.CourseName = module.Course.Name;
-                        break;
-                    case 'c':
-                        Course course = db.Courses.Find(intId);
-                        tuvm.Files = course.Files;
-                        tuvm.CourseName = course.Name;
-                        tuvm.Id = id;
-                        break;
+                if (int.TryParse(id.Substring(1), out intId))
+                {                
+                    switch (id[0])
+                    {
+                        case 'a':
+                            Activity activity = db.Activities.Find(intId);
+                            tuvm.ActivityName = activity.Name;
+                            tuvm.Files = activity.Files;
+                            tuvm.Id = id;
+                            tuvm.CourseName = activity.Module.Course.Name;
+                            break;
+                        case 'm':
+                            Module module = db.Modules.Find(intId);
+                            tuvm.Files = module.Files;
+                            tuvm.ModuleName = module.Name;
+                            tuvm.Id = id;
+                            tuvm.CourseName = module.Course.Name;
+                            break;
+                        case 'c':
+                            Course course = db.Courses.Find(intId);                            
+                            tuvm.Files = course.Files;
+                            tuvm.CourseName = course.Name;
+                            tuvm.Id = id;
+                            break;
+                    }
                 }
-            }
             return View(tuvm);
         }
 
@@ -136,53 +139,65 @@ namespace BAPA_LMS.Controllers
             TeacherUploadViewModel tuvm = new TeacherUploadViewModel();
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
             int intId;
-            if (int.TryParse(id.Substring(1), out intId))
+            try
             {
-
-                if (postedFile != null)
+                if (int.TryParse(id.Substring(1), out intId))
                 {
-                    FileDocument file = new FileDocument();
-                    file.MemberId = currentUser.Id;
-                    file.TimeStamp = DateTime.Now;
-                    switch (id[0])
+
+                    if (postedFile != null)
                     {
-                        case 'a':
-                            Activity activity = db.Activities.Find(intId);
-                            file.ActivityId = activity.Id;
-                            tuvm.ActivityName = activity.Name;
-                            tuvm.Files = activity.Files;
-                            tuvm.Id = id;
-                            break;
-                        case 'm':
-                            Module module = db.Modules.Find(intId);
-                            file.ModuleId = module.Id;
-                            tuvm.ModuleName = module.Name;
-                            tuvm.Files = module.Files;
-                            tuvm.Id = id;
-                            break;
-                        case 'c':
-                            Course course = db.Courses.Find(intId);
-                            file.CourseId = course.Id;
-                            tuvm.CourseName = course.Name;
-                            tuvm.Files = course.Files;
-                            tuvm.Id = id;
-                            break;
-                        default:
-                            break;
-                    }
-                    file.Name = postedFile.FileName;
+                        FileDocument file = new FileDocument();
+                        file.MemberId = currentUser.Id;
+                        file.TimeStamp = DateTime.Now;
+                        switch (id[0])
+                        {
+                            case 'a':
+                                Activity activity = db.Activities.Find(intId);
+                                file.ActivityId = activity.Id;
+                                tuvm.ActivityName = activity.Name;
+                                tuvm.Files = activity.Files;
+                                tuvm.Id = id;
+                                break;
+                            case 'm':
+                                Module module = db.Modules.Find(intId);
+                                file.ModuleId = module.Id;
+                                tuvm.ModuleName = module.Name;
+                                tuvm.Files = module.Files;
+                                tuvm.Id = id;
+                                break;
+                            case 'c':
+                                Course course = db.Courses.Find(intId);
+                                file.CourseId = course.Id;
+                                tuvm.CourseName = course.Name;
+                                tuvm.Files = course.Files;
+                                tuvm.Id = id;
+                                break;
+                            default:
+                                break;
+                        }
+                        file.Name = postedFile.FileName;
 
 
-                    string path = Server.MapPath("~/Uploads/");
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
+                        string path = Server.MapPath("~/Uploads/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        db.Files.Add(file);
+                        db.SaveChanges();
+                        file.Id.Encode().ToString();
+                        postedFile.SaveAs(path + file.Id.Encode().ToString());
+                        TempData["alert"] = "success|Dokumentet är uppladdad!";
                     }
-                    db.Files.Add(file);
-                    db.SaveChanges();
-                    postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-                    ViewBag.Message = "Uppladdningen lyckades.";
+                    else
+                    {                                       
+                        TempData["alert"] = "danger|Kunde inte lägga till dokument";                       
+                    }
                 }
+            }
+            catch (DataException)
+            {
+                TempData["alert"] = "danger|Allvarligt fel!";
             }
             return View(tuvm);
         }
@@ -230,20 +245,21 @@ namespace BAPA_LMS.Controllers
         public FileResult DownloadFile(int id)
         {
             FileDocument fileDocument = db.Files.Find(id);
-            string file = "~/Uploads/" + fileDocument.Name;
+            string file = "~/Uploads/" + fileDocument.Id.Encode();
             string contentType = ".jpg";
 
-            return File(file, contentType, Path.GetFileName(file));
+            return File(file, contentType, fileDocument.Name);
         }
 
         // GET: Document/Delete/5
         public ActionResult Delete(int? id)
         {
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            FileDocument file = db.Files.Find(id);
+            }           
+            FileDocument file = db.Files.Find(id?.Decode());
             if (file == null)
             {
                 return HttpNotFound();
@@ -266,7 +282,7 @@ namespace BAPA_LMS.Controllers
             {
                 FileDocument file = db.Files.Find(id);
                 
-                string path = Server.MapPath("~/Uploads/" + file.Name);
+                string path = Server.MapPath("~/Uploads/" + file.Id.Encode());
                 if (System.IO.File.Exists(path))
                 {
                     System.IO.File.Delete(path);
