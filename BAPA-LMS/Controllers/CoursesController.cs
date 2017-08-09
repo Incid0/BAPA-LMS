@@ -49,7 +49,7 @@ namespace BAPA_LMS.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
 		{
-			return View();
+			return PartialView("_Create");
 		}
 
 		// POST: Courses/Create
@@ -58,6 +58,7 @@ namespace BAPA_LMS.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create(CourseEditViewModel cevm)
 		{
+			string returnView = "_Create";
 			try
 			{
 				if (ModelState.IsValid)
@@ -68,7 +69,10 @@ namespace BAPA_LMS.Controllers
 					{
 						db.Courses.Add(newCourse);
 						db.SaveChanges();
-						TempData["alert"] = "success|Kursen är tillagd!";
+						cevm = newCourse; // CourseEditViewModel
+						Session["courseid"] = newCourse.Id;
+						TempData["alert"] = "success|Kursen är tillagd!| c" + newCourse.Id.Encode();
+						returnView = "_Edit";
 					}
 					else
 					{
@@ -82,7 +86,7 @@ namespace BAPA_LMS.Controllers
 				ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
 				TempData["alert"] = "danger|Allvarligt fel!";
 			}
-			return View(cevm);
+			return PartialView(returnView, cevm);
 		}
 
         // GET: Courses/Edit/5

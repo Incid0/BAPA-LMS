@@ -87,6 +87,10 @@
 
     function createAction() {
         var btn = $(this);
+        if (!btn.data('parent')) {
+            switchToEditor(0, '<Ny kurs>');
+            tree.empty();
+        }
         changeEditor('create', btn.data('controller'), btn.data('parent'));
     }
 
@@ -97,6 +101,17 @@
             filter.parents('form').submit();
             filterhandler = null;
         }, 300);
+    }
+
+    function switchToEditor(id, name) {
+        $('#courses').slideUp();
+        $('#courseeditor').slideDown();
+        $('#coursename').text(name);
+        if (tree.length) {
+            tree.data('id', id);
+            $('#editarea').empty();
+            if (id !== 0) loadTree();
+        }
     }
 
     return {
@@ -139,20 +154,13 @@
             $('#coursefilter').on('input', updateCourseList);
             $('#StartRange, #EndRange').on('change', updateCourseList);
 
-            // Connecting buttons
+            // Connecting add buttons
             $('button.add').on('click', createAction);
 
             // Clicking course
-            $('#courseList').on('click', 'tr[data-id]', function () {
+            $('#courseList').on('click', 'tr[data-id]', function () {              
                 var row = $(this);
-                $('#courses').slideUp();
-                $('#courseeditor').slideDown();
-                $('#coursename').text(row.find('td:first').text());
-                if (tree.length) {
-                    tree.data('id', row.data('id'));
-                    $('#editarea').empty();
-                    loadTree();
-                }
+                switchToEditor(row.data('id'), row.find('td:first').text());
             });
 
             // Return to courselist
@@ -177,7 +185,7 @@
             $('input[data-val-length-max]').each(function (idx, element) {
                 element.setAttribute('maxlength', element.getAttribute('data-val-length-max'));
             });
-            var input = $('#formResult'), result = input.val(), data = result.split('|');
+            var input = $('#formResult'), result = input.val(), data = result && result.split('|');
             if (result) {
                 localAlert(data[1], data[0]);
                 if (data[0] === 'success') {
@@ -188,7 +196,7 @@
             input.remove();
         },
         initPopup: function () {
-            var input = $('#popupResult'), result = input.val(), data = result.split('|');
+            var input = $('#popupResult'), result = input.val(), data = result && result.split('|');
             if (result) {
                 localAlert(data[1], data[0]);
                 if (data[0] === 'success') {

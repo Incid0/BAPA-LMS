@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 @Html.ActionLink("Lägg till lärare", "RegisterTeacher", null, new { @class = "btn btn-default" })
-                @Html.ActionLink("Lägg till kurs", "Create", "Courses", null, new { @class = "btn btn-default" })
+                <button class="btn btn-default add" data-controller="courses">Lägg till kurs</button> 
             </div>
             @Html.Partial("_TeacherIndex", Model)
         }
