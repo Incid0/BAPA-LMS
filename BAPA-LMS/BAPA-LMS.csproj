@@ -435,11 +435,10 @@
     <Content Include="Views\Teacher\ActivityUploads.cshtml" />
     <Content Include="Views\UploadDocument\ListDocuments.cshtml" />
     <Content Include="Views\UploadDocument\ListUploadActivities.cshtml" />
-    <Content Include="Views\UploadDocument\TeacherUploader.cshtml" />
     <Content Include="Views\UploadDocument\_Delete.cshtml" />
     <Content Include="Views\Student\AktivitetsInfo.cshtml" />
     <Content Include="Views\Student\_ActivityFileList.cshtml" />
-    <Content Include="Views\Shared\_TeacherUploader.cshtml" />
+    <Content Include="Views\UploadDocument\_TeacherUploader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
