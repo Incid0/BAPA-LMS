@@ -1,78 +1,95 @@
 ﻿@model BAPA_LMS.Models.ActivityViewModels.ActivityEditViewModel
+<div class="container">
+   
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Redigering</a></li>
+        <li><a data-toggle="tab" href="#menu1">Dokument</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h4>Redigera aktivitet</h4>
 
-<h4>Redigera aktivitet</h4>
-
-@using (Ajax.BeginForm("edit", null,
-    new AjaxOptions
-    {
-        HttpMethod = "post",
-        InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = "editarea"
-    }, new { id = "formEdit" }))
+            @using (Ajax.BeginForm("edit", null,
+new AjaxOptions
 {
-    @Html.AntiForgeryToken()
-    @Html.Hidden("result", TempData["alert"], new { id = "formResult" })
-    @Html.Hidden("ModuleStartDate", Model.ModuleStartDate)
-    @Html.Hidden("ModuleEndDate", Model.ModuleEndDate)
-    <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    HttpMethod = "post",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "editarea"
+}, new { id = "formEdit" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("result", TempData["alert"], new { id = "formResult" })
+                @Html.Hidden("ModuleStartDate", Model.ModuleStartDate)
+                @Html.Hidden("ModuleEndDate", Model.ModuleEndDate)
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownListFor(model => model.Type, new SelectList(Model.Types, "Id", "Name"), new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.Type, new SelectList(Model.Types, "Id", "Name"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, "Datumspann (Startdatum - Slutdatum)", htmlAttributes: new { @class = "control-label" })
-            <div class="input-daterange input-group " data-provide="datepicker" data-date-start-date="@Model.ModuleStartDate" data-date-end-date="@Model.ModuleEndDate">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control ", placeholder = "åååå-mm-dd", min = Model.ModuleStartDate, max = Model.ModuleEndDate } })
-                <span class="input-group-addon">till</span>
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd", min = Model.ModuleStartDate, max = Model.ModuleEndDate } })
-            </div>
-            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartDate, "Datumspann (Startdatum - Slutdatum)", htmlAttributes: new { @class = "control-label" })
+                    <div class="input-daterange input-group " data-provide="datepicker" data-date-start-date="@Model.ModuleStartDate" data-date-end-date="@Model.ModuleEndDate">
+                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control ", placeholder = "åååå-mm-dd", min = Model.ModuleStartDate, max = Model.ModuleEndDate } })
+                        <span class="input-group-addon">till</span>
+                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd", min = Model.ModuleStartDate, max = Model.ModuleEndDate } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartTime, "Tidsspann (Starttid - Sluttid)", htmlAttributes: new { @class = "control -label" })
-            <div class="input-daterange input-group">
-                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control timepicker" } })
-                <span class="input-group-addon">till</span>
-                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control timepicker" } })
-            </div>
-            @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
-            @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartTime, "Tidsspann (Starttid - Sluttid)", htmlAttributes: new { @class = "control -label" })
+                    <div class="input-daterange input-group">
+                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control timepicker" } })
+                        <span class="input-group-addon">till</span>
+                        @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control timepicker" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+                </div>
 
-        @*<div class="form-group">
+                @*<div class="form-group">
                 @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
             </div>*@
 
-        @*<div class="form-group">
+                @*<div class="form-group">
                 @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label" })
                 @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
             </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
-            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "4" })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "4" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group">
-                <input type="submit" value="Spara" id="btnSave" class="btn btn-primary" />
+                <div class="form-group">
+                    <input type="submit" value="Spara" id="btnSave" class="btn btn-primary" />
+                </div>
+            }
+            <script>
+                teacher.initForm();
+            </script>
         </div>
-}
-<script>
-    teacher.initForm();
-</script>
+        <div id="menu1" class="tab-pane fade">
+
+            @{Html.RenderAction("TeacherUploader", "UploadDocument", new { id = "a" + Model.Id.ToString() });}
+        
+        </div>
+    </div>
+</div>
+
+

@@ -109,7 +109,7 @@ namespace BAPA_LMS.Controllers
                         break;
                 }
             }
-            return View(tuvm);
+            return PartialView("_TeacherUploader", tuvm);
         }
 
         [HttpPost]
@@ -163,10 +163,10 @@ namespace BAPA_LMS.Controllers
                     db.Files.Add(file);
                     db.SaveChanges();
                     postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-                    ViewBag.Message = "Uppladdningen lyckades.";
+                    TempData["alert"] = "success|FUCKYEAH!";
                 }
             }
-            return View(tuvm);
+            return PartialView("_TeacherUploader", tuvm);
         }
 
         public ActionResult ListUploadActivities(int id)
@@ -217,7 +217,7 @@ namespace BAPA_LMS.Controllers
 
             return File(file, contentType, Path.GetFileName(file));
         }
-     
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
