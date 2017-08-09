@@ -30,6 +30,7 @@ namespace BAPA_LMS.Models.CourseViewModels
 		{
 			return new CourseDetailViewModel
 			{
+                Id = model.Id,
 				Name = model.Name,
 				Description = model.Description,
 				StartDate = model.StartDate,

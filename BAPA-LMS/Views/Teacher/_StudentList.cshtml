@@ -1,19 +1,34 @@
 ﻿@model BAPA_LMS.Models.CourseViewModels.CourseDetailViewModel
 
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Klasslista</a></li>
+    <li><a data-toggle="tab" href="#menu1">Dokument</a></li>
+</ul>
 
-            <div class="panel panel-default no-padding ">
-                <div class="panel-heading">
-                    <h4>
-                        Klasslista för @Html.DisplayFor(model => model.Name)
-                    </h4>
-                </div>
-                <table class="table table-fixed">
-
-                    @foreach (var item in Model.Members)
-                    {
-                        <tr>
-                            <td class="col-xs-12">@Html.DisplayFor(modelItem => item.FullName) @Html.ActionLink("Ta Bort Student", "Delete", new { id = item.Id })</td>
-                        </tr>
-                    }
-                </table>
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <div class="panel panel-default no-padding ">
+            <div class="panel-heading">
+                <h4>
+                    Klasslista för @Html.DisplayFor(model => model.Name)
+                </h4>
             </div>
+            <table class="table table-fixed">
+
+                @foreach (var item in Model.Members)
+                {
+                    <tr>
+                        <td class="col-xs-12">@Html.DisplayFor(modelItem => item.FullName) @Html.ActionLink("Ta Bort Student", "Delete", new { id = item.Id })</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        
+        @{Html.RenderAction("TeacherUploader", "UploadDocument", new { id = "c" + Model.Id.ToString() });}
+    </div>
+ 
+</div>
+            

@@ -1,7 +1,7 @@
-﻿
+﻿@using BAPA_LMS.Models
 @model BAPA_LMS.Models.UploadViewModels.TeacherUploadViewModel
 
-<div id="uploadWindow">
+<div id="uploadWindow" style="margin-top:10px;">
 
 
 
@@ -15,34 +15,24 @@
                 <input id="btnUpload" class="btn btn-primary" type="submit" value="Ladda upp" />
                 <br />
     }
-    <table class="table">
-        <tr>
-            <th>
+    
 
-            </th>
 
-            <th>
+        <table class="table" style="max-width: 500px; margin-top:10px;">
+        
 
-            </th>
-        </tr>
+            @foreach (var file in Model.Files)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => file.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => file.Member.FullName)</td>
+                    <td>@Html.ActionLink("Ta bort", "Delete", "UploadDocument", new { id = file.Id.Encode() }, null)</td>
+                </tr>
+            }
 
-        @foreach (var file in Model.Files)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => file.Name)
-                </td>
+        </table>
+    </div>
 
-                <td>
-                    @Html.DisplayFor(modelItem => file.Member.FullName)
-
-                </td>
-            </tr>
-        }
-
-    </table>
-
-</div>
 <script>
     teacher.initUpload();
 </script>
