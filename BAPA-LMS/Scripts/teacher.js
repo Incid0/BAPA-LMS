@@ -4,6 +4,7 @@
     var treeview;
     var skipEditor = false;
     var filterhandler;
+    var formrefresh = false;
 
     // Show temporary message at the top of page
     function localAlert(message, style) {
@@ -181,12 +182,6 @@
                     return false;
                 }
             });
-            // FileUpload
-            $('#formUpload').ajaxForm({
-                complete: function (xhr) {
-                    $('#uploadWindow').html(xhr.responseText);
-                }
-            });
             $('#formEdit .timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
             // Setting MaxLength automatically according to MVC StringLength
             $('input[data-val-length-max]').each(function (idx, element) {
@@ -216,16 +211,17 @@
             });
             // FileUpload
             $('#formUpload').ajaxForm({
-                complete: function (xhr) {
-                    $('#uploadWindow').html(xhr.responseText);
-                }
+                data: {
+                    refresh: function () { return formrefresh; }
+                },
+                target: $('#uploadWindow'),
+                success: function () { formrefresh = false; }
             });
             $('#inputFile').change(function () {
-                    if ($(this).val()) {
-                        $('#btnUpload').attr('disabled', false);
-                    }
+                if ($(this).val()) {
+                    $('#btnUpload').attr('disabled', false);
                 }
-            );
+            });
             $(":file").filestyle({ buttonText: "Välj fil" });
             $('#formUpload .timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
             // Setting MaxLength automatically according to MVC StringLength
@@ -255,6 +251,7 @@
                         }
                         //$('#btnDel').prop('disabled', true);
                     } else {
+                        formrefresh = true;
                         $('#formUpload').submit();
                     }
                 }
