@@ -70,6 +70,7 @@
             $('#modalContainer').on('hidden.bs.modal', function () {
                 $(this).removeData('bs.modal').children('.modal-content').html('');
             });
+            $(":file").filestyle({ buttonText: "Välj fil" });
         },
         calUpdate: function () {
             $('#calendar a.modal-link').attr('data-toggle', 'modal').attr('data-target', '#modalContainer');
