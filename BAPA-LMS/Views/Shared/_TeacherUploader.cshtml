@@ -10,9 +10,9 @@
     @using (Html.BeginForm("TeacherUploader", "UploadDocument", FormMethod.Post, new { id = "formUpload", enctype = "multipart/form-data" }))
     {
         @Html.Hidden("result", TempData["alert"], new { id = "uploadResult" })
-        <input type="file" name="postedFile" />
+        <input type="file" name="postedFile" id="inputFile"/>
                 <br />
-                <input id="btnUpload" class="btn btn-primary" type="submit" value="Ladda upp" />
+                <input id="btnUpload" class="btn btn-primary" type="submit" value="Ladda upp" disabled/>
                 <br />
     }
     
