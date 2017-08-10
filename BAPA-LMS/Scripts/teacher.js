@@ -1,6 +1,7 @@
 ﻿var teacher = (function ($) {
     var alertbox;
     var tree;
+    var treeview;
     var skipEditor = false;
     var filterhandler;
 
@@ -16,37 +17,32 @@
         }, 2000);
     }
 
-    // Returns a node from TreeView if id matches
-    function findNode(id) {
-        return tree.treeview('getEnabled').find(function (node) {
-            return node.id === id;
-        });
-    }
-
     function loadTree(id) {
         $.getJSON('/Courses/GetTree/' + tree.data('id'), function (result) {
             tree.treeview({
                 data: [result],
+                preventUnselect: true,
                 showTags: true
             });
-            tree.on('nodeSelected', treeNodeSelect);
-            if (id) {
-                var node = findNode(id);
-                if (node) {
-                    tree.treeview('selectNode', [node]);
-                    tree.treeview('revealNode', [node, { silent: true }]);
-                    $('html, body').scrollTop(tree.find('.node-selected').offset().top - $('.navbar').height());
-                }
-            }
-            // Initializing tooltips
-            tree.find('[data-toggle="tooltip"]').tooltip();
+            tree.on('rendered', function () {
+                treeview = tree.treeview(true);
 
-            // Testing edit click
-            tree.on('click', '.editnode', function () {
-                var nodeid = tree.treeview('getNode', $(this).parents('li').data('nodeid')).id;
-                if (nodeid) changeEditor('edit', 'courses', nodeid.substr(1));
-                //console.log();
-                return false;
+                tree.on('nodeSelected', treeNodeSelect);
+                var node = id ? treeview.findNodes(id, 'id')[0] : treeview.getNodes()[0];
+                if (node) {
+                    treeview.selectNode(node);
+                    treeview.revealNode(node, { silent: true });
+                    $('html, body').scrollTop(node.$el.offset().top - $('.navbar').height());
+                }
+                // Initializing tooltips
+                tree.find('[data-toggle="tooltip"]').tooltip();
+
+                // Testing edit click
+                tree.on('click', '.editnode', function () {
+                    var node = treeview.findNodes('^' + $(this).parents('li').data('nodeid') + '$', 'nodeId'), nodeid = node.length && node[0].id;
+                    if (nodeid) changeEditor('edit', 'courses', nodeid.substr(1));
+                    return false;
+                });
             });
         });
     }
@@ -54,14 +50,14 @@
     function treeNodeSelect(event, node) {
         var index = node.id, ctrl = index[0], action = 'edit', id = index.substr(1);
         var btnA = $('#btnActivity'), btnD = $('#btnDel');
+
+        $('.toggle-action').prop('disabled', false);
         // Limit activity creation to modules and activities
         btnA.prop('disabled', (ctrl === 'c'));
-        // Limit deletion to modules and activities
-        btnD.prop('disabled', (ctrl === 'c'));
 
         if (ctrl === 'a') {
             ctrl = 'activities';
-            btnA.data('parent', tree.treeview('getParent', node).id.substr(1));
+            btnA.data('parent', treeview.getParents(node)[0].id.substr(1));
             btnD.attr('href', '/activities/delete/' + id);
         }
         else if (ctrl === 'm') {
@@ -72,6 +68,8 @@
         else if (ctrl === 'c') {
             action = 'studentlist';
             ctrl = 'teacher';
+            btnD.attr('href', '/courses/delete/' + id);
+            $('#btnModule').data('parent', id)
         }
         else ctrl = '';
         if (!skipEditor && ctrl !== '') changeEditor(action, ctrl, id);
@@ -87,8 +85,9 @@
 
     function createAction() {
         var btn = $(this);
-        if (!btn.data('parent')) {
+        if (btn.data('controller') === 'courses') {
             switchToEditor(0, '<Ny kurs>');
+            $('.toggle-action').prop('disabled', true);
             tree.empty();
         }
         changeEditor('create', btn.data('controller'), btn.data('parent'));
@@ -112,6 +111,12 @@
             $('#editarea').empty();
             if (id !== 0) loadTree();
         }
+    }
+
+    function switchToList() {
+        $('#courseeditor').slideUp();
+        $('#courses').slideDown();
+        $('#coursefilter').trigger('input');
     }
 
     return {
@@ -147,7 +152,7 @@
             // Initializing TimePicker
             $('.timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
 
-            // Initializing TreeView
+            // Connecting TreeView
             tree = $('#tree');
 
             // Connecting filterinput
@@ -155,7 +160,7 @@
             $('#StartRange, #EndRange').on('change', updateCourseList);
 
             // Connecting add buttons
-            $('button.add').on('click', createAction);
+            $('.create-action').on('click', createAction);
 
             // Clicking course
             $('#courseList').on('click', 'tr[data-id]', function () {              
@@ -164,11 +169,7 @@
             });
 
             // Return to courselist
-            $('#btnReturn').on('click', function () {
-                $('#courseeditor').slideUp();
-                $('#courses').slideDown();
-                $('#coursefilter').trigger('input');
-            });
+            $('#btnReturn').on('click', switchToList);
         },
         showAlert: function (message) {
             localAlert(message)
@@ -190,7 +191,12 @@
                 localAlert(data[1], data[0]);
                 if (data[0] === 'success') {
                     skipEditor = true;
-                    loadTree(data[2]);
+                    var id = data[2];
+                    if (id && id[0] === 'c') {
+                        tree.data('id', id.substr(1));
+                        $('#coursename').text(data[3]);
+                    }
+                    loadTree(id);
                 }
             }
             input.remove();
@@ -201,9 +207,19 @@
                 localAlert(data[1], data[0]);
                 if (data[0] === 'success') {
                     $('#modalContainer').modal('hide');
-                    $('#editarea').empty();
-                    $('#btnDel').prop('disabled', true);
-                    loadTree();
+                    if (!data[2]) {
+                        var node = treeview.getSelected(), parent = treeview.getParents(node)[0];
+                        treeview.removeNode(node, { silent: true });
+                        if (parent) {
+                            treeview.selectNode(parent);
+                        } else {
+                            $('#editarea').empty();
+                            switchToList();
+                        }
+                        //$('#btnDel').prop('disabled', true);
+                    } else {
+                        $('#formUpload').submit();
+                    }
                 }
             }
         }

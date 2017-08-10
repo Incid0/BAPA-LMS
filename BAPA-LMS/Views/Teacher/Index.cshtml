@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 @Html.ActionLink("Lägg till lärare", "RegisterTeacher", null, new { @class = "btn btn-default" })
-                <button class="btn btn-default add" data-controller="courses">Lägg till kurs</button> 
+                <button class="btn btn-default create-action" data-controller="courses">Lägg till kurs</button> 
             </div>
             @Html.Partial("_TeacherIndex", Model)
         }
@@ -46,13 +46,12 @@
         <div class="col-md-8">
             <div class="editarea-fixed">
                 <div id="editarea">
-
                 </div>
                 <div class="buttonbar">
-                    @Html.ActionLink("Lägg till kursdeltagare", "Register", new { id = 0 }, new { @class = "btn btn-default" })
-                    <button id="btnModule" class="btn btn-default add" data-controller="modules" data-parent="0">Ny modul</button>
-                    <button id="btnActivity" class="btn btn-default add" data-controller="activities" disabled="disabled">Ny aktivitet</button>
-                    <button id="btnDel" class="btn btn-danger" data-toggle="modal" data-target="#modalContainer" href="" disabled="disabled">Ta bort</button>
+                    @Html.ActionLink("Lägg till kursdeltagare", "Register", new { id = 0 }, new { @class = "btn btn-default toggle-action", disabled = "disabled" })
+                    <button id="btnModule" class="btn btn-default create-action toggle-action" data-controller="modules" disabled="disabled">Ny modul</button>
+                    <button id="btnActivity" class="btn btn-default create-action toggle-action" data-controller="activities" disabled="disabled">Ny aktivitet</button>
+                    <button id="btnDel" class="btn btn-danger toggle-action" data-toggle="modal" data-target="#modalContainer" href="" disabled="disabled">Ta bort</button>
                 </div>
             </div>
         </div>

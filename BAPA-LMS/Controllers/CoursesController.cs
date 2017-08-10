@@ -71,7 +71,7 @@ namespace BAPA_LMS.Controllers
 						db.SaveChanges();
 						cevm = newCourse; // CourseEditViewModel
 						Session["courseid"] = newCourse.Id;
-						TempData["alert"] = "success|Kursen är tillagd!| c" + newCourse.Id.Encode();
+						TempData["alert"] = "success|Kursen är tillagd!|c" + newCourse.Id.Encode() + "|" + newCourse.Name;
 						returnView = "_Edit";
 					}
 					else
@@ -184,33 +184,27 @@ namespace BAPA_LMS.Controllers
 		[Authorize(Roles = "Admin")]
 		public JsonResult GetTree(int id)
 		{
-			Course course = db.Courses.Find(id);
+			Course course = db.Courses.Find(id.Decode());
 
 			var actArray = new {
 				id = "c" + course.Id.Encode(),
 				text = course.Name,
 				icon = "glyphicon glyphicon-home",
 				tags = new string[] {
-					"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera kurs\"></span>",
-					"<span class=\"delnode glyphicon glyphicon-trash\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Radera kurs\"></span>"
+					"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera kurs\"></span>"
 				},
 				nodes = (course.Modules.OrderBy(m => m.StartDate).Select(m => new {
 					id = "m" + m.Id.Encode(),
 					text = m.Name,
 					icon = "glyphicon glyphicon-book",
 					tags = new string[] {
-						"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera kurs\"></span>",
-						"<span class=\"delnode glyphicon glyphicon-trash\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Radera kurs\"></span>"
+						"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera kurs\"></span>"
 					},
 					nodes = (m.Activities.OrderBy(a => a.StartTime).Select(a => new
 					{
 						id = "a" + a.Id.Encode(),
 						text = a.Name,
-						icon = "glyphicon glyphicon-wrench",
-						tags = new string[] {
-							"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera kurs\"></span>",
-							"<span class=\"delnode glyphicon glyphicon-trash\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Radera kurs\"></span>"
-						},
+						icon = "glyphicon glyphicon-wrench"
 					}))
 				})).ToArray()
 			};
