@@ -26,7 +26,7 @@
                 <tr>
                     <td>@Html.DisplayFor(modelItem => file.Name)</td>
                     <td>@Html.DisplayFor(modelItem => file.Member.FullName)</td>
-                    <td>@Html.ActionLink("Ta bort", "Delete", "UploadDocument", new { id = file.Id.Encode() }, null)</td>
+                    <td>@Html.ActionLink("Ta bort", "Delete", "UploadDocument", new { id = file.Id.Encode() }, new { data_toggle = "modal", data_target = "#modalContainer" })</td>
                 </tr>
             }
 

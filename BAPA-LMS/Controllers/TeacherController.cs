@@ -206,6 +206,7 @@ namespace BAPA_LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             ApplicationUser delObj = db.Users.SingleOrDefault(u => u.Id == id);
             DeleteUserViewModel duvm = delObj;
             if (duvm == null)
@@ -230,7 +231,7 @@ namespace BAPA_LMS.Controllers
             catch (RetryLimitExceededException)
             {
                 // Log errors here				
-                TempData["alert"] = "danger|Det gick inte att ta bort kursen!";
+                TempData["alert"] = "danger|Det gick inte att ta bort användaren!";
             }
             return RedirectToAction("CourseEdit", new { id = courseId });
         }

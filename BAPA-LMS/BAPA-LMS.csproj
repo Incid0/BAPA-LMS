@@ -216,7 +216,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ActivityViewModels\ActivityCreateViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityDeleteViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityDetailViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityEditViewModel.cs" />
@@ -224,7 +223,6 @@
     <Compile Include="Models\UploadViewModels\DocumentDeleteViewModel.cs" />
     <Compile Include="Models\UploadViewModels\StudentDocumentListViewModel.cs" />
     <Compile Include="Models\UploadViewModels\StudentUploadViewModel.cs" />
-    <Compile Include="Models\CourseViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseDetailViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseEditViewModel.cs" />
     <Compile Include="Models\CourseViewModels\CourseIndexViewModel.cs" />
@@ -238,7 +236,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModelExtensions.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleDeleteViewModel.cs" />
-    <Compile Include="Models\ModuleViewModels\ModuleCreateViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleDetailViewModel.cs" />
     <Compile Include="Models\ModuleViewModels\ModuleEditViewModel.cs" />
     <Compile Include="Models\UploadViewModels\TeacherUploadViewModel.cs" />
@@ -420,7 +417,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Courses\Delete.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
-    <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Modules\Details.cshtml" />
     <Content Include="Views\Activities\_Details.cshtml" />
     <Content Include="Views\Student\KursInfo.cshtml" />
@@ -448,7 +444,9 @@
     <Content Include="Views\UploadDocument\TeacherUploader.cshtml" />
     <Content Include="Views\UploadDocument\_Delete.cshtml" />
     <Content Include="Views\Student\AktivitetsInfo.cshtml" />
-    <Content Include="Views\Shared\_TeacherUploader.cshtml" />
+    <Content Include="Views\Student\_ActivityFileList.cshtml" />
+    <Content Include="Views\UploadDocument\_TeacherUploader.cshtml" />
+    <Content Include="Views\Shared\_TeacherLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
