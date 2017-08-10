@@ -1,20 +1,20 @@
 ﻿@using BAPA_LMS.Models.DB;
 @model Tuple<List<ApplicationUser>, List<FileDocument>>
 
-@{
-    ViewBag.Title = "ListDocuments";
-}
-
-<h2>ListDocuments</h2>
-
-
 <table class="table">
     <tr>
         <th>
-            <p>Full Name</p>
+            <p>Elev</p>
         </th>
-
-        <th></th>
+        <th>
+            <p>Filnamn</p>
+        </th>
+        <th>
+            <p>Inskickad</p>
+        </th>
+        <th>
+            <p>Hämta dokument</p>
+        </th>
     </tr>
 
     @foreach (var user in Model.Item1)
@@ -31,16 +31,23 @@
                 if (file.MemberId == user.Id)
 
                 {
+                
                     <td>
-                        @Html.ActionLink("Ladda ner dokument", "DownloadFile", new { id = file.Id })
-
+                       <span> &nbsp; </span>
+                        @Html.DisplayFor(modelItem => file.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => file.TimeStamp)
                     </td>
+                    <td>
+                        @Html.ActionLink(" ", "DownloadFile", new { id = file.Id }, new { @class = "glyphicon glyphicon-download-alt", style="font-size:1.5em;" })                       
+                    </td>
                 }
                 else
                 {
+                    <td>
+
+                    </td>
                     <td>
 
                     </td>
