@@ -439,6 +439,7 @@
     <Content Include="Views\Student\AktivitetsInfo.cshtml" />
     <Content Include="Views\Student\_ActivityFileList.cshtml" />
     <Content Include="Views\UploadDocument\_TeacherUploader.cshtml" />
+    <Content Include="Views\Shared\_TeacherLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
