@@ -4,11 +4,11 @@
     ViewBag.Title = "ListUploadActivities";
 }
 
-<h2>ListUploadActivities</h2>
+<h2>Lista över inlämningsaktiviteter</h2>
 
 
-<table class="table">
-    <tr>
+<table class="table table-striped table-responsive">
+    <tr class="custom-table" >
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -23,7 +23,7 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr class="custom-table" >
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>

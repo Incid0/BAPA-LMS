@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Kurser";
 }
-
+<p></p>
 @using (Ajax.BeginForm(null, null,
     new AjaxOptions
     {
@@ -30,7 +30,3 @@
     @Html.Partial("_TeacherIndex", Model)
 }
 
-<div>
-    @Html.ActionLink("Lägg till lärare", "RegisterTeacher")
-    @Html.ActionLink("Lägg till kurs", "Create", "Courses")
-</div>
