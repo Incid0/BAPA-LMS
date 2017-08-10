@@ -80,6 +80,22 @@ body > div.alert {
     width: auto;
 }
 
+.bootstrap-filestyle.input-group {
+    display: block;
+}
+
+.bootstrap-filestyle.input-group > * {
+    display: inline-block;
+}
+
+.bootstrap-filestyle.input-group > .input-group-btn {
+    width: inherit;
+}
+
+.bootstrap-filestyle.input-group > .input-group-btn > label {
+    padding-bottom: 7px;
+}
+
 .editarea-fixed {
     position: fixed;
 }

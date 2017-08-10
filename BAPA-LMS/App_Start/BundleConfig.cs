@@ -38,9 +38,10 @@ namespace BAPA_LMS
 						"~/Scripts/bootstrap-datepicker.js",
 						"~/Scripts/bootstrap-datepicker.sv.min.js",
 						"~/Scripts/jquery.timepicker.js",
+						"~/Scripts/bootstrap-filestyle.min.js",
 						"~/Scripts/teacher.js"
-                        ));
-			
+						));
+
 			bundles.Add(new StyleBundle("~/Content/lms").Include(
 						"~/Content/bootstrap.css",
 						"~/Content/bootstrap-treeview.css",
@@ -53,6 +54,7 @@ namespace BAPA_LMS
 						"~/Scripts/jquery-{version}.js",
 						"~/Scripts/bootstrap.js",
 						"~/Scripts/respond.js",
+						"~/Scripts/bootstrap-filestyle.min.js",
 						"~/Scripts/moment.min.js",
 						"~/Scripts/fullcalendar/fullcalendar.min.js",
 						"~/Scripts/fullcalendar/locale/sv.js",
