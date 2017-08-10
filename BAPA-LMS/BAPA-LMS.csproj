@@ -215,6 +215,7 @@
     <Compile Include="Models\ActivityViewModels\ActivityDeleteViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityDetailViewModel.cs" />
     <Compile Include="Models\ActivityViewModels\ActivityEditViewModel.cs" />
+    <Compile Include="Models\CourseViewModels\CourseDeleteViewModel.cs" />
     <Compile Include="Models\UploadViewModels\ActivitySubmitViewModel.cs" />
     <Compile Include="Models\UploadViewModels\DocumentDeleteViewModel.cs" />
     <Compile Include="Models\UploadViewModels\StudentDocumentListViewModel.cs" />
@@ -411,7 +412,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Courses\Delete.cshtml" />
+    <Content Include="Views\Courses\_Delete.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Modules\Details.cshtml" />
     <Content Include="Views\Activities\_Details.cshtml" />
