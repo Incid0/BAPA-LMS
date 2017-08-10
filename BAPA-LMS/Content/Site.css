@@ -92,9 +92,9 @@ body > div.alert {
     width: inherit;
 }
 
-.bootstrap-filestyle.input-group > .input-group-btn > label {
+/*.bootstrap-filestyle.input-group > .input-group-btn > label {
     padding-bottom: 7px;
-}
+}*/
 
 .editarea-fixed {
     position: fixed;
