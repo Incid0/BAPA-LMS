@@ -16,7 +16,7 @@
                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse@(item.Id)" href="#collapse@(item.Id)" )>@Html.DisplayFor(model => item.Name)<span> </span>@Html.DisplayFor(model => item.Type.Name)</a>
                 </h4>
             </div>
-            <div id="collapse@(item.Id)" class="panel-collapse collapse">
+            <div id="collapse@(item.Id)" class="panel-collapse collapse ">
                 <div class="panel-body">
                     @Html.DisplayFor(model => item.Name)
                     <br />
@@ -24,14 +24,15 @@
                     <br />
                     @Html.DisplayFor(model => item.EndTime)
                     <br />
-                    @if(Model.Item3.Exists(e => e.Member.Id == Model.Item2.Id) && Model.Item3.Exists(f => f.ActivityId == item.Id))
+                  
+                    @if (Model.Item3.Exists(e => e.Member.Id == Model.Item2.Id) && Model.Item3.Exists(f => f.ActivityId == item.Id))
                     {
                       <strong>Uppgiften är redan inlämnad.</strong>
                     }
                     else
                     {
                         <br />
-                        @Html.ActionLink("Ladda upp dokument", "ActivityUploader", new { id = item.Id })
+                        { Html.RenderAction("ActivityUploader", "UploadDocument", new { id = item.Id }); }
                     }
                    
                 </div>

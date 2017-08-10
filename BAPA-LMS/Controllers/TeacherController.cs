@@ -16,6 +16,7 @@ using BAPA_LMS.Utils;
 using BAPA_LMS.Models.ActivityViewModels;
 using System.Text.RegularExpressions;
 using System;
+using BAPA_LMS.Models.UserViewModels;
 
 namespace BAPA_LMS.Controllers
 {
@@ -116,21 +117,7 @@ namespace BAPA_LMS.Controllers
             return View(clvm);
 
         }
-
-        //public ActionResult ActivityUploads(int id)
-        //{
-        //    List<StudentUploadViewModel> activityList = new List<StudentUploadViewModel>();
-        //    foreach (var item in db.Activities)
-        //    {
-        //        if (item.Type.Id == 3 && item.Module.Course.Id == id)
-        //        {
-        //            activityList.Add(item);
-        //        }
-        //    }
-        //    return View(activityList);
-        //}
-
-
+        
 
         public ActionResult CourseEdit(int? id)
         {
@@ -146,6 +133,7 @@ namespace BAPA_LMS.Controllers
             CourseIndexViewModel civm = course;
             return View(civm);
         }
+
         [AllowAnonymous]
         public ActionResult RegisterTeacher()
         {
@@ -165,7 +153,6 @@ namespace BAPA_LMS.Controllers
 
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, int id)
         {
@@ -189,8 +176,8 @@ namespace BAPA_LMS.Controllers
 
             return View(model);
         }
+
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterTeacher(RegisterViewModel model)
         {
@@ -225,12 +212,14 @@ namespace BAPA_LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             ApplicationUser delObj = db.Users.SingleOrDefault(u => u.Id == id);
-            if (delObj == null)
+            DeleteUserViewModel duvm = delObj;
+            if (duvm == null)
             {
                 return HttpNotFound();
             }
-            return View(delObj);
+            return View(duvm);
         }
 
         [HttpPost]
@@ -248,7 +237,7 @@ namespace BAPA_LMS.Controllers
             catch (RetryLimitExceededException)
             {
                 // Log errors here				
-                TempData["alert"] = "danger|Det gick inte att ta bort kursen!";
+                TempData["alert"] = "danger|Det gick inte att ta bort användaren!";
             }
             return RedirectToAction("CourseEdit", new { id = courseId });
         }

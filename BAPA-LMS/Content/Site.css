@@ -27,6 +27,24 @@ textarea {
     margin: 10px 0;
 }
 
+.navbar-user  {
+    line-height: 20px;
+    padding: 15px !important;
+    color: #9d9d9d;    
+}
+
+    .navbar-user a {
+        color: #9d9d9d;
+    }
+
+.navbar-user > a:hover{
+    color:white;
+    text-decoration:none;
+}
+
+#logouticon{
+    padding-right: 4px;
+}
 /* Haxxored alertviewer on top*/
 body > div.alert {
     display: none;
@@ -83,6 +101,22 @@ body > div.alert {
 .input-daterange {
     width: auto;
 }
+
+.bootstrap-filestyle.input-group {
+    display: block;
+}
+
+.bootstrap-filestyle.input-group > * {
+    display: inline-block;
+}
+
+.bootstrap-filestyle.input-group > .input-group-btn {
+    width: inherit;
+}
+
+/*.bootstrap-filestyle.input-group > .input-group-btn > label {
+    padding-bottom: 7px;
+}*/
 
 .editarea-fixed {
     position: fixed;

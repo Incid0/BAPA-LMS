@@ -181,6 +181,12 @@
                     return false;
                 }
             });
+            // FileUpload
+            $('#formUpload').ajaxForm({
+                complete: function (xhr) {
+                    $('#uploadWindow').html(xhr.responseText);
+                }
+            });
             $('#formEdit .timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
             // Setting MaxLength automatically according to MVC StringLength
             $('input[data-val-length-max]').each(function (idx, element) {
@@ -198,6 +204,37 @@
                     }
                     loadTree(id);
                 }
+            }
+            input.remove();
+        },
+        initUpload: function () {
+            $.validator.unobtrusive.parse('#formUpload');
+            $('#btnUpload').click(function () {
+                if (!$('#formUpload').valid()) {
+                    return false;
+                }
+            });
+            // FileUpload
+            $('#formUpload').ajaxForm({
+                complete: function (xhr) {
+                    $('#uploadWindow').html(xhr.responseText);
+                }
+            });
+            $('#inputFile').change(function () {
+                    if ($(this).val()) {
+                        $('#btnUpload').attr('disabled', false);
+                    }
+                }
+            );
+            $(":file").filestyle({ buttonText: "Välj fil" });
+            $('#formUpload .timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
+            // Setting MaxLength automatically according to MVC StringLength
+            $('input[data-val-length-max]').each(function (idx, element) {
+                element.setAttribute('maxlength', element.getAttribute('data-val-length-max'));
+            });
+            var input = $('#uploadResult'), result = input.val(), data = result.split('|');
+            if (result) {
+                localAlert(data[1], data[0]);
             }
             input.remove();
         },
