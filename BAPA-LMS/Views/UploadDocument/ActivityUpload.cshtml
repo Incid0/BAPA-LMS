@@ -16,7 +16,7 @@
                     <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse@(item.Id)" href="#collapse@(item.Id)" )>@Html.DisplayFor(model => item.Name)<span> </span>@Html.DisplayFor(model => item.Type.Name)</a>
                 </h4>
             </div>
-            <div id="collapse@(item.Id)" class="panel-collapse collapse">
+            <div id="collapse@(item.Id)" class="panel-collapse collapse ">
                 <div class="panel-body">
                     @Html.DisplayFor(model => item.Name)
                     <br />

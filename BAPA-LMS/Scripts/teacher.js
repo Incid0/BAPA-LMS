@@ -174,6 +174,12 @@
                     $('#uploadWindow').html(xhr.responseText);
                 }
             });
+            $('#inputFile').change(function () {
+                    if ($(this).val()) {
+                        $('#btnUpload').attr('disabled', false);
+                    }
+                }
+            );
             $(":file").filestyle({ buttonText: "Välj fil" });
             $('#formUpload .timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
             // Setting MaxLength automatically according to MVC StringLength
