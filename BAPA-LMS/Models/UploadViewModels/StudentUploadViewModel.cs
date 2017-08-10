@@ -13,7 +13,6 @@ namespace BAPA_LMS.Models.ActivityViewModels
         public int CourseId { get; set; }
         public int ActivityId { get; set; }
 
-        public string UserdId { get; set; }
         public static implicit operator StudentUploadViewModel(FileDocument model)
         {
             return new StudentUploadViewModel

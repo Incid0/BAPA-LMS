@@ -47,12 +47,12 @@ namespace BAPA_LMS.Controllers
             var tuple = new Tuple<List<ActivitySubmitViewModel>, ApplicationUser, List<FileDocument>>(activityList, currentUser, fileList);
             return View(tuple);
         }
-
+        
         public ActionResult ActivityUploader(int id)
         {
             Activity activity = db.Activities.Find(id);
             ActivitySubmitViewModel asvm = activity;
-            return View(asvm);
+            return PartialView("_ActivityUploader",asvm);
         }
 
         //Studentupload
@@ -62,7 +62,7 @@ namespace BAPA_LMS.Controllers
             Activity activity = db.Activities.Find(id);
             ActivitySubmitViewModel asvm = activity;
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
-
+           
             try
             {
                 if (postedFile != null)
@@ -97,7 +97,8 @@ namespace BAPA_LMS.Controllers
                 // Log errors here
                 TempData["alert"] = "danger|Allvarligt fel!";
             }
-            return View(asvm);
+            //return PartialView("_ActivityUploader",asvm);
+            return RedirectToAction("ActivityUpload");
         }
         
         public ActionResult TeacherUploader(string id)
@@ -187,7 +188,7 @@ namespace BAPA_LMS.Controllers
                         db.SaveChanges();
                         file.Id.Encode().ToString();
                         postedFile.SaveAs(path + file.Id.Encode().ToString());
-                        TempData["alert"] = "success|Dokumentet är uppladdad!";
+                        TempData["alert"] = "success|Dokumentet är uppladdat!";
                     }
                     else
                     {                                       
@@ -226,6 +227,7 @@ namespace BAPA_LMS.Controllers
         {
 
             Activity activity = db.Activities.Find(id);
+
             List<ApplicationUser> classList = new List<ApplicationUser>();
             foreach (var item in db.Users.Where(u => u.Course.Id == activity.Module.Course.Id))
             {
@@ -238,6 +240,7 @@ namespace BAPA_LMS.Controllers
             {
                 fileList.Add(item);
             }
+          
             var tuple = new Tuple<List<ApplicationUser>, List<FileDocument>>(classList, fileList);
             return View(tuple);
         }

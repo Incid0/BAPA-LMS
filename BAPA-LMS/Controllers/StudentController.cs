@@ -2,6 +2,7 @@
 using BAPA_LMS.Models.CourseViewModels;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ModuleViewModels;
+using BAPA_LMS.Models.UploadViewModels;
 using BAPA_LMS.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace BAPA_LMS.Controllers
 
         public ActionResult ActivityFileList(int id)
         {
-            List<FileDocument> fileList = new List<FileDocument>();
+            List<StudentDocumentListViewModel> fileList = new List<StudentDocumentListViewModel>();
             foreach (var file in db.Files.Where(f => f.Activity.Id == id))
             {
                 fileList.Add(file);

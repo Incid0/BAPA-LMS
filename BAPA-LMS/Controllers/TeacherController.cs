@@ -16,6 +16,7 @@ using BAPA_LMS.Utils;
 using BAPA_LMS.Models.ActivityViewModels;
 using System.Text.RegularExpressions;
 using System;
+using BAPA_LMS.Models.UserViewModels;
 
 namespace BAPA_LMS.Controllers
 {
@@ -206,11 +207,12 @@ namespace BAPA_LMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ApplicationUser delObj = db.Users.SingleOrDefault(u => u.Id == id);
-            if (delObj == null)
+            DeleteUserViewModel duvm = delObj;
+            if (duvm == null)
             {
                 return HttpNotFound();
             }
-            return View(delObj);
+            return View(duvm);
         }
 
         [HttpPost]
