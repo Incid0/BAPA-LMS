@@ -7,6 +7,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    position: relative;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -23,15 +24,30 @@ textarea {
     max-width: 280px;
 }
 
+.body-content {
+}
+
+.body-content hr {
+    margin: 10px 0;
+}
+
+footer {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 20px;
+}
+
 .navbar-user  {
     line-height: 20px;
     padding: 15px !important;
     color: #9d9d9d;    
 }
 
-    .navbar-user a {
-        color: #9d9d9d;
-    }
+.navbar-user a {
+    color: #9d9d9d;
+}
 
 .navbar-user > a:hover{
     color:white;
@@ -119,6 +135,29 @@ body > div.alert {
 
 .editarea-fixed {
     position: fixed;
+}
+
+#courses > .panel {
+    margin-top: 20px;
+}
+
+#editarea {
+    min-height: 500px;
+}
+
+#editarea > h4 {
+    margin-top: 0;
+}
+
+#courseeditor {
+    display: none;
+    min-height: 610px;
+}
+
+/* Fix pointer on empty anchor */
+a.create-action:hover {
+    cursor: pointer;
+}
 }
 /*Anton och Basses äventyr*/
 .custom-table {

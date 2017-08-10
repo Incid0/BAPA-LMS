@@ -99,12 +99,18 @@ namespace BAPA_LMS.Controllers
             }
             // Paginate the result
             clvm.Count = result.Count();
-            clvm.Courses = result
+            CourseListRow[] resultArr = result
                 .Skip(() => clvm.Offset)
                 .Take(() => CourseListViewModel.PageSize)
                 .ToArray();
+			// Encode the result
+			for (var i = 0; i < resultArr.Length; i++)
+			{
+				resultArr[i].Id = resultArr[i].Id.Encode();
+			}
+			clvm.Courses = resultArr;
 
-            if (Request.IsAjaxRequest())
+			if (Request.IsAjaxRequest())
             {
                 return PartialView("_TeacherIndex", clvm);
             }

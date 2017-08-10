@@ -49,7 +49,7 @@ namespace BAPA_LMS.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
 		{
-			return View();
+			return PartialView("_Create");
 		}
 
 		// POST: Courses/Create
@@ -58,6 +58,7 @@ namespace BAPA_LMS.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create(CourseEditViewModel cevm)
 		{
+			string returnView = "_Create";
 			try
 			{
 				if (ModelState.IsValid)
@@ -68,7 +69,10 @@ namespace BAPA_LMS.Controllers
 					{
 						db.Courses.Add(newCourse);
 						db.SaveChanges();
-						TempData["alert"] = "success|Kursen är tillagd!";
+						cevm = newCourse; // CourseEditViewModel
+						Session["courseid"] = newCourse.Id;
+						TempData["alert"] = "success|Kursen är tillagd!|c" + newCourse.Id.Encode() + "|" + newCourse.Name;
+						returnView = "_Edit";
 					}
 					else
 					{
@@ -82,7 +86,7 @@ namespace BAPA_LMS.Controllers
 				ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
 				TempData["alert"] = "danger|Allvarligt fel!";
 			}
-			return View(cevm);
+			return PartialView(returnView, cevm);
 		}
 
         // GET: Courses/Edit/5
@@ -93,21 +97,21 @@ namespace BAPA_LMS.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			Course course = db.Courses.Find(id);
+			Course course = db.Courses.Find(id?.Decode());
 			if (course == null)
 			{
 				return HttpNotFound();
 			}
 			CourseEditViewModel cevm = course;
-			HttpContext.Session["courseid"] = id;
-			return View(cevm);
+			HttpContext.Session["courseid"] = course.Id;
+			return PartialView("_Edit", cevm);
 		}
 
 		// POST: Courses/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit()
+        public ActionResult Edit(CourseEditViewModel cevm)
 		{
 			int? id = (int?)HttpContext.Session["courseid"];
 			if (id == null)
@@ -119,13 +123,13 @@ namespace BAPA_LMS.Controllers
 			{
 				updatedCourse = db.Courses.Find(id);
 				// Match up fieldnames and update the model.
-				if (id != null && TryUpdateModel(updatedCourse, "", new string[] { "Name", "Description", "StartDate" }))
+				if (updatedCourse != null && TryUpdateModel(updatedCourse, "", new string[] { "Name", "Description", "StartDate" }))
 				{
 					try
 					{
 						db.SaveChanges();
-						TempData["alert"] = "success|Kursen är uppdaterad!";
-						return RedirectToAction("Index");
+						cevm = updatedCourse; // CourseEditViewModel
+						TempData["alert"] = "success|Kursen är uppdaterad!|c" + updatedCourse.Id.Encode();
 					}
 					catch (RetryLimitExceededException)
 					{
@@ -139,7 +143,7 @@ namespace BAPA_LMS.Controllers
 					TempData["alert"] = "danger|Kunde inte uppdatera kursen!";
 				}
 			}
-			return View((CourseEditViewModel)updatedCourse);
+			return PartialView("_Edit", cevm);
 		}
 
 		// GET: Courses/Delete/5
@@ -180,16 +184,22 @@ namespace BAPA_LMS.Controllers
 		[Authorize(Roles = "Admin")]
 		public JsonResult GetTree(int id)
 		{
-			Course course = db.Courses.Find(id);
+			Course course = db.Courses.Find(id.Decode());
 
 			var actArray = new {
 				id = "c" + course.Id.Encode(),
 				text = course.Name,
 				icon = "glyphicon glyphicon-home",
+				tags = new string[] {
+					"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera kurs\"></span>"
+				},
 				nodes = (course.Modules.OrderBy(m => m.StartDate).Select(m => new {
 					id = "m" + m.Id.Encode(),
 					text = m.Name,
 					icon = "glyphicon glyphicon-book",
+					tags = new string[] {
+						"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera kurs\"></span>"
+					},
 					nodes = (m.Activities.OrderBy(a => a.StartTime).Select(a => new
 					{
 						id = "a" + a.Id.Encode(),
