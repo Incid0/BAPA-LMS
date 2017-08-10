@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Lexicon</title>
+    <title>@ViewBag.Title - BAPA LMS</title>
     @* Include correct bundle depending on the views role *@
     @Styles.Render("~/Content/lms" + ViewBag.Style)
 
@@ -37,9 +37,9 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - BAPAS Lexicon</p>
+            <hr />
+            <p>&copy; @DateTime.Now.Year - BAPA LMS</p>
         </footer>
     </div>
 

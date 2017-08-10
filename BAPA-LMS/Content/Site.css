@@ -7,6 +7,8 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    padding-bottom: 51px;
+    position: relative;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -23,8 +25,19 @@ textarea {
     max-width: 280px;
 }
 
+.body-content {
+}
+
 .body-content hr {
     margin: 10px 0;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 15px;
 }
 
 .navbar-user  {
@@ -33,9 +46,9 @@ textarea {
     color: #9d9d9d;    
 }
 
-    .navbar-user a {
-        color: #9d9d9d;
-    }
+.navbar-user a {
+    color: #9d9d9d;
+}
 
 .navbar-user > a:hover{
     color:white;
@@ -136,4 +149,5 @@ body > div.alert {
 
 #courseeditor {
     display: none;
+    min-height: 610px;
 }
