@@ -7,7 +7,6 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 51px;
     position: relative;
 }
 
@@ -33,11 +32,11 @@ textarea {
 }
 
 footer {
-    position: absolute;
+    position: relative;
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 0 15px;
+    margin-top: 20px;
 }
 
 .navbar-user  {
@@ -150,4 +149,9 @@ body > div.alert {
 #courseeditor {
     display: none;
     min-height: 610px;
+}
+
+/* Fix pointer on empty anchor */
+a.create-action:hover {
+    cursor: pointer;
 }

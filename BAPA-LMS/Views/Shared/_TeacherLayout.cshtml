@@ -28,7 +28,7 @@
                     {
                         <li>@Html.ActionLink("Hem", "Index", "Teacher")</li>
                         <li>@Html.ActionLink("Lägg till lärare", "RegisterTeacher")</li> 
-                        <li>@Html.ActionLink("Lägg till kurs", "courses", null, new { @class = "create-action", data_controller = "courses" })</li>
+                        <li><a class="create-action" data-controller="courses">Lägg till kurs</a></li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
