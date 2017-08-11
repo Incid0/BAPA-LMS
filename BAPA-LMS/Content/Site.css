@@ -151,6 +151,8 @@ body > div.alert {
 }
 
 /* Fix pointer on empty anchor */
-a.create-action:hover {
+a.create-action:hover,
+#courseList table tr td:hover
+{
     cursor: pointer;
 }

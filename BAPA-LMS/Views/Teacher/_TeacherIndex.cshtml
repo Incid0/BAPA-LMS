@@ -29,7 +29,7 @@
                     @SortHeader("StartDate", "Startdatum")
                 </th>
                 <th>
-                    @SortHeader("Inlämningsaktiviter","Inlämningsaktiviteter")
+                    <a>Inlämningsaktiviteter</a>
                 </th>
             </tr>
 }
@@ -50,7 +50,7 @@
 @if (Model.Courses.Length == CourseListViewModel.PageSize)
 {
     <tr id="moreData">
-        <td colspan="3">
+        <th colspan="3">
             @Ajax.ActionLink("Ladda fler kurser", "Index",
                 new { filter = Model.Filter, startrange = Model.StartRange, endrange = Model.EndRange, sortparam = Model.SortParam, offset = Model.Offset + CourseListViewModel.PageSize },
                 new AjaxOptions
@@ -63,7 +63,7 @@
                 {
                     @class = "btn btn-primary"
                 })
-        </td>
+        </th>
     </tr>
 }
 @if (Model.Offset == 0)
