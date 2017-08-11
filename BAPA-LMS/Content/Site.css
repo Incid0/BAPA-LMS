@@ -50,6 +50,10 @@ footer {
     color:white;
     text-decoration:none;
 }
+    .navbar-user > a:focus {
+        color: white;
+        text-decoration: none;
+    }
 
 #logouticon{
     padding-right: 4px;
@@ -108,7 +112,6 @@ body > div.alert {
     width: 0;
 }
 
-
 .input-daterange {
     width: auto;
 }
@@ -156,3 +159,18 @@ a.create-action:hover,
 {
     cursor: pointer;
 }
+}
+/*Anton och Basses äventyr*/
+.custom-table {
+    text-align: center;
+    height: 43px;
+    border-collapse: collapse;
+}
+
+    .custom-table td {
+        border-bottom: 1px solid rgb(221, 221,221);
+    }
+
+    .custom-table > th {
+        text-align: center;
+    }

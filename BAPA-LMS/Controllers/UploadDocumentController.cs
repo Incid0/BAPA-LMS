@@ -200,10 +200,13 @@ namespace BAPA_LMS.Controllers
             return PartialView("_TeacherUploader", tuvm);
         }
 
-        public ActionResult ListUploadActivities(int id)
+        public ActionResult ListUploadActivities(int? id)
         {
-
-            Course course = db.Courses.Find(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(id?.Decode());
 
             List<ActivitySubmitViewModel> activityList = new List<ActivitySubmitViewModel>();
             foreach (var module in course.Modules)

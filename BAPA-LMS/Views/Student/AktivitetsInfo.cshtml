@@ -12,7 +12,7 @@
     <div class="row">
 
 
-        <div class="panel panel-default col-md-6 no-padding">
+        <div class="panel panel-default col-md-4 no-padding">
             <div class="panel-heading">
                 <h3 class="panel-title">@Html.DisplayFor(model => model.Name)</h3>
             </div>
@@ -21,25 +21,31 @@
                 @Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)<br />
 
             </div>
-           
 
-            @*<div class="panel panel-default col-md-6 no-padding ">*@
-            <hr/>
-                <div class="panel-heading">
-                    <h3 class="panel-title">Dokument för @Html.DisplayFor(model => model.Name)</h3>
-                </div>
-                <table class="table table-fixed">
 
-                    @foreach (var item in Model.Files)
-            {
-                        <tr>
-                            <td class="col-xs-12">@Html.DisplayFor(modelItem => item.Name) @Html.ActionLink("Ladda ner", "DownloadFile", "UploadDocument", new { id = item.Id }, null)</td>
-                        </tr>
-                    }
-                </table>
-            @*</div>*@
+
         </div>
-        <div class="panel-group col-md-6 no-padding" id="accordion">
+        <div class="panel panel-default col-md-4 no-padding ">
+            <div class="panel-heading">
+                <h3 class="panel-title">Dokument för @Html.DisplayFor(model => model.Name)</h3>
+            </div>
+            <div class="panel-body">
+                @if (Model.Files.Count() > 0)
+                {
+                    foreach (var item in Model.Files)
+                    {
+                        @Html.DisplayFor(modelItem => item.Name) @Html.ActionLink("Ladda ner", "DownloadFile", "UploadDocument", new { id = item.Id }, null)
+                    }
+                }
+                else
+                {
+                    <p>Inga uppladdade dokument för tillfället.</p>
+                }
+
+            </div>
+        </div>
+
+        <div class="panel-group col-md-4 no-padding" id="accordion">
             @foreach (var item in Model.Activities)
             {
 
@@ -56,10 +62,10 @@
                             @Html.DisplayFor(model => item.StartTime)
                             <br />
                             @Html.DisplayFor(model => item.EndTime)
-                            <br/>
-                            @foreach(var file in item.Files)
+                            <br />
+                            @foreach (var file in item.Files)
                             {
-                                if(file.Activity.Id == item.Id)
+                                if (file.Activity.Id == item.Id)
                                 {
                                     @Html.DisplayFor(model => file.Name) @Html.ActionLink("Ladda ner", "DownloadFile", "UploadDocument", new { id = file.Id }, null)
                                 }
@@ -71,8 +77,8 @@
             }
         </div>
     </div>
- 
- 
+
+
 
 
 
