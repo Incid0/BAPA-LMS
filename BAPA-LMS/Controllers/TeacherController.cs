@@ -87,16 +87,18 @@ namespace BAPA_LMS.Controllers
                 {
                     default: result = result.OrderBy(c => c.Name); break;
                     case "StartDate": result = result.OrderBy(c => c.StartDate); break;
-                }
-            }
+					case "Description": result = result.OrderBy(c => c.Description); break;
+				}
+			}
             else
             {
                 switch (sortdir[0])
                 {
                     default: result = result.OrderByDescending(c => c.Name); break;
                     case "StartDate": result = result.OrderByDescending(c => c.StartDate); break;
-                }
-            }
+					case "Description": result = result.OrderByDescending(c => c.Description); break;
+				}
+			}
             // Paginate the result
             clvm.Count = result.Count();
             CourseListRow[] resultArr = result
@@ -115,7 +117,6 @@ namespace BAPA_LMS.Controllers
                 return PartialView("_TeacherIndex", clvm);
             }
             return View(clvm);
-
         }
         
 
