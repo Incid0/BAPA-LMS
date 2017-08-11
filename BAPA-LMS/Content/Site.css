@@ -19,12 +19,9 @@
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select,
-textarea {
+select
+{
     max-width: 280px;
-}
-
-.body-content {
 }
 
 .body-content hr {
@@ -103,8 +100,10 @@ body > div.alert {
     font-size: 1.1em;
 }
 
+/* Size and placement of popup window */
 .modal-content {
-    width: 500px;
+    width: 50%;
+    min-width: 600px;
     margin: 70px auto;
 }
 
@@ -142,7 +141,7 @@ body > div.alert {
 }
 
 #editarea {
-    min-height: 500px;
+    min-height: 556px;
 }
 
 #editarea > h4 {
@@ -151,7 +150,7 @@ body > div.alert {
 
 #courseeditor {
     display: none;
-    min-height: 610px;
+    min-height: 650px;
 }
 
 /* Fix pointer on empty anchor */

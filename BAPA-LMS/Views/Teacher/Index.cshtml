@@ -48,7 +48,7 @@
                 <div id="editarea">
                 </div>
                 <div class="buttonbar">
-                    @Html.ActionLink("Lägg till kursdeltagare", "Register", new { id = 0 }, new { @class = "btn btn-default toggle-action", disabled = "disabled" })
+                    <button id="btnRegister" class="btn btn-default create-action toggle-action" data-controller="teacher" disabled="disabled">Registrera elever</button>
                     <button id="btnModule" class="btn btn-default create-action toggle-action" data-controller="modules" disabled="disabled">Ny modul</button>
                     <button id="btnActivity" class="btn btn-default create-action toggle-action" data-controller="activities" disabled="disabled">Ny aktivitet</button>
                     <button id="btnDel" class="btn btn-danger toggle-action" data-toggle="modal" data-target="#modalContainer" href="" disabled="disabled">Ta bort</button>
