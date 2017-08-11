@@ -29,8 +29,8 @@
                         @Html.EditorFor(model => model.EndRange, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd" } })
                     </div>
                 </div>
-                @Html.ActionLink("Lägg till lärare", "RegisterTeacher", null, new { @class = "btn btn-default" })
-                <button class="btn btn-default create-action" data-controller="courses">Lägg till kurs</button> 
+                @*@Html.ActionLink("Lägg till lärare", "RegisterTeacher", null, new { @class = "btn btn-default" })
+                <button class="btn btn-default create-action" data-controller="courses">Lägg till kurs</button>*@ 
             </div>
             @Html.Partial("_TeacherIndex", Model)
         }
