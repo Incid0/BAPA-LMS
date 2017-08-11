@@ -32,7 +32,7 @@ namespace BAPA_LMS.Controllers
         }
 
     
-        public ActionResult KursInfo()
+        public ActionResult CourseInfo()
         {
 
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
@@ -47,7 +47,7 @@ namespace BAPA_LMS.Controllers
             return View(cdvm);
         }
 
-        public ActionResult AktivitetsInfo(int id)
+        public ActionResult Acitvityinfo(int id)
         {
             Module module = db.Modules.Find(id);
             ModuleDetailViewModel mdvm = module;
