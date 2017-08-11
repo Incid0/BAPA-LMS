@@ -5,80 +5,89 @@
 }
 
 <h2>Kursinformation</h2>
-<div class="container">
-    <div class="panel panel-default col-md-12 no-padding">
-        <div class="panel-heading">
-            <h3 class="panel-title">@Html.DisplayFor(model => model.Name)</h3>
-        </div>
-        <div class="panel-body">
-            @Html.DisplayFor(model => model.Description)
-            <br />
-            @Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)
-        </div>
-        @*<div class="panel-footer panel-info">
 
-            </div>*@
-    </div>
+   <div class="row">
+       <div class="col-md-12">
+           <div class="panel panel-primary">
+               <div class="panel-heading">
+                   <h3 class="panel-title">@Html.DisplayFor(model => model.Name)</h3>
+               </div>
+               <div class="panel-body">
+                   @Html.DisplayFor(model => model.Description)
+                   <br />
+                   @Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)
+               </div>
+           </div>
+       </div>
+</div>
 
+    <div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>
+                    Moduler för @Html.DisplayFor(model => model.Name)
+                </h4>
+            </div>
+            <table class="table table-fixed">
 
-
-
-    <div class="panel panel-default col-md-4 no-padding">
-        <div class="panel-heading">
-            <h4>
-                Moduler för @Html.DisplayFor(model => model.Name)
-            </h4>
-        </div>
-        <table class="table table-fixed">
-
-            @foreach (var item in Model.Modules)
+                @foreach (var item in Model.Modules)
             {
-                <tr>
-                    <td class="col-xs-12"><a href="@Url.Action("AktivitetsInfo","Student",new {id=item.Id })">@Html.DisplayFor(modelItem => item.Name)<Span> | </Span>@Html.DisplayFor(modelItem => item.Description)</a></td>
-                </tr>
-            }
+                    <tr>
+                        <td class="col-xs-12"><a href="@Url.Action("ActivityInfo","Student",new {id=item.Id })">@Html.DisplayFor(modelItem => item.Name)<Span> | </Span>@Html.DisplayFor(modelItem => item.Description)</a></td>
+                    </tr>
+                }
 
 
-        </table>
+            </table>
+        </div>
     </div>
 
-    <div class="panel panel-default col-md-4 no-padding ">
-        <div class="panel-heading">
-            <h4>
-                Klasslista för @Html.DisplayFor(model => model.Name)
-            </h4>
-        </div>
-        <table class="table table-fixed">
 
-            @foreach (var item in Model.Members)
+    <div class="col-md-4">
+        <div class="panel panel-primary no-padding ">
+            <div class="panel-heading">
+                <h4>
+                    Klasslista för @Html.DisplayFor(model => model.Name)
+                </h4>
+            </div>
+            <table class="table table-fixed">
+
+                @foreach (var item in Model.Members)
             {
-                <tr>
-                    <td class="col-xs-12">@Html.DisplayFor(modelItem => item.FullName)</td>
-                </tr>
-            }
-        </table>
-    </div>
-    <div class="panel panel-default col-md-4 no-padding ">
-        <div class="panel-heading">
-            <h4>
-                Dokument för @Html.DisplayFor(model => model.Name)
-            </h4>
+                    <tr>
+                        <td class="col-xs-12">@Html.DisplayFor(modelItem => item.FullName)</td>
+                    </tr>
+                }
+            </table>
         </div>
-        <table class="table table-fixed">
-            @if (Model.Files.Count() > 0)
+
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-primary ">
+            <div class="panel-heading">
+                <h4>
+                    Dokument för @Html.DisplayFor(model => model.Name)
+                </h4>
+            </div>
+            <table class="table table-fixed">
+                @if (Model.Files.Count() > 0)
             {
                 foreach (var item in Model.Files)
                 {
-                    <tr>
-                        <td class="col-xs-12">@Html.DisplayFor(modelItem => item.Name)<span> | </span> @Html.ActionLink(" ", "DownloadFile", "UploadDocument", new { id = item.Id }, new { @class = "glyphicon glyphicon-floppy-save" })</td>
-                    </tr>
+                        <tr>
+                            <td class="col-xs-12">@Html.DisplayFor(modelItem => item.Name)<span> | </span> @Html.ActionLink(" ", "DownloadFile", "UploadDocument", new { id = item.Id }, new { @class = "glyphicon glyphicon-floppy-save" })</td>
+                        </tr>
+                    }
                 }
-            }
-            else
-            {
-                <tr><td>Inga uppladdade dokument för tillfället.</td></tr>
-            }
-        </table>
+                else
+                {
+                    <tr><td>Inga uppladdade dokument för tillfället.</td></tr>
+                }
+            </table>
+        </div>
     </div>
 </div>
 

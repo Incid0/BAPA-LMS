@@ -47,10 +47,10 @@ namespace BAPA_LMS.Controllers
             return View(cdvm);
         }
 
-        public ActionResult Acitvityinfo(int id)
+        public ActionResult ActivityInfo(int id)
         {
             Module module = db.Modules.Find(id);
-            ModuleDetailViewModel mdvm = module;
+            ModuleDetailViewModel mdvm = module;            
             return View(mdvm);
         }
 

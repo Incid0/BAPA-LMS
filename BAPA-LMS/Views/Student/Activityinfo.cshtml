@@ -8,48 +8,51 @@
 
 
 
-<div class="container">
+<div class="">
     <div class="row">
 
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@Html.DisplayFor(model => model.Name)</h3>
+                </div>
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.Description)
+                    @Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)<br />
 
-        <div class="panel panel-default col-md-4 no-padding">
-            <div class="panel-heading">
-                <h3 class="panel-title">@Html.DisplayFor(model => model.Name)</h3>
-            </div>
-            <div class="panel-body">
-                @Html.DisplayFor(model => model.Description)
-                @Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)<br />
-
-            </div>
-
+                </div>
+          </div>
 
 
         </div>
-        <div class="panel panel-default col-md-4 no-padding ">
-            <div class="panel-heading">
-                <h3 class="panel-title">Dokument för @Html.DisplayFor(model => model.Name)</h3>
-            </div>
-            <div class="panel-body">
-                @if (Model.Files.Count() > 0)
-                {
-                    foreach (var item in Model.Files)
+
+        <div class="col-md-4 no-padding">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Dokument för @Html.DisplayFor(model => model.Name)</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Model.Files.Count() > 0)
                     {
-                        @Html.DisplayFor(modelItem => item.Name) @Html.ActionLink("Ladda ner", "DownloadFile", "UploadDocument", new { id = item.Id }, null)
+                        foreach (var item in Model.Files)
+                        {
+                            @Html.DisplayFor(modelItem => item.Name) @Html.ActionLink("Ladda ner", "DownloadFile", "UploadDocument", new { id = item.Id }, null)
+                        }
                     }
-                }
-                else
-                {
-                    <p>Inga uppladdade dokument för tillfället.</p>
-                }
+                    else
+                    {
+                        <p>Inga uppladdade dokument för tillfället.</p>
+                    }
 
+                </div>
             </div>
         </div>
 
-        <div class="panel-group col-md-4 no-padding" id="accordion">
+        <div class="panel-group col-md-4" id="accordion">
             @foreach (var item in Model.Activities)
             {
 
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse@(item.Id)" href="#collapse@(item.Id)" )>@Html.DisplayFor(model => item.Name)<span> </span>@Html.DisplayFor(model => item.Type.Name)</a>
@@ -58,9 +61,9 @@
                     <div id="collapse@(item.Id)" class="panel-collapse collapse">
                         <div class="panel-body">
                             @Html.DisplayFor(model => item.Description)
-                            <br />
+                            <br />                           
                             @Html.DisplayFor(model => item.StartTime)
-                            <br />
+                            <br />                          
                             @Html.DisplayFor(model => item.EndTime)
                             <br />
                             @foreach (var file in item.Files)
@@ -77,10 +80,6 @@
             }
         </div>
     </div>
-
-
-
-
 
 
 

@@ -440,7 +440,7 @@
     <Content Include="Views\UploadDocument\ListUploadActivities.cshtml" />
     <Content Include="Views\UploadDocument\TeacherUploader.cshtml" />
     <Content Include="Views\UploadDocument\_Delete.cshtml" />
-    <Content Include="Views\Student\Activityinfo.cshtml" />
+    <Content Include="Views\Student\ActivityInfo.cshtml" />
     <Content Include="Views\Student\_ActivityFileList.cshtml" />
     <Content Include="Views\UploadDocument\_TeacherUploader.cshtml" />
     <Content Include="Views\Shared\_TeacherLayout.cshtml" />

@@ -27,7 +27,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Hem", "Index", "Student")</li> 
-                        <li>@Html.ActionLink("Kursinformation", "KursInfo", "Student")</li>   
+                        <li>@Html.ActionLink("Kursinformation", "CourseInfo", "Student")</li>   
                         <li>@Html.ActionLink("Inlämingsuppgifter","ActivityUpload","UploadDocument")</li>
                     }
                 </ul>
