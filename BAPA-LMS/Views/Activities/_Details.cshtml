@@ -55,7 +55,25 @@
 
         <dd>
             @Html.DisplayFor(model => model.Description)
+            <br />
+            <br />
         </dd>
+     
+       @if (Model.File != null)
+       {
+           <dt>
+              Inlämningsuppgift
+           </dt>
+        <dd>
+            @Html.DisplayFor(model => model.File.Name)&nbsp;&nbsp;&nbsp;   @Html.ActionLink(" ", "DownloadFile", "UploadDocument", new { id = Model.File.Id }, new { @class = "glyphicon glyphicon-floppy-save" })
+        </dd>
+       }
+       else
+       {
+           <dd></dd>
+       }
+
+
 
     </dl>
 </div>

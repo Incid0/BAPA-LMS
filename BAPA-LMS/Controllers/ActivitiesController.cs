@@ -40,8 +40,14 @@ namespace BAPA_LMS.Controllers
 			{
 				return HttpNotFound();
 			}
-			ActivityDetailViewModel advm = activity;
-			return PartialView("_Details", advm);
+            ActivityDetailViewModel advm = activity;
+            foreach (var item in db.Files.Where(f => f.Activity.Id == activity.Id))
+            {
+                advm.File = item;
+                break;
+            }
+			     
+            return PartialView("_Details", advm);
 		}
 
 		// GET: Activities/Create
