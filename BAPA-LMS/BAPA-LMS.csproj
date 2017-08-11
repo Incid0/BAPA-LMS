@@ -429,8 +429,8 @@
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\UploadDocument\ActivityUpload.cshtml" />
     <Content Include="Views\UploadDocument\_ActivityUploader.cshtml" />
-    <Content Include="Views\Teacher\Delete.cshtml" />
-    <Content Include="Views\Teacher\Register.cshtml" />
+    <Content Include="Views\Teacher\_Delete.cshtml" />
+    <Content Include="Views\Teacher\_Register.cshtml" />
     <Content Include="Views\Activities\_Delete.cshtml" />
     <Content Include="Views\Modules\_Delete.cshtml" />
     <Content Include="Views\Teacher\_StudentList.cshtml" />

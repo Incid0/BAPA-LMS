@@ -15,10 +15,15 @@
             </div>
             <table class="table table-fixed">
 
-                @foreach (var item in Model.Members)
+                @foreach (var user in Model.Members.OrderBy(u => u.LastName).ThenBy(u => u.FirstName))
                 {
                     <tr>
-                        <td class="col-xs-12">@Html.DisplayFor(modelItem => item.FullName) @Html.ActionLink("Ta Bort Student", "Delete", new { id = item.Id })</td>
+                        <td class="col-xs-12">
+                            @Html.DisplayFor(modelItem => user.FullName) &nbsp;
+                            <a href="@Url.Action("Delete", new { id = user.Id })" data-toggle="modal" data-target="#modalContainer">
+                                <span class="glyphicon glyphicon-trash" title="Ta Bort @user.FullName"></span>
+                            </a>
+                        </td>
                     </tr>
                 }
             </table>

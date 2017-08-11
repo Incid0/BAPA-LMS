@@ -85,13 +85,17 @@
     }
 
     function createAction() {
-        var btn = $(this);
-        if (btn.data('controller') === 'courses') {
+        var btn = $(this), ctrl = btn.data('controller'), action = 'create', id = btn.data('parent');
+        if (ctrl === 'courses') {
             switchToEditor(0, '<Ny kurs>');
             $('.toggle-action').prop('disabled', true);
             tree.empty();
+        } else if (ctrl === 'teacher') {
+            action = 'register';
+            node = treeview.getNodes()[0];
+            id = node && node.id.substr(1);
         }
-        changeEditor('create', btn.data('controller'), btn.data('parent'));
+        changeEditor(action, ctrl, id);
     }
 
     function updateCourseList() {
@@ -240,7 +244,7 @@
                 localAlert(data[1], data[0]);
                 if (data[0] === 'success') {
                     $('#modalContainer').modal('hide');
-                    if (!data[2]) {
+                    if (!data[2]) { // Treeview or other view item deleted
                         var node = treeview.getSelected(), parent = treeview.getParents(node)[0];
                         treeview.removeNode(node, { silent: true });
                         if (parent) {
@@ -249,10 +253,13 @@
                             $('#editarea').empty();
                             switchToList();
                         }
-                        //$('#btnDel').prop('disabled', true);
                     } else {
-                        formrefresh = true;
-                        $('#formUpload').submit();
+                        if (data[2] === 'user') { // Deleted user, refresh node to show updated classlist
+                            treeNodeSelect(null, treeview.getNodes()[0]);
+                        } else {
+                            formrefresh = true; // Deleted file, trigger form to reload filelist
+                            $('#formUpload').submit();
+                        }
                     }
                 }
             }

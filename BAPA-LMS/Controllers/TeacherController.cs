@@ -134,15 +134,13 @@ namespace BAPA_LMS.Controllers
             return View(civm);
         }
 
-        [AllowAnonymous]
-        public ActionResult RegisterTeacher()
-        {
-            return View();
-        }
-
         public ActionResult StudentList(int? id)
         {
-            Course course = db.Courses.Find(id?.Decode());
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Find(id?.Decode());
             if (course == null)
             {
                 return HttpNotFound();
@@ -151,33 +149,67 @@ namespace BAPA_LMS.Controllers
             return PartialView("_StudentList", cdvm);
         }
 
-        // POST: /Account/Register
-        [HttpPost]
+		// GET: /Account/Register
+		[AllowAnonymous]
+		public ActionResult Register(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Find(id?.Decode());
+			if (course == null)
+			{
+				return HttpNotFound();
+			}
+			RegisterViewModel rvm = new RegisterViewModel();
+			Session["courseid"] = course.Id;
+			return PartialView("_Register", rvm);
+		}
+
+		// POST: /Account/Register
+		[HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, int id)
+        public async Task<ActionResult> Register(RegisterViewModel rvm)
         {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CourseId = id, FirstName = model.FirstName, LastName = model.LastName };
+			try
+			{
+				if (ModelState.IsValid)
+				{
+					ApplicationUser newUser = new ApplicationUser { UserName = rvm.Email, Email = rvm.Email, CourseId = (int)Session["courseid"], FirstName = rvm.FirstName, LastName = rvm.LastName };
+					var result = await UserManager.CreateAsync(newUser, rvm.Password);
 
-                var result = await UserManager.CreateAsync(user, model.Password);
+					if (result.Succeeded)
+					{
+						result = UserManager.AddToRole(newUser.Id, "Member");
+						//await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+						TempData["alert"] = "success|Eleven är registrerad!";
+						ModelState.Clear();
+						rvm = new RegisterViewModel();
+					}
+					else
+					{
+						TempData["alert"] = "danger|Kunde inte lägga till elev!";
+						AddErrors(result);
+					}
+				}
 
-                if (result.Succeeded)
-                {
-                    result = UserManager.AddToRole(user.Id, "Member");
-                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-
-
-                    return RedirectToAction("Index", "Teacher");
-                }
-                AddErrors(result);
-            }
-
-            return View(model);
+			}
+			catch (Exception)
+			{
+				ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
+				TempData["alert"] = "danger|Allvarligt fel!";
+			}
+			return PartialView("_Register", rvm);
         }
 
-        [HttpPost]
+		[AllowAnonymous]
+		public ActionResult RegisterTeacher()
+		{
+			return View();
+		}
+
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterTeacher(RegisterViewModel model)
         {
@@ -206,40 +238,52 @@ namespace BAPA_LMS.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        public ActionResult Delete(string id)
+
+		public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ApplicationUser delObj = db.Users.SingleOrDefault(u => u.Id == id);
-            DeleteUserViewModel duvm = delObj;
-            if (duvm == null)
+            ApplicationUser user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(duvm);
+			DeleteUserViewModel duvm = user;
+			Session["userid"] = user.Id;
+			return PartialView("_Delete", duvm);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(DeleteUserViewModel duvm)
         {
-            int? courseId = null;
+			string id = (string)Session["userid"];
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
             try
             {
-                ApplicationUser delObj = db.Users.SingleOrDefault(u => u.Id == id);
-                courseId = delObj.CourseId;
-                db.Users.Remove(delObj);
-                db.SaveChanges();
-            }
-            catch (RetryLimitExceededException)
+                ApplicationUser user = db.Users.Find(id);
+				if (user != null)
+				{
+					db.Users.Remove(user);
+					db.SaveChanges();
+					TempData["alert"] = "success|Elev togs bort!|user";
+				} else
+				{
+					TempData["alert"] = "danger|Eleven gick inte att hitta!";
+				}
+			}
+			catch (RetryLimitExceededException)
             {
                 // Log errors here				
-                TempData["alert"] = "danger|Det gick inte att ta bort användaren!";
+                TempData["alert"] = "danger|Det gick inte att ta bort eleven!";
             }
-            return RedirectToAction("CourseEdit", new { id = courseId });
+            return PartialView("_Delete", duvm);
         }
 
         private void AddErrors(IdentityResult result)
