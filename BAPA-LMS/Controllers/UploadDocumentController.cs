@@ -133,6 +133,7 @@ namespace BAPA_LMS.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult TeacherUploader(HttpPostedFileBase postedFile, string id, bool refresh = false)
         {
             TeacherUploadViewModel tuvm = new TeacherUploadViewModel();
