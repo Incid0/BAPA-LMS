@@ -147,38 +147,45 @@ namespace BAPA_LMS.Controllers
 		}
 
 		// GET: Courses/Delete/5
-		//public ActionResult Delete(int? id)
-		//{
-		//    if (id == null)
-		//    {
-		//        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-		//    }
-		//    Course course = db.Courses.Find(id);
-		//    if (course == null)
-		//    {
-		//        return HttpNotFound();
-		//    }
-		//    return View(course);
-		//}
+		public ActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Course course = db.Courses.Find(id?.Decode());
+			if (course == null)
+			{
+				return HttpNotFound();
+			}
+			Session["courseid"] = course.Id;
+			return PartialView("_Delete", (CourseDeleteViewModel)course);
+		}
 
 		// POST: Courses/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(CourseDeleteViewModel cdvm)
 		{
+			int? id = (int?)Session["courseid"];
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
 			try
 			{
 				Course course = db.Courses.Find(id);
 				db.Courses.Remove(course);
-				db.SaveChanges();				
+				db.SaveChanges();
+				TempData["alert"] = "success|Kursen togs bort!";
 			}
 			catch (RetryLimitExceededException)
 			{
 				// Log errors here				
 				TempData["alert"] = "danger|Det gick inte att ta bort kursen!";
 			}
-			return RedirectToAction("Index");
+			return PartialView("_Delete", cdvm);
 		}
 
 		[Authorize(Roles = "Admin")]

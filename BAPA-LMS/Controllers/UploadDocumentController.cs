@@ -104,7 +104,8 @@ namespace BAPA_LMS.Controllers
         public ActionResult TeacherUploader(string id)
         {
             TeacherUploadViewModel tuvm = new TeacherUploadViewModel();
-            int intId;
+			tuvm.Id = id;
+			int intId;
             if (int.TryParse(id.Substring(1), out intId))
             {
                 switch (id[0])
@@ -113,21 +114,18 @@ namespace BAPA_LMS.Controllers
                         Activity activity = db.Activities.Find(intId);
                         tuvm.ActivityName = activity.Name;
                         tuvm.Files = activity.Files;
-                        tuvm.Id = id;
                         tuvm.CourseName = activity.Module.Course.Name;
                         break;
                     case 'm':
                         Module module = db.Modules.Find(intId);
                         tuvm.Files = module.Files;
                         tuvm.ModuleName = module.Name;
-                        tuvm.Id = id;
                         tuvm.CourseName = module.Course.Name;
                         break;
                     case 'c':
                         Course course = db.Courses.Find(intId);
                         tuvm.Files = course.Files;
                         tuvm.CourseName = course.Name;
-                        tuvm.Id = id;
                         break;
                 }
             }
@@ -135,78 +133,81 @@ namespace BAPA_LMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult TeacherUploader(HttpPostedFileBase postedFile, string id)
+        [Authorize(Roles = "Admin")]
+        public ActionResult TeacherUploader(HttpPostedFileBase postedFile, string id, bool refresh = false)
         {
             TeacherUploadViewModel tuvm = new TeacherUploadViewModel();
-            var currentUser = UserUtils.GetCurrentUser(HttpContext);
-            int intId;
+			tuvm.Id = id;
+			tuvm.Files = new List<FileDocument>();
+			var currentUser = UserUtils.GetCurrentUser(HttpContext);
             try
             {
-                if (int.TryParse(id.Substring(1), out intId))
+				int intId;
+				if (int.TryParse(id.Substring(1), out intId))
                 {
-
-                    if (postedFile != null)
+                    FileDocument file = new FileDocument();
+                    file.MemberId = currentUser.Id;
+                    file.TimeStamp = DateTime.Now;
+                    switch (id[0])
                     {
-                        FileDocument file = new FileDocument();
-                        file.MemberId = currentUser.Id;
-                        file.TimeStamp = DateTime.Now;
-                        switch (id[0])
-                        {
-                            case 'a':
-                                Activity activity = db.Activities.Find(intId);
-                                file.ActivityId = activity.Id;
-                                tuvm.ActivityName = activity.Name;
-                                tuvm.Files = activity.Files;
-                                tuvm.Id = id;
-                                break;
-                            case 'm':
-                                Module module = db.Modules.Find(intId);
-                                file.ModuleId = module.Id;
-                                tuvm.ModuleName = module.Name;
-                                tuvm.Files = module.Files;
-                                tuvm.Id = id;
-                                break;
-                            case 'c':
-                                Course course = db.Courses.Find(intId);
-                                file.CourseId = course.Id;
-                                tuvm.CourseName = course.Name;
-                                tuvm.Files = course.Files;
-                                tuvm.Id = id;
-                                break;
-                            default:
-                                break;
-                        }
-                        file.Name = postedFile.FileName;
-
-
-                        string path = Server.MapPath("~/Uploads/");
-                        if (!Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
-                        }
-                        db.Files.Add(file);
-                        db.SaveChanges();
-                        file.Id.Encode().ToString();
-                        postedFile.SaveAs(path + file.Id.Encode().ToString());
-                        TempData["alert"] = "success|Dokumentet är uppladdat!";
+                        case 'a':
+                            Activity activity = db.Activities.Find(intId);
+                            file.ActivityId = activity.Id;
+                            tuvm.ActivityName = activity.Name;
+                            tuvm.Files = activity.Files;
+                            break;
+                        case 'm':
+                            Module module = db.Modules.Find(intId);
+                            file.ModuleId = module.Id;
+                            tuvm.ModuleName = module.Name;
+                            tuvm.Files = module.Files;
+                            break;
+                        case 'c':
+                            Course course = db.Courses.Find(intId);
+                            file.CourseId = course.Id;
+                            tuvm.CourseName = course.Name;
+                            tuvm.Files = course.Files;
+                            break;
+                        default:
+                            break;
                     }
-                    else
-                    {                                       
-                        TempData["alert"] = "danger|Kunde inte lägga till dokument";                       
-                    }
+					if (!refresh)
+					{
+						if (postedFile != null)
+						{
+							file.Name = postedFile.FileName;
+
+							string path = Server.MapPath("~/Uploads/");
+							if (!Directory.Exists(path))
+							{
+								Directory.CreateDirectory(path);
+							}
+							db.Files.Add(file);
+							db.SaveChanges();
+							postedFile.SaveAs(path + file.Id.Encode().ToString());
+							TempData["alert"] = "success|Dokumentet är uppladdat!";
+						}
+						else
+						{
+							TempData["alert"] = "danger|Kunde inte lägga till dokument";
+						}
+					}
                 }
             }
-            catch (DataException)
+            catch (Exception)
             {
                 TempData["alert"] = "danger|Allvarligt fel!";
             }
             return PartialView("_TeacherUploader", tuvm);
         }
 
-        public ActionResult ListUploadActivities(int id)
+        public ActionResult ListUploadActivities(int? id)
         {
-
-            Course course = db.Courses.Find(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(id?.Decode());
 
             List<ActivitySubmitViewModel> activityList = new List<ActivitySubmitViewModel>();
             foreach (var module in course.Modules)
@@ -292,7 +293,7 @@ namespace BAPA_LMS.Controllers
                 }                
                 db.Files.Remove(file);
                 db.SaveChanges();                
-                TempData["alert"] = "success|Dokumentet togs bort!";
+                TempData["alert"] = "success|Dokumentet togs bort!|Upload";
             }
             catch (RetryLimitExceededException)
             {

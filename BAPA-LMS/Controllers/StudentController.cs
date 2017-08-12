@@ -21,7 +21,7 @@ namespace BAPA_LMS.Controllers
 
         public object ModuleDetailViewModel { get; private set; }
 
-     
+        [Authorize(Roles = "Member")]
         public ActionResult Index()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);

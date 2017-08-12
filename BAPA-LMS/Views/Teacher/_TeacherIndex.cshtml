@@ -28,8 +28,11 @@
                 <th>
                     @SortHeader("StartDate", "Startdatum")
                 </th>
+                <th class="hidden-sm hidden-xs">
+                    @SortHeader("Description", "Beskrivning")
+                </th>              
                 <th>
-                    @SortHeader("Inlämningsaktiviter","Inlämningsaktiviteter")
+                    <a>Inlämningsaktiviteter</a>
                 </th>
             </tr>
 }
@@ -42,15 +45,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.StartDate)
         </td>
+        <td class="course-col-desc hidden-sm hidden-xs">
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
         <td>
-            @Html.ActionLink(" ", "ListUploadActivities","UploadDocument",new { id = item.Id }, new {@class= "glyphicon glyphicon-arrow-right" })
+            <span class="glyphicon glyphicon-arrow-right">@Html.ActionLink(" ", "ListUploadActivities", "UploadDocument", new { id = item.Id })</span>
         </td>
     </tr>
 }
 @if (Model.Courses.Length == CourseListViewModel.PageSize)
 {
     <tr id="moreData">
-        <td colspan="3">
+        <th colspan="3">
             @Ajax.ActionLink("Ladda fler kurser", "Index",
                 new { filter = Model.Filter, startrange = Model.StartRange, endrange = Model.EndRange, sortparam = Model.SortParam, offset = Model.Offset + CourseListViewModel.PageSize },
                 new AjaxOptions
@@ -63,7 +69,8 @@
                 {
                     @class = "btn btn-primary"
                 })
-        </td>
+        </th>
+        <th class="hidden-sm hidden-xs"></th>
     </tr>
 }
 @if (Model.Offset == 0)
