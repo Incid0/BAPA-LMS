@@ -7,6 +7,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    padding-bottom: 51px;
     position: relative;
 }
 
@@ -29,11 +30,11 @@ select
 }
 
 footer {
-    position: relative;
+    position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    margin-top: 20px;
+    padding: 0 15px;
 }
 
 .navbar-user  {
@@ -155,9 +156,19 @@ body > div.alert {
 
 /* Fix pointer on empty anchor */
 a.create-action:hover,
-#courseList table tr td:hover
-{
+#courseList tr td:hover {
     cursor: pointer;
+}
+
+#courseList tr > * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+#courseList .course-col-desc {
+    text-overflow: ellipsis;
+    max-width: 500px;
 }
 
 /*Anton och Basses äventyr*/
@@ -174,3 +185,18 @@ a.create-action:hover,
     .custom-table > th {
         text-align: center;
     }
+
+/* Mobile customizations */
+@media screen and (max-width: 767px) {
+    .editarea-fixed {
+        position: inherit;
+    }
+    
+    #courseList table {
+        table-layout: fixed;
+    }
+
+    #btnDel {
+        margin-top: 8px;
+    }
+}
