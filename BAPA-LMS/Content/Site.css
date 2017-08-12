@@ -34,6 +34,7 @@ footer {
     right: 0;
     bottom: 0;
     margin-top: 20px;
+    z-index: -10;
 }
 
 .navbar-user  {
@@ -186,11 +187,14 @@ a.create-action:hover,
     }
 
 /* Mobile customizations */
-@media screen and (max-width: 767px) {
+
+@media (max-width: 991px) { /* sm */
     .editarea-fixed {
         position: inherit;
     }
-    
+}
+
+@media screen and (max-width: 767px) { /* xs */
     #courseList table {
         table-layout: fixed;
     }

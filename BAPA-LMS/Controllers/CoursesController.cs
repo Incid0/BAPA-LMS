@@ -15,10 +15,8 @@ using BAPA_LMS.Models;
 namespace BAPA_LMS.Controllers
 {
     [Authorize]
-	public class CoursesController : Controller
+	public class CoursesController : BaseController
 	{
-		private LMSDbContext db = new LMSDbContext();
-
         // GET: Courses
         [Authorize(Roles = "Admin")]
         public ActionResult Index(string filter, string sort = "")
@@ -176,11 +174,31 @@ namespace BAPA_LMS.Controllers
 			try
 			{
 				Course course = db.Courses.Find(id);
+				List<FileDocument> docs = new List<FileDocument>();
+				ApplicationUser[] users = course.Members.ToArray();
+				foreach (var user in users)
+				{
+					docs.AddRange(user.Files);
+				}
+				docs.AddRange(course.Files);
+				foreach (var module in course.Modules)
+				{
+					docs.AddRange(module.Files);
+					foreach (var activity in module.Activities)
+					{
+						docs.AddRange(activity.Files);
+					}
+				}
+				DeleteDocs(docs.ToArray());
+				foreach (var user in users)
+				{
+					db.Users.Remove(user);
+				}
 				db.Courses.Remove(course);
 				db.SaveChanges();
 				TempData["alert"] = "success|Kursen togs bort!";
 			}
-			catch (RetryLimitExceededException)
+			catch (Exception)
 			{
 				// Log errors here				
 				TempData["alert"] = "danger|Det gick inte att ta bort kursen!";
@@ -205,7 +223,7 @@ namespace BAPA_LMS.Controllers
 					text = m.Name,
 					icon = "glyphicon glyphicon-book",
 					tags = new string[] {
-						"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera kurs\"></span>"
+						"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera modul\"></span>"
 					},
 					nodes = (m.Activities.OrderBy(a => a.StartTime).Select(a => new
 					{
@@ -217,15 +235,6 @@ namespace BAPA_LMS.Controllers
 			};
 
 			return Json(actArray, JsonRequestBehavior.AllowGet);
-		}
-		
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				db.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 	}
 }
