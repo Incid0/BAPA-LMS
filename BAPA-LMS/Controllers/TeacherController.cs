@@ -21,7 +21,7 @@ using BAPA_LMS.Models.UserViewModels;
 namespace BAPA_LMS.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class TeacherController : Controller
+    public class TeacherController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -48,8 +48,6 @@ namespace BAPA_LMS.Controllers
                 _signInManager = value;
             }
         }
-
-        private LMSDbContext db = new LMSDbContext();
 
         public ActionResult Index(CourseListViewModel clvm)
         {
@@ -271,6 +269,7 @@ namespace BAPA_LMS.Controllers
                 ApplicationUser user = db.Users.Find(id);
 				if (user != null)
 				{
+					DeleteDocs(user.Files.ToArray());
 					db.Users.Remove(user);
 					db.SaveChanges();
 					TempData["alert"] = "success|Elev togs bort!|user";
@@ -294,14 +293,5 @@ namespace BAPA_LMS.Controllers
                 ModelState.AddModelError("", error);
             }
         }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
     }
 }
