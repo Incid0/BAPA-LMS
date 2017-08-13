@@ -21,7 +21,7 @@
         <table class="table" style="max-width: 500px; margin-top:10px;">
         
 
-            @foreach (var file in Model.Files)
+            @foreach (var file in Model.Files.Where(f => f.CourseName == null))
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => file.Name)</td>

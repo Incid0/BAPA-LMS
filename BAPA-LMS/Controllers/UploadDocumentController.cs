@@ -235,7 +235,7 @@ namespace BAPA_LMS.Controllers
             }
 
             List<FileDocument> fileList = new List<FileDocument>();
-            foreach (var item in db.Files.Where(a => a.Activity.Id == id))
+            foreach (var item in db.Files.Where(a => a.Activity.Id == id && a.CourseName != null))
             {
                 fileList.Add(item);
             }
