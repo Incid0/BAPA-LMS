@@ -197,13 +197,16 @@ namespace BAPA_LMS.Migrations
 							FirstName = firstName[i],
 							LastName = lastName[i],
 						};
-						if (i < 5)
+						if (i > 0)
 						{
-							user.CourseId = 1;
-						}
-						else
-						{
-							user.CourseId = 2;
+							if (i < 6)
+							{
+								user.CourseId = 1;
+							}
+							else
+							{
+								user.CourseId = 2;
+							}
 						}
 						var result = userManager.Create(user, "foobar");
 						if (!result.Succeeded)
