@@ -59,21 +59,20 @@
             <br />
         </dd>
      
-       @if (Model.File != null)
-       {
-           <dt>
-              Inlämningsuppgift
-           </dt>
-        <dd>
-            @Html.DisplayFor(model => model.File.Name)&nbsp;&nbsp;&nbsp;   @Html.ActionLink(" ", "DownloadFile", "UploadDocument", new { id = Model.File.Id }, new { @class = "glyphicon glyphicon-floppy-save" })
-        </dd>
-       }
-       else
-       {
-           <dd></dd>
-       }
-
-
-
+        @if (Model.Files.Any())
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Files)
+            </dt>
+            <dd>
+                @foreach (var file in Model.Files)
+                {
+                    <span>@file.Name</span> &nbsp;
+                    <a class="btn btn-default btn-sm" href="@Url.Action("DownloadFile", "UploadDocument", new { id = file.Id })">
+                        <span class="glyphicon glyphicon-floppy-save"></span>
+                    </a><br />
+                }
+            </dd>
+        }
     </dl>
 </div>

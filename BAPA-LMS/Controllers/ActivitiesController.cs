@@ -39,12 +39,8 @@ namespace BAPA_LMS.Controllers
 				return HttpNotFound();
 			}
             ActivityDetailViewModel advm = activity;
-            foreach (var item in db.Files.Where(f => f.Activity.Id == activity.Id))
-            {
-                advm.File = item;
-                break;
-            }
-			     
+			advm.Files = activity.Files.ToArray();
+
             return PartialView("_Details", advm);
 		}
 
