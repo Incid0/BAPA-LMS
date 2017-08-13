@@ -263,6 +263,14 @@
                     }
                 }
             }
+        },
+        initStudents: function () {
+            // Initializing tooltips
+            $('#tabedit [data-toggle="tooltip"]').tooltip();
+            // Clicking user edit
+            $('#tabedit .edit-student').on('click', function () {
+                changeEditor('editstudent', 'teacher', $(this).data('id'));
+            });
         }
     };
 })(jQuery);
