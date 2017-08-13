@@ -15,10 +15,8 @@ using BAPA_LMS.Models;
 namespace BAPA_LMS.Controllers
 {
     [Authorize]
-    public class ModulesController : Controller
+    public class ModulesController : BaseController
     {
-        private LMSDbContext db = new LMSDbContext();
-
         // GET: Modules
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
@@ -188,7 +186,14 @@ namespace BAPA_LMS.Controllers
 			try
 			{
                 Module module = db.Modules.Find(id);
-                db.Modules.Remove(module);
+				List<FileDocument> docs = new List<FileDocument>();
+				docs.AddRange(module.Files);
+				foreach (var activity in module.Activities)
+				{
+					docs.AddRange(activity.Files);
+				}
+				DeleteDocs(docs.ToArray());
+				db.Modules.Remove(module);
                 db.SaveChanges();
 				TempData["alert"] = "success|Modulen togs bort!";
 			}
@@ -198,15 +203,6 @@ namespace BAPA_LMS.Controllers
                 TempData["alert"] = "danger|Det gick inte att ta bort modulen";
             }
 			return PartialView("_Delete", mdvm);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

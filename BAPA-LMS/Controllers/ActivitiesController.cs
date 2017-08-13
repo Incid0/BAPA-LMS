@@ -16,10 +16,8 @@ using System.Data.Entity.Infrastructure;
 namespace BAPA_LMS.Controllers
 {
 	[Authorize]
-	public class ActivitiesController : Controller
+	public class ActivitiesController : BaseController
 	{
-		private LMSDbContext db = new LMSDbContext();
-
 		// GET: Activities
 		[Authorize(Roles = "Admin")]
 		public ActionResult Index()
@@ -207,6 +205,7 @@ namespace BAPA_LMS.Controllers
 			try
 			{
 				Activity activity = db.Activities.Find(id);
+				DeleteDocs(activity.Files.ToArray());
 				db.Activities.Remove(activity);
 				db.SaveChanges();
 				TempData["alert"] = "success|Aktiviteten togs bort!";
@@ -241,15 +240,6 @@ namespace BAPA_LMS.Controllers
 				}).ToArray();
 
 			return Json(actArray, JsonRequestBehavior.AllowGet);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				db.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 	}
 }

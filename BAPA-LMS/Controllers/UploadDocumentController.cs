@@ -17,10 +17,8 @@ using System.Data;
 namespace BAPA_LMS.Controllers
 {
     [Authorize]
-    public class UploadDocumentController : Controller
+    public class UploadDocumentController : BaseController
     {
-        private LMSDbContext db = new LMSDbContext();
-
         public ActionResult ActivityUpload()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
@@ -282,34 +280,16 @@ namespace BAPA_LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            try
-            {
-                FileDocument file = db.Files.Find(id);
-                
-                string path = Server.MapPath("~/Uploads/" + file.Id.Encode());
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }                
-                db.Files.Remove(file);
-                db.SaveChanges();                
-                TempData["alert"] = "success|Dokumentet togs bort!|Upload";
-            }
-            catch (RetryLimitExceededException)
-            {
-                // Log errors here
-                TempData["alert"] = "danger|Det gick inte att ta bort Dokumentet!";
-            }
+			FileDocument file = db.Files.Find(id);
+			if (file != null && DeleteDocs(new FileDocument[] { file }))
+			{
+				TempData["alert"] = "success|Dokumentet togs bort!|Upload";
+			}
+			else
+			{
+				TempData["alert"] = "danger|Det gick inte att ta bort Dokumentet!";
+			}
             return PartialView("_Delete");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
