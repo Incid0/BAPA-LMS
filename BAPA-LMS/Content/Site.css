@@ -77,6 +77,12 @@ body > div.alert {
     overflow-y:scroll;
 }
 
+th.optimized,
+td.optimized {
+    width: 1%;
+    white-space: nowrap;
+}
+
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
     display: block;
 }
@@ -141,7 +147,9 @@ body > div.alert {
     margin-top: 20px;
 }
 
+/* Max width, col-lg-8 */
 #editarea {
+    max-width: 750px;
     min-height: 556px;
 }
 
@@ -187,10 +195,18 @@ a.create-action:hover,
     }
 
 /* Mobile customizations */
+@media (max-width: 1199px) { /* md */
+    #editarea {
+        max-width: 617px;
+    }
+}
 
 @media (max-width: 991px) { /* sm */
     .editarea-fixed {
         position: inherit;
+    }
+    #editarea {
+        max-width: inherit;
     }
 }
 

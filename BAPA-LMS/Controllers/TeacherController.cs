@@ -149,7 +149,6 @@ namespace BAPA_LMS.Controllers
         }
 
 		// GET: /Account/Register
-		[AllowAnonymous]
 		public ActionResult Register(int? id)
 		{
 			if (id == null)
@@ -202,7 +201,70 @@ namespace BAPA_LMS.Controllers
 			return PartialView("_Register", rvm);
         }
 
-		[AllowAnonymous]
+		// GET: Teacher/StudentEdit/5
+		public ActionResult EditStudent(string id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			ApplicationUser user = db.Users.Find(id);
+			if (user == null)
+			{
+				return HttpNotFound();
+			}
+			EditUserViewModel euvm = user;
+			Session["userid"] = user.Id;
+			return PartialView("_EditStudent", euvm);
+		}
+
+		// POST: Teacher/StudentEdit/5
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> EditStudent(EditUserViewModel euvm)
+		{
+			string id = (string)Session["userid"];
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			if (ModelState.IsValid)
+			{
+				ApplicationUser updatedUser = db.Users.Find(id);
+				// Match up fieldnames and update the model.
+				if (updatedUser != null && TryUpdateModel(updatedUser, "", new string[] { "Email", "FirstName", "LastName" }))
+				{
+					try
+					{
+						updatedUser.UserName = euvm.Email;
+						db.Entry(updatedUser).State = EntityState.Modified;
+						// New password?
+						if (euvm.Password != null && euvm.Password.Trim() != "")
+						{
+							PasswordHasher ph = new PasswordHasher();
+							string hashed = ph.HashPassword(euvm.Password.Trim());
+							updatedUser.PasswordHash = hashed;
+							db.Entry(updatedUser).State = EntityState.Modified;
+						}
+						db.SaveChanges();
+						euvm = updatedUser; // EditUserViewModel
+						TempData["alert"] = "success|Eleven är uppdaterad!";
+					}
+					catch (RetryLimitExceededException)
+					{
+						// Log errors here
+						ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
+						TempData["alert"] = "danger|Allvarligt fel!";
+					}
+				}
+				else
+				{
+					TempData["alert"] = "danger|Kunde inte uppdatera elev";
+				}
+			}
+			return PartialView("_EditStudent", euvm);
+		}
+
 		public ActionResult RegisterTeacher()
 		{
 			return View();

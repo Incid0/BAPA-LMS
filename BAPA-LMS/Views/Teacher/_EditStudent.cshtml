@@ -1,0 +1,59 @@
+﻿@model EditUserViewModel
+@using BAPA_LMS.Models
+
+<h4>Redigera elev</h4>
+
+@using (Ajax.BeginForm(null, null,
+    new AjaxOptions
+    {
+        HttpMethod = "post",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "editarea"
+    }, new { id = "formEdit" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("result", TempData["alert"], new { id = "formResult" })
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Spara" class="btn btn-primary" />
+        @Ajax.ActionLink("Tillbaka till klasslistan", "StudentList", new { id = Model.CourseId },
+            new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "editarea"
+            }, new { @class="btn btn-default" })
+    </div>
+}
+<script>
+    teacher.initForm();
+</script>

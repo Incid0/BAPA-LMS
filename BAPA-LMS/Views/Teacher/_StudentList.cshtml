@@ -13,17 +13,23 @@
                     Klasslista för @Html.DisplayFor(model => model.Name)
                 </h4>
             </div>
-            <table class="table table-fixed">
+            <table class="table">
 
                 @foreach (var user in Model.Members.OrderBy(u => u.LastName).ThenBy(u => u.FirstName))
                 {
                     <tr>
-                        <td class="col-xs-12">
-                            @Html.DisplayFor(modelItem => user.FullName) &nbsp;
-                            <a href="@Url.Action("Delete", new { id = user.Id })" data-toggle="modal" data-target="#modalContainer">
-                                <span class="glyphicon glyphicon-trash" title="Ta Bort @user.FullName"></span>
+                        <td class="optimized">
+                            @Html.DisplayFor(modelItem => user.FullName)
+                        </td>
+                        <td class="optimized">
+                            <a class="btn btn-primary btn-xs edit-student" data-id="@user.Id">
+                                <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Redigera @user.FullName"></span>
+                            </a>
+                            <a class="btn btn-primary btn-xs" href="@Url.Action("Delete", new { id = user.Id })" data-toggle="modal" data-target="#modalContainer">
+                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Ta Bort @user.FullName"></span>
                             </a>
                         </td>
+                        <td></td>
                     </tr>
                 }
             </table>
@@ -33,3 +39,6 @@
         @{Html.RenderAction("TeacherUploader", "UploadDocument", new { id = "c" + Model.Id.ToString() });}
     </div>
 </div>
+<script>
+    teacher.initStudents();
+</script>

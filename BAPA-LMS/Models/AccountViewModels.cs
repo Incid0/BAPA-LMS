@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BAPA_LMS.Models.DB;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BAPA_LMS.Models
@@ -87,9 +88,58 @@ namespace BAPA_LMS.Models
         [Required]
         [Display(Name = "Efternamn")]
         public string LastName { get; set; }
-    }
 
-    public class ResetPasswordViewModel
+		public static implicit operator RegisterViewModel(ApplicationUser model)
+		{
+			return new RegisterViewModel
+			{
+				Email = model.Email,
+				FirstName = model.FirstName,
+				LastName = model.LastName
+			};
+		}
+	}
+
+	public class EditUserViewModel
+	{
+		[Required]
+		[EmailAddress]
+		[Display(Name = "Email")]
+		public string Email { get; set; }
+
+		[StringLength(100, ErrorMessage = " {0} måste vara minst {2} tecken.", MinimumLength = 6)]
+		[DataType(DataType.Password)]
+		[Display(Name = "Lösenord")]
+		public string Password { get; set; }
+
+		[DataType(DataType.Password)]
+		[Display(Name = "Upprepa lösenord")]
+		[Compare("Password", ErrorMessage = "Lösenorden matchar ej.")]
+		public string ConfirmPassword { get; set; }
+
+		[Required]
+		[Display(Name = "Förnamn")]
+		public string FirstName { get; set; }
+
+		[Required]
+		[Display(Name = "Efternamn")]
+		public string LastName { get; set; }
+
+		public int? CourseId { get; set; }
+
+		public static implicit operator EditUserViewModel(ApplicationUser model)
+		{
+			return new EditUserViewModel
+			{
+				Email = model.Email,
+				FirstName = model.FirstName,
+				LastName = model.LastName,
+				CourseId = model.CourseId?.Encode()
+			};
+		}
+	}
+
+	public class ResetPasswordViewModel
     {
         [Required]
         [EmailAddress]
