@@ -1,4 +1,5 @@
 ﻿@model BAPA_LMS.Models.CourseViewModels.CourseEditViewModel
+@using BAPA_LMS.Models
 
 <h4>Redigera kurs</h4>
 
@@ -39,6 +40,12 @@
 
         <div class="form-group">
             <input type="submit" value="Spara" id="btnSave" class="btn btn-primary" />
+            @Ajax.ActionLink("Tillbaka till klasslistan", "StudentList", "Teacher", new { id = ((int)Session["courseid"]).Encode() },
+            new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "editarea"
+            }, new { @class = "btn btn-default" })
         </div>
 }
 <script>
