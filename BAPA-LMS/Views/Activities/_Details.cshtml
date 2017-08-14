@@ -59,7 +59,7 @@
             <br />
         </dd>
      
-        @if (Model.Files.Any())
+        @if (Model.Files.Any(f => f.CourseName == null))
         {
             <dt>
                 @Html.DisplayNameFor(model => model.Files)
