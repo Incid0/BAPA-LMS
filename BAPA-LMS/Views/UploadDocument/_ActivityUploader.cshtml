@@ -5,12 +5,9 @@
     @using (Html.BeginForm("ActivityUploader", "UploadDocument", FormMethod.Post, new { id = "formUpload", enctype = "multipart/form-data" }))
     {
         @Html.Hidden("result", TempData["alert"], new { id = "uploadResult" })
-        <input type="file" name="postedFile" id="inputFile" class="filestyle" />
+        <input type="file" name="postedFile" id="inputFile" />
         <br />
                 <input id="btnUpload" class="btn btn-primary" type="submit" value="Ladda upp" @*disabled*@ />
                 <br />
     }
 </div>
-
-
-    <script type="text/javascript" src="~/Scripts/bootstrap-filestyle.min.js"> </script>

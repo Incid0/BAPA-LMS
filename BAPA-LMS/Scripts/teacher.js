@@ -162,6 +162,9 @@
             // Initializing TimePicker
             $('.timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
 
+            // Initializing Filestyle
+            $(':file').filestyle({ buttonText: 'Välj fil' });
+
             // Connecting TreeView
             tree = $('#tree');
 
@@ -238,7 +241,7 @@
                     $('#btnUpload').attr('disabled', false);
                 }
             });
-            $(":file").filestyle({ buttonText: "Välj fil" });
+            $(':file').filestyle({ buttonText: 'Välj fil' });
             $('#formUpload .timepicker').timepicker({ 'timeFormat': 'H:i', 'scrollDefault': 'now' });
             // Setting MaxLength automatically according to MVC StringLength
             $('input[data-val-length-max]').each(function (idx, element) {
