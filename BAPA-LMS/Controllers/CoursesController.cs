@@ -222,9 +222,9 @@ namespace BAPA_LMS.Controllers
 					id = "m" + m.Id.Encode(),
 					text = m.Name,
 					icon = "glyphicon glyphicon-book",
-					tags = new string[] {
-						"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera modul\"></span>"
-					},
+					//tags = new string[] {
+					//	"<span class=\"editnode glyphicon glyphicon-pencil\" data-placement=\"bottom\" data-toggle=\"tooltip\" title=\"Redigera modul\"></span>"
+					//},
 					nodes = (m.Activities.OrderBy(a => a.StartTime).Select(a => new
 					{
 						id = "a" + a.Id.Encode(),
