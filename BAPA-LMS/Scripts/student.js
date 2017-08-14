@@ -16,6 +16,9 @@
             },
             weekNumberTitle: 'v. ',
             monthNames: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'October', 'November', 'December'], // Custom names to get Pascal casing on months
+            buttonText: {
+                list: "Veckoschema"
+            },
             views: {
                 month: {
                     titleFormat: 'MMMM YYYY', // Gives the whole name of the month and the full number for the year

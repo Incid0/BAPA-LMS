@@ -10,6 +10,7 @@ using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.CourseViewModels;
 using System.Data.Entity.Infrastructure;
+using BAPA_LMS.Models;
 
 namespace BAPA_LMS.Controllers
 {
@@ -22,12 +23,8 @@ namespace BAPA_LMS.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index(string filter, string sort = "")
 		{
-			var result = new List<CourseListViewModel>();
+            var result = db.Courses.Select(c => new CourseListRow { Name = c.Name, Description = c.Description, StartDate = c.StartDate }).ToList();
             
-			foreach(var course in db.Courses)
-			{
-				result.Add(course);
-			}
 			return View(result);
 		}
 
@@ -59,7 +56,7 @@ namespace BAPA_LMS.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create(CourseCreateViewModel ccvm)
+        public ActionResult Create(CourseEditViewModel cevm)
 		{
 			try
 			{
@@ -85,7 +82,7 @@ namespace BAPA_LMS.Controllers
 				ModelState.AddModelError("", "Kan inte spara ändringar. Försök igen och om problemet kvarstår kontakta din systemadministratör.");
 				TempData["alert"] = "danger|Allvarligt fel!";
 			}
-			return View(ccvm);
+			return View(cevm);
 		}
 
         // GET: Courses/Edit/5
@@ -180,6 +177,31 @@ namespace BAPA_LMS.Controllers
 			return RedirectToAction("Index");
 		}
 
+		[Authorize(Roles = "Admin")]
+		public JsonResult GetTree(int id)
+		{
+			Course course = db.Courses.Find(id);
+
+			var actArray = new {
+				id = "c" + course.Id.Encode(),
+				text = course.Name,
+				icon = "glyphicon glyphicon-home",
+				nodes = (course.Modules.OrderBy(m => m.StartDate).Select(m => new {
+					id = "m" + m.Id.Encode(),
+					text = m.Name,
+					icon = "glyphicon glyphicon-book",
+					nodes = (m.Activities.OrderBy(a => a.StartTime).Select(a => new
+					{
+						id = "a" + a.Id.Encode(),
+						text = a.Name,
+						icon = "glyphicon glyphicon-wrench"
+					}))
+				})).ToArray()
+			};
+
+			return Json(actArray, JsonRequestBehavior.AllowGet);
+		}
+		
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)

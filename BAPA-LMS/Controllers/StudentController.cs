@@ -1,4 +1,5 @@
-﻿using BAPA_LMS.DataAccessLayer;
+﻿using BAPA_LMS;
+using BAPA_LMS.DataAccessLayer;
 using BAPA_LMS.Models;
 using BAPA_LMS.Models.ActivityViewModels;
 using BAPA_LMS.Models.CourseViewModels;
@@ -9,6 +10,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Runtime.Remoting.Contexts;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 
@@ -24,27 +30,29 @@ namespace BAPA_LMS.Controllers
 
         public object ModuleDetailViewModel { get; private set; }
 
+     
         public ActionResult Index()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
-         
+
             Course course = db.Courses.Find(currentUser.CourseId);
             CourseIndexViewModel cdvm = course;
             return View(cdvm);
         }
 
+    
         public ActionResult KursInfo()
         {
-          
+
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
 
             Course course = db.Courses.Find(currentUser.CourseId);
-            if(course == null)
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            CourseDetailViewModel cdvm = course; 
-            
+            CourseDetailViewModel cdvm = course;
+
             return View(cdvm);
         }
         public ActionResult ModulInfo()
@@ -53,12 +61,9 @@ namespace BAPA_LMS.Controllers
 
             Course course = db.Courses.Find(currentUser.CourseId);
             List<ModuleDetailViewModel> moduleList = new List<ModuleDetailViewModel>();
-            foreach (var item in db.Modules)
-            {
-                if(item.CourseId == course.Id)
-                {
-                    moduleList.Add(item);
-                }
+            foreach (var item in course.Modules)
+            {          
+                    moduleList.Add(item);             
             }                       
             return View(moduleList);
 
@@ -67,17 +72,17 @@ namespace BAPA_LMS.Controllers
         public ActionResult AktivitetsInfo(int id)
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
-            Course course = db.Courses.Find(currentUser.CourseId);
+            Module module = db.Modules.Find(id);
             List<ActivityDetailViewModel> activityList = new List<ActivityDetailViewModel>();
-            foreach (var item in db.Activities)
-            {
-                if(item.ModuleId == id)
-                {
-                    activityList.Add(item);
-                }
+            foreach (var item in module.Activities)
+            {   
+                    activityList.Add(item);               
             }
             return View(activityList);
         }
+
+
+
 
         protected override void Dispose(bool disposing)
         {

@@ -4,11 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Lexicon</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @* Include correct bundle depending on the views role *@
+    @Styles.Render("~/Content/lms" + ViewBag.Style)
 
 </head>
 <body>
+    <div class="alert alert-success">
+        <div id="alertbox" class="container body-content">@TempData["alert"]</div>
+    </div>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -25,7 +28,7 @@
                     {
                         <li>@Html.ActionLink("Hem", "Index", "Student")</li> 
                         <li>@Html.ActionLink("Kursinformation", "KursInfo", "Student")</li>   
-                        <li>@Html.ActionLink("Modulinformation", "ModulInfo", "Student")</li>  
+                        <li>@Html.ActionLink("Inlämingsuppgifter","ActivityUpload","UploadDocument")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -40,8 +43,8 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @* Include correct bundle depending on the views role *@
+    @Scripts.Render("~/bundles/lms" + ViewBag.Style)
     @RenderSection("scripts", required: false)
 </body>
 </html>

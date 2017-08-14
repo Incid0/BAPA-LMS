@@ -1,0 +1,18 @@
+﻿@model BAPA_LMS.Models.CourseViewModels.CourseDetailViewModel
+
+<div class="panel panel-default no-padding ">
+    <div class="panel-heading">
+        <h4>
+            Klasslista för @Html.DisplayFor(model => model.Name)
+        </h4>
+    </div>
+    <table class="table table-fixed">
+
+        @foreach (var item in Model.Members)
+        {
+            <tr>
+                <td class="col-xs-12">@Html.DisplayFor(modelItem => item.FullName) @Html.ActionLink("Ta Bort Student", "Delete", new { id = item.Id })</td>
+            </tr>
+        }
+    </table>
+</div>

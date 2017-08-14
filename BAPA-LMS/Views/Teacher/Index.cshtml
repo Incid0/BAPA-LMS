@@ -1,0 +1,36 @@
+﻿@model BAPA_LMS.Models.CourseViewModels.CourseListViewModel
+
+@{
+    ViewBag.Title = "Kurser";
+}
+
+@using (Ajax.BeginForm(null, null,
+    new AjaxOptions
+    {
+        HttpMethod = "get",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "courseList"
+    },
+    new { @class = "form-inline" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.Filter, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Filter, new { htmlAttributes = new { id = "coursefilter", @class = "form-control" } })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StartRange, "Sökspann:", htmlAttributes: new { @class = "control-label" })
+        <div class="input-daterange input-group " data-provide="datepicker">
+            @Html.EditorFor(model => model.StartRange, new { htmlAttributes = new { @class = "form-control ", placeholder = "åååå-mm-dd" } })
+            <span class="input-group-addon">till</span>
+            @Html.EditorFor(model => model.EndRange, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd" } })
+        </div>
+    </div>
+    <p></p>
+    @Html.Partial("_TeacherIndex", Model)
+}
+
+<div>
+    @Html.ActionLink("Lägg till lärare", "RegisterTeacher")
+    @Html.ActionLink("Lägg till kurs", "Create", "Courses")
+</div>
