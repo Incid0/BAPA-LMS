@@ -49,11 +49,18 @@ namespace BAPA_LMS.Controllers
             }
         }
 
-        public ActionResult Index(CourseListViewModel clvm)
+		public ActionResult Index(CourseListViewModel clvm)
+		{
+			clvm.StartRange = DateTime.Today.ToString("yyyy/MM/dd");
+			clvm.EndRange = (DateTime.Today + new TimeSpan(14, 0, 0, 0)).ToString("yyyy/MM/dd");
+			clvm.SortParam = "StartDate";
+
+			return View(clvm);
+		}
+
+		public ActionResult Filtered(CourseListViewModel clvm)
         {
-            var result = db.Courses
-                .AsNoTracking()
-                .Select(c => new CourseListRow { Id = c.Id, Name = c.Name, Description = c.Description, StartDate = c.StartDate });
+			IQueryable<Course> result = db.Courses.AsNoTracking();
 
             // Filter based on words
             string[] filters = (clvm.Filter ?? "").Trim().Split();
@@ -70,12 +77,12 @@ namespace BAPA_LMS.Controllers
             // Filter based on dates
             if (DateTime.TryParse(clvm.StartRange, out DateTime startDate))
             {
-                result = result.Where(c => c.StartDate >= startDate);
+                result = result.Where(c => c.Modules.Any(m => m.Activities.Any(a => a.StartTime >= startDate)));
             }
             if (DateTime.TryParse(clvm.EndRange, out DateTime endDate))
             {
                 endDate += new TimeSpan(23, 59, 59);
-                result = result.Where(c => c.StartDate <= endDate);
+                result = result.Where(c => c.Modules.Any(m => m.Activities.Any(a => a.EndTime <= endDate)));
             }
             // Order by parameter
             string[] sortdir = (clvm.SortParam ?? "").Split('_');
@@ -83,23 +90,26 @@ namespace BAPA_LMS.Controllers
             {
                 switch (sortdir[0])
                 {
-                    default: result = result.OrderBy(c => c.Name); break;
                     case "StartDate": result = result.OrderBy(c => c.StartDate); break;
 					case "Description": result = result.OrderBy(c => c.Description); break;
+					// Default = Name
+					default: result = result.OrderBy(c => c.Name); break;
 				}
 			}
             else
             {
                 switch (sortdir[0])
                 {
-                    default: result = result.OrderByDescending(c => c.Name); break;
                     case "StartDate": result = result.OrderByDescending(c => c.StartDate); break;
 					case "Description": result = result.OrderByDescending(c => c.Description); break;
+					// Default = Name
+					default: result = result.OrderByDescending(c => c.Name); break;
 				}
 			}
             // Paginate the result
             clvm.Count = result.Count();
             CourseListRow[] resultArr = result
+				.Select(c => new CourseListRow { Id = c.Id, Name = c.Name, Description = c.Description, StartDate = c.StartDate })
                 .Skip(() => clvm.Offset)
                 .Take(() => CourseListViewModel.PageSize)
                 .ToArray();
@@ -110,13 +120,8 @@ namespace BAPA_LMS.Controllers
 			}
 			clvm.Courses = resultArr;
 
-			if (Request.IsAjaxRequest())
-            {
-                return PartialView("_TeacherIndex", clvm);
-            }
-            return View(clvm);
-        }
-        
+			return PartialView("_TeacherIndex", clvm);
+        }     
 
         public ActionResult CourseEdit(int? id)
         {
@@ -221,7 +226,7 @@ namespace BAPA_LMS.Controllers
 		// POST: Teacher/StudentEdit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> EditStudent(EditUserViewModel euvm)
+		public ActionResult EditStudent(EditUserViewModel euvm)
 		{
 			string id = (string)Session["userid"];
 			if (id == null)

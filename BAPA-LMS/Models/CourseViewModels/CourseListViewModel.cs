@@ -9,21 +9,17 @@ namespace BAPA_LMS.Models.CourseViewModels
 {
     public class CourseListViewModel
     {
-        public CourseListRow[] Courses { get; set; }
+		public CourseListRow[] Courses { get; set; }
 
         [Display(Name = "Sökord:")]
         public string Filter { get; set; }
 
+		[Display(Name = "Sökspann:")]
         public string StartRange { get; set; }
-
         public string EndRange { get; set; }
-
         public string SortParam { get; set; }
-
         public int Count { get; set; }
-
         public int Offset { get; set; }
-
         public const int PageSize = 10;
     }
 
@@ -40,17 +36,5 @@ namespace BAPA_LMS.Models.CourseViewModels
 		[Display(Name = "Startdatum")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime StartDate { get; set; }
-
-	//	public static implicit operator CourseListViewModel(Course model)
-	//	{
-	//		return new CourseListViewModel
-	//		{
-	//			Id = model.Id,
-	//			Name = model.Name,
-	//			Description = model.Description,
-	//			StartDate = model.StartDate,
-	//		};
-
-	//	}
 	}
 }

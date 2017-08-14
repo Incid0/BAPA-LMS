@@ -167,14 +167,21 @@
             // Connecting add buttons
             $('.create-action').on('click', createAction);
 
-            // Clicking course
+            // Clicking course...
             $('#courseList').on('click', 'tr[data-id]', function () {              
                 var row = $(this);
                 switchToEditor(row.data('id'), row.find('td:first').text());
             });
+            // but not the buttons
+            $('#courseList').on('click', 'a.btn', function (e) {
+                e.stopPropagation();
+            });
 
             // Return to courselist
             $('#btnReturn').on('click', switchToList);
+
+            // Load first list
+            $('#courses form').submit();
         },
         showAlert: function (message) {
             localAlert(message)
