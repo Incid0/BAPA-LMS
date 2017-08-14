@@ -23,7 +23,7 @@ namespace BAPA_LMS.Models.DB
         public virtual ActivityType Type { get; set; }
 		public virtual Module Module { get; set; }
         public virtual ICollection<FileDocument> Files { get; set; }
-
+        public Nullable<DateTime> DeadLine { get; set; }
 
 
     }

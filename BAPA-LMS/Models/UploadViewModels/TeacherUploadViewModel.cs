@@ -18,8 +18,10 @@ namespace BAPA_LMS.Models.UploadViewModels
         public string ModuleName { get; set; }
         public string CourseName { get; set; }
         public ICollection<FileDocument> Files { get; set; }
+        public string ActivityType { get; set; }
+        public Module Module { get; set; }
+        public Nullable<DateTime> DeadLine { get; set; }
 
 
-      
     }
 }

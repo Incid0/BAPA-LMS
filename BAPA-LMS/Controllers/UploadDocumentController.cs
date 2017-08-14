@@ -113,6 +113,8 @@ namespace BAPA_LMS.Controllers
                         tuvm.ActivityName = activity.Name;
                         tuvm.Files = activity.Files;
                         tuvm.CourseName = activity.Module.Course.Name;
+                        tuvm.ActivityType = activity.Type.Name;
+                        tuvm.Module = activity.Module;
                         break;
                     case 'm':
                         Module module = db.Modules.Find(intId);
@@ -153,6 +155,7 @@ namespace BAPA_LMS.Controllers
                             file.ActivityId = activity.Id;
                             tuvm.ActivityName = activity.Name;
                             tuvm.Files = activity.Files;
+                            activity.DeadLine = tuvm.DeadLine;
                             break;
                         case 'm':
                             Module module = db.Modules.Find(intId);

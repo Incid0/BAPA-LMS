@@ -2,7 +2,18 @@
 @model BAPA_LMS.Models.UploadViewModels.TeacherUploadViewModel
 
 <div id="uploadWindow" style="margin-top:10px;">
-
+   @if (Model.ActivityType == "Inlämningsuppgift")
+   {
+    <div class="form-group">
+        @Html.LabelFor(model => model, "Datumspann (Startdatum - Slutdatum)", htmlAttributes: new { @class = "control-label" })
+        <div class="input-daterange input-group " data-provide="datepicker" data-date-start-date="@Model.Module.StartDate" data-date-end-date="@Model.Module.EndDate">
+            @Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "form-control ", placeholder = "åååå-mm-dd", min = Model.Module.StartDate, max = Model.Module.EndDate } })
+            <span class="input-group-addon">till</span>
+            @*@Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd", min = Model.Module.StartDate, max = Model.Module.EndDate } })*@
+        </div>
+        @Html.ValidationMessageFor(model => model.DeadLine, "", new { @class = "text-danger" })      
+    </div>
+   }
 
 
 
