@@ -130,8 +130,13 @@
 
             // Show message left after page load
             alertbox = $('#alertbox');
-            if (alertbox.length && alertbox.text()) {
-                localAlert();
+            if (alertbox.length) {
+                var result = alertbox.text(), data = result.split('|');
+                if (result) {
+                    if (data.length > 1) {
+                        localAlert(data[1], data[0]);
+                    } else localAlert(data[0]);
+                }
             }
 
             // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
