@@ -59,7 +59,7 @@
 {
     <tr id="moreData">
         <th colspan="3">
-            @Ajax.ActionLink("Ladda fler kurser", "Index",
+            @Ajax.ActionLink("Ladda fler kurser", "Filtered",
                 new { filter = Model.Filter, startrange = Model.StartRange, endrange = Model.EndRange, sortparam = Model.SortParam, offset = Model.Offset + CourseListViewModel.PageSize },
                 new AjaxOptions
                 {
