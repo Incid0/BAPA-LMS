@@ -27,7 +27,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Hem", "Index", "Teacher")</li>
-                        <li>@Html.ActionLink("Lägg till lärare", "RegisterTeacher")</li>
+                        <li>@Html.ActionLink("Lägg till lärare", "RegisterTeacher", "Teacher")</li>
                         <li><a class="create-action" data-controller="courses">Lägg till kurs</a></li>
                     }
                 </ul>
