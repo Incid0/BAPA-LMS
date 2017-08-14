@@ -1,0 +1,30 @@
+﻿@model BAPA_LMS.Models.CourseViewModels.CourseIndexViewModel
+@using BAPA_LMS.Models
+@{
+    ViewBag.Title = "Kurseditor";
+}
+
+<h2>Kurseditor - @(Model.Name)</h2>
+
+<div class="row">
+    <div id="tree" data-id="@Model.Id" class="col-md-4">
+
+    </div>
+    <div class="col-md-8">
+        <div class="editarea-fixed">
+            <div id="editarea">
+
+            </div>
+            <div class="buttonbar">
+                @Html.ActionLink("Lägg till kursdeltagare", "Register", new { id = Model.Id }, new { @class = "btn btn-default" })
+                <button id="btnModule" class="btn btn-default add" data-controller="modules" data-parent="@Model.Id.Encode()">Ny modul</button>
+                <button id="btnActivity" class="btn btn-default add" data-controller="activities" disabled="disabled">Ny aktivitet</button>
+                <button id="btnDel" class="btn btn-danger" data-toggle="modal" data-target="#modalContainer" href="" disabled="disabled">Ta bort</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalContainer" class="modal" tabindex="-1" role="dialog">
+    <div id="popupContent" class="modal-content">
+    </div>
+</div>

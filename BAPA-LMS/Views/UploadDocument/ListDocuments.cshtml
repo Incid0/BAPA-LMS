@@ -1,0 +1,67 @@
+﻿@using BAPA_LMS.Models
+@using BAPA_LMS.Models.DB
+@model Tuple<List<ApplicationUser>, List<FileDocument>>
+<h2>Inskickade filer för aktivitet</h2>
+<table class="table table-striped table-responsive">
+    <tr class="custom-table">
+        <th>
+            Elev
+        </th>
+        <th>
+            Filnamn
+        </th>
+        <th>
+            Inskickad
+        </th>
+        <th>
+            Hämta dokument
+        </th>
+    </tr>
+
+    @foreach (var user in Model.Item1)
+    {
+        <tr class="custom-table" >
+            <td>
+                @Html.DisplayFor(modelItem => user.FullName)
+            </td>
+            @if (Model.Item2.Count() > 0)
+            {
+                foreach (var file in Model.Item2)
+                {
+                    if (file.MemberId == user.Id)
+
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => file.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => file.TimeStamp)
+                        </td>
+                        <td>
+                            @Html.ActionLink(" ", "DownloadFile", new { id = file.Id }, new { @class = "glyphicon glyphicon-download-alt", style = "font-size:1.5em;" })
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    }
+                }
+            }
+            else
+            {
+                <td></td>
+                <td></td>
+                <td></td>
+            }
+
+        </tr>
+    }
+
+</table>
+
+
+<div>
+    @Html.ActionLink("Tillbaka", "ListUploadActivities", new { id = ((int)Model.Item1.FirstOrDefault().CourseId).Encode() })
+</div>

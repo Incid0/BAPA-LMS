@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace BAPA_LMS.Models.ModuleViewModels
 {
@@ -29,7 +26,7 @@ namespace BAPA_LMS.Models.ModuleViewModels
 
         [Display(Name = "Aktivitetslista")]
         public ICollection<Activity> Activities { get; set; }
-
+        public ICollection<FileDocument> Files { get; set; }
         public static implicit operator ModuleDetailViewModel(Module model)
         {
             return new ModuleDetailViewModel
@@ -39,7 +36,9 @@ namespace BAPA_LMS.Models.ModuleViewModels
                 Description = model.Description,
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
-                Activities = model.Activities
+                Activities = model.Activities,
+                Files = model.Files,
+               
             };
 
         }

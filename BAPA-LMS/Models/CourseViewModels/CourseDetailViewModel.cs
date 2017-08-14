@@ -21,23 +21,22 @@ namespace BAPA_LMS.Models.CourseViewModels
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]        
         public DateTime StartDate { get; set; }
 
-        [Display(Name = "Starttid")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}")]
-        public DateTime StartTime { get; set; }
-
         [Display(Name = "Modullista")]
 		public ICollection<Module> Modules { get; set; }
         public ICollection<ApplicationUser> Members { get; set; }
+        public ICollection<FileDocument> Files { get; set; }
+
 		public static implicit operator CourseDetailViewModel(Course model)
 		{
 			return new CourseDetailViewModel
 			{
+                Id = model.Id,
 				Name = model.Name,
 				Description = model.Description,
 				StartDate = model.StartDate,
-                StartTime = model.StartDate,
 				Modules = model.Modules,
-                Members = model.Members
+                Members = model.Members,
+                Files = model.Files
 			};
 
 		}

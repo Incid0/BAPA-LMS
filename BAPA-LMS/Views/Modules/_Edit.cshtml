@@ -1,0 +1,59 @@
+﻿@model BAPA_LMS.Models.ModuleViewModels.ModuleEditViewModel
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tabedit">Redigering</a></li>
+    <li><a data-toggle="tab" href="#tabdoc">Dokument</a></li>
+</ul>
+<div class="tab-content">
+    <div id="tabedit" class="tab-pane fade in active">
+        <h4>Redigera modul</h4>
+
+        @using (Ajax.BeginForm("edit", null,
+            new AjaxOptions
+            {
+                HttpMethod = "post",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "editarea"
+            }, new { id = "formEdit" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("result", TempData["alert"], new { id = "formResult" })
+            @Html.Hidden("CourseStartDate", Model.CourseStartDate)
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StartDate, "Datumspann (Startdatum - Slutdatum)", htmlAttributes: new { @class = "control-label" })
+                <div class="input-daterange input-group " data-provide="datepicker" data-date-start-date="@Model.CourseStartDate">
+                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control ", placeholder = "åååå-mm-dd", min = Model.CourseStartDate } })
+                    <span class="input-group-addon">till</span>
+                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", placeholder = "åååå-mm-dd" } })
+                </div>
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "4" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Spara" id="btnSave" class="btn btn-primary" />
+            </div>
+        }
+    </div>
+    <div id="tabdoc" class="tab-pane fade">
+        @{Html.RenderAction("TeacherUploader", "UploadDocument", new { id = "m" + Model.Id.ToString() });}
+    </div>
+</div>
+<script>
+    teacher.initForm();
+</script>

@@ -14,7 +14,8 @@ namespace BAPA_LMS.Models.CourseViewModels
         {
             return new CourseIndexViewModel
             {
-                Name = model.Name
+				Id = model.Id,
+				Name = model.Name
             };
         }
     }

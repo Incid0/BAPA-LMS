@@ -1,0 +1,51 @@
+﻿@using BAPA_LMS.Models.DB;
+@model Tuple<List<BAPA_LMS.Models.ActivityViewModels.ActivitySubmitViewModel>,ApplicationUser, List<FileDocument>>
+
+@{
+    ViewBag.Title = "Inlämningsuppgifter";
+}
+<h2>Inlämningsuppgifter</h2>
+
+<div class="panel-group" id="accordion">
+    @foreach (var item in Model.Item1)
+            {
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse@(item.Id)" href="#collapse@(item.Id)" )>@Html.DisplayFor(model => item.Name)<span> </span>@Html.DisplayFor(model => item.Type.Name)</a>
+                </h4>
+            </div>
+            <div id="collapse@(item.Id)" class="panel-collapse collapse ">
+                <div class="panel-body">
+                    @Html.DisplayFor(model => item.Name)
+                    <hr />
+                    
+                    <strong>Slutdatum:</strong>
+                    @Html.DisplayFor(model => item.EndDate)
+                    <br />
+                    <strong>Sluttid:</strong>
+                    @Html.DisplayFor(model => item.EndTime)
+                    <br />
+                 <hr />
+                    @if (Model.Item3.Exists(e => e.Member.Id == Model.Item2.Id) && Model.Item3.Exists(f => f.ActivityId == item.Id))
+                    {
+                       
+                      <strong>Uppgiften är redan inlämnad.</strong>
+                    }
+                    else
+                    {
+                        <br />
+                        { Html.RenderAction("ActivityUploader", "UploadDocument", new { id = item.Id }); }
+                    }
+                   
+                </div>
+            </div>
+        </div>
+
+    }
+    <hr />
+    <div>
+        @Html.ActionLink("Tillbaka till index", "Index","Student")
+    </div>
+</div>

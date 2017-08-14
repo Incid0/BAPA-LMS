@@ -1,0 +1,44 @@
+﻿@model BAPA_LMS.Models.CourseViewModels.CourseDetailViewModel
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tabedit">Klasslista</a></li>
+    <li><a data-toggle="tab" href="#tabdoc">Dokument</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="tabedit" class="tab-pane fade in active">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    Klasslista för @Html.DisplayFor(model => model.Name)
+                </h4>
+            </div>
+            <table class="table">
+
+                @foreach (var user in Model.Members.OrderBy(u => u.LastName).ThenBy(u => u.FirstName))
+                {
+                    <tr>
+                        <td class="optimized">
+                            @Html.DisplayFor(modelItem => user.FullName)
+                        </td>
+                        <td class="optimized">
+                            <a class="btn btn-primary btn-xs edit-student" data-id="@user.Id">
+                                <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Redigera @user.FullName"></span>
+                            </a>
+                            <a class="btn btn-primary btn-xs" href="@Url.Action("Delete", new { id = user.Id })" data-toggle="modal" data-target="#modalContainer">
+                                <span class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Ta Bort @user.FullName"></span>
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div id="tabdoc" class="tab-pane fade">
+        @{Html.RenderAction("TeacherUploader", "UploadDocument", new { id = "c" + Model.Id.ToString() });}
+    </div>
+</div>
+<script>
+    teacher.initStudents();
+</script>

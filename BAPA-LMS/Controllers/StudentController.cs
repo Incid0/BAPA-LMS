@@ -1,14 +1,11 @@
 ﻿using BAPA_LMS.DataAccessLayer;
-using BAPA_LMS.Models;
-using BAPA_LMS.Models.ActivityViewModels;
 using BAPA_LMS.Models.CourseViewModels;
 using BAPA_LMS.Models.DB;
 using BAPA_LMS.Models.ModuleViewModels;
+using BAPA_LMS.Models.UploadViewModels;
 using BAPA_LMS.Utils;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 using System.Web.Mvc;
 
 
@@ -24,60 +21,49 @@ namespace BAPA_LMS.Controllers
 
         public object ModuleDetailViewModel { get; private set; }
 
+        [Authorize(Roles = "Member")]
         public ActionResult Index()
         {
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
-         
+
             Course course = db.Courses.Find(currentUser.CourseId);
             CourseIndexViewModel cdvm = course;
             return View(cdvm);
         }
 
-        public ActionResult KursInfo()
+    
+        public ActionResult CourseInfo()
         {
-          
+
             var currentUser = UserUtils.GetCurrentUser(HttpContext);
 
             Course course = db.Courses.Find(currentUser.CourseId);
-            if(course == null)
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            CourseDetailViewModel cdvm = course; 
-            
+            CourseDetailViewModel cdvm = course;
+
             return View(cdvm);
         }
-        public ActionResult ModulInfo()
+
+        public ActionResult ActivityInfo(int id)
         {
-            var currentUser = UserUtils.GetCurrentUser(HttpContext);
-
-            Course course = db.Courses.Find(currentUser.CourseId);
-            List<ModuleDetailViewModel> moduleList = new List<ModuleDetailViewModel>();
-            foreach (var item in db.Modules)
-            {
-                if(item.CourseId == course.Id)
-                {
-                    moduleList.Add(item);
-                }
-            }                       
-            return View(moduleList);
-
+            Module module = db.Modules.Find(id);
+            ModuleDetailViewModel mdvm = module;            
+            return View(mdvm);
         }
 
-        public ActionResult AktivitetsInfo(int id)
+        public ActionResult ActivityFileList(int id)
         {
-            var currentUser = UserUtils.GetCurrentUser(HttpContext);
-            Course course = db.Courses.Find(currentUser.CourseId);
-            List<ActivityDetailViewModel> activityList = new List<ActivityDetailViewModel>();
-            foreach (var item in db.Activities)
+            List<StudentDocumentListViewModel> fileList = new List<StudentDocumentListViewModel>();
+            foreach (var file in db.Files.Where(f => f.Activity.Id == id))
             {
-                if(item.ModuleId == id)
-                {
-                    activityList.Add(item);
-                }
+                fileList.Add(file);
             }
-            return View(activityList);
+            return PartialView(fileList);
         }
+
 
         protected override void Dispose(bool disposing)
         {

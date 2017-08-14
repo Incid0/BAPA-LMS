@@ -1,0 +1,82 @@
+﻿@using BAPA_LMS.Models.CourseViewModels
+@model CourseListViewModel
+
+@helper SortHeader(string fieldname, string labelname)
+{
+    @Html.Raw((Model.SortParam == fieldname ? "<span class=\"glyphicon glyphicon-triangle-bottom\"></span>&nbsp;" : ""))
+    @Html.Raw((Model.SortParam == fieldname + "_desc" ? "<span class=\"glyphicon glyphicon-triangle-top\"></span>&nbsp;" : ""))
+    @Ajax.ActionLink(labelname, "Filtered",
+        new { filter = Model.Filter, startrange = Model.StartRange, endrange = Model.EndRange, sortparam = fieldname + (Model.SortParam == fieldname ? "_desc" : "") },
+        new AjaxOptions
+        {
+            HttpMethod = "get",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "courseList"
+        })
+}
+
+@if (Model.Offset == 0)
+{
+    @:<div id="courseList">
+        <div class="panel-body">Antal träffar: @Model.Count</div>
+        <input type="hidden" name="sortparam" value="@Model.SortParam" />
+        @:<table class="table table-striped table-responsive table-hover">
+            <tr>
+                <th>
+                    @SortHeader("Name", "Namn")
+                </th>
+                <th>
+                    @SortHeader("StartDate", "Startdatum")
+                </th>
+                <th class="hidden-sm hidden-xs">
+                    @SortHeader("Description", "Beskrivning")
+                </th>              
+                <th>
+                    <a>Inlämningsaktiviteter</a>
+                </th>
+            </tr>
+}
+@foreach (var item in Model.Courses)
+{
+    <tr data-id="@item.Id">
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td class="course-col-desc hidden-sm hidden-xs">
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            <a href="@Url.Action("ListUploadActivities", "UploadDocument", new { id = item.Id })" class="btn btn-info btn-xs uploads" title="Visa inlämningsaktiviteter">
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            </a>
+        </td>
+    </tr>
+}
+@if (Model.Courses.Length == CourseListViewModel.PageSize)
+{
+    <tr id="moreData">
+        <th colspan="3">
+            @Ajax.ActionLink("Ladda fler kurser", "Filtered",
+                new { filter = Model.Filter, startrange = Model.StartRange, endrange = Model.EndRange, sortparam = Model.SortParam, offset = Model.Offset + CourseListViewModel.PageSize },
+                new AjaxOptions
+                {
+                    HttpMethod = "get",
+                    InsertionMode = InsertionMode.ReplaceWith,
+                    UpdateTargetId = "moreData"
+                },
+                new
+                {
+                    @class = "btn btn-primary"
+                })
+        </th>
+        <th class="hidden-sm hidden-xs"></th>
+    </tr>
+}
+@if (Model.Offset == 0)
+{
+        @:</table>
+    @:</div>
+}

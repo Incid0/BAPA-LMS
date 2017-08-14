@@ -7,16 +7,23 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
+        @*<li>
+            @Html.ActionLink("" + UserUtils.GetCurrentUser(Context).FirstName, "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { @class = "glyphicon glyphicon-user", title = "Ändra lösenord"}) 
+        </li>*@
+        
         <li>
-            @Html.ActionLink("Hej " + UserUtils.GetCurrentUser(Context).FirstName + "!", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Ändra lösenord" })
+            <div class="navbar-user">                
+              <a href="@Url.Action("ChangePassword", "Manage")" new { title = "Ändra lösenord"><span class="glyphicon glyphicon-user"></span> @UserUtils.GetCurrentUser(Context).FirstName</a>
+            </div>
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
+       
+        <li><div class="navbar-user"><a href="javascript:document.getElementById('logoutForm').submit()"><span id="logouticon" class="glyphicon glyphicon-log-out"></span>Logga ut</a></div></li>
     </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">        
-        <li>@Html.ActionLink("Logga in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li><div class="navbar-user"><a href="@Url.Action("Login", "Account", new { id = "loginLink" })"><span id="logouticon" class="glyphicon glyphicon-log-in"></span>Logga in</a></div></li>
     </ul>
 }

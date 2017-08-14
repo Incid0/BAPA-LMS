@@ -40,6 +40,9 @@ namespace BAPA_LMS.Models.ActivityViewModels
 		[Display(Name = "Ingår i modul")]
 		public string ModuleName { get; set; }
 
+		[Display(Name = "Dokument")]
+		public FileDocument[] Files { get; set; }
+
 		public static implicit operator ActivityDetailViewModel(Activity model)
         {
             return new ActivityDetailViewModel

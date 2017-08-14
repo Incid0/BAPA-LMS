@@ -18,6 +18,10 @@ namespace BAPA_LMS
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 			LMSConfig.Init();
+
+            // Register custom messages
+            ClientDataTypeModelValidatorProvider.ResourceClassKey = "CustomDateMessages";
+            DefaultModelBinder.ResourceClassKey = "CustomDateMessages";
         }
     }
 }

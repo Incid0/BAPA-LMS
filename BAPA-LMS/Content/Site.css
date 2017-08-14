@@ -7,6 +7,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    position: relative;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -18,10 +19,56 @@
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select,
-textarea {
+select
+{
     max-width: 280px;
 }
+
+.body-content hr {
+    margin: 10px 0;
+}
+
+footer {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 20px;
+    z-index: -10;
+}
+
+.navbar-user  {
+    line-height: 20px;
+    padding: 15px !important;
+    color: #9d9d9d;    
+}
+
+.navbar-user a {
+    color: #9d9d9d;
+}
+
+.navbar-user > a:hover{
+    color:white;
+    text-decoration:none;
+}
+    .navbar-user > a:focus {
+        color: white;
+        text-decoration: none;
+    }
+
+#logouticon{
+    padding-right: 4px;
+}
+/* Haxxored alertviewer on top*/
+body > div.alert {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000
+}
+
 .course-modules {
     height: 220px;
     width: 580px;
@@ -30,14 +77,19 @@ textarea {
     overflow-y:scroll;
 }
 
+th.optimized,
+td.optimized {
+    width: 1%;
+    white-space: nowrap;
+}
+
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
     display: block;
 }
-
-    .table-fixed tbody td, .table-fixed thead > tr > th {
-        float: left;
-        border-bottom-width: 0;
-    }
+.table-fixed tbody td, .table-fixed thead > tr > th {
+    float: left;
+    border-bottom-width: 0;
+}
 .no-padding{
     padding-left:0px !important;
     padding-right:0px !important;
@@ -55,7 +107,130 @@ textarea {
     font-size: 1.1em;
 }
 
+/* Size and placement of popup window */
 .modal-content {
-    width: 500px;
+    width: 50%;
+    min-width: 600px;
     margin: 70px auto;
+}
+
+/*Override strange default input bootstrap*/
+.input-group.date > .input-group-addon {
+    width: 0;
+}
+
+.input-daterange {
+    width: auto;
+}
+
+.bootstrap-filestyle.input-group {
+    display: block;
+}
+
+.bootstrap-filestyle.input-group > * {
+    display: inline-block;
+}
+
+.bootstrap-filestyle.input-group > .input-group-btn {
+    width: inherit;
+}
+
+/*.bootstrap-filestyle.input-group > .input-group-btn > label {
+    padding-bottom: 7px;
+}*/
+
+.editarea-fixed {
+    position: fixed;
+}
+
+#courses > .panel {
+    margin-top: 20px;
+}
+
+/* Max width, col-lg-8 */
+#editarea {
+    max-width: 750px;
+    min-height: 556px;
+}
+
+#editarea > h4 {
+    margin-top: 0;
+}
+
+#courseeditor {
+    display: none;
+    min-height: 650px;
+}
+
+/* Fix pointer on empty anchor */
+a.create-action:hover,
+#courseList tr td:hover {
+    cursor: pointer;
+}
+
+#courseList tr > * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+#courseList .course-col-desc {
+    text-overflow: ellipsis;
+    max-width: 480px;
+}
+
+#tree .badge {
+    display: inherit;
+    min-width: inherit;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    text-align: inherit;
+    white-space: inherit;
+    vertical-align: inherit;
+    background-color: inherit;
+    border-radius: inherit;
+}
+
+/*Anton och Basses äventyr*/
+.custom-table {
+    text-align: center;
+    height: 43px;
+    border-collapse: collapse;
+}
+
+    .custom-table td {
+        border-bottom: 1px solid rgb(221, 221,221);
+    }
+
+    .custom-table > th {
+        text-align: center;
+    }
+
+/* Mobile customizations */
+@media (max-width: 1199px) { /* md */
+    #editarea {
+        max-width: 617px;
+    }
+}
+
+@media (max-width: 991px) { /* sm */
+    .editarea-fixed {
+        position: inherit;
+    }
+    #editarea {
+        max-width: inherit;
+    }
+}
+
+@media screen and (max-width: 767px) { /* xs */
+    #courseList table {
+        table-layout: fixed;
+    }
+
+    #btnDel {
+        margin-top: 8px;
+    }
 }

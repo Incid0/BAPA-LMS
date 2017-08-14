@@ -55,7 +55,24 @@
 
         <dd>
             @Html.DisplayFor(model => model.Description)
+            <br />
+            <br />
         </dd>
-
+     
+        @if (Model.Files.Any(f => f.CourseName == null))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Files)
+            </dt>
+            <dd>
+                @foreach (var file in Model.Files.Where(f => f.CourseName == null))
+                {
+                    <span>@file.Name</span> @:&nbsp;
+                    <a class="btn btn-default btn-sm" href="@Url.Action("DownloadFile", "UploadDocument", new { id = file.Id })">
+                        <span class="glyphicon glyphicon-download-alt"></span>
+                    </a><br />
+                }
+            </dd>
+        }
     </dl>
 </div>
