@@ -17,8 +17,10 @@
                     <h3 class="panel-title">@Html.DisplayFor(model => model.Name)</h3>
                 </div>
                 <div class="panel-body">
-                    @Html.DisplayFor(model => model.Description)
-                    @Html.DisplayNameFor(model => model.StartDate): @Html.DisplayFor(model => model.StartDate)<br />
+                    @Html.DisplayFor(model => model.Description)<br />
+                    <hr />
+                   <strong>@Html.DisplayNameFor(model => model.StartDate): </strong> 
+                    @Html.DisplayFor(model => model.StartDate)<br />
 
                 </div>
           </div>
@@ -61,16 +63,20 @@
                     <div id="collapse@(item.Id)" class="panel-collapse collapse">
                         <div class="panel-body">
                             @Html.DisplayFor(model => item.Description)
-                            <br />                           
-                            @Html.DisplayFor(model => item.StartTime)
-                            <br />                          
-                            @Html.DisplayFor(model => item.EndTime)
                             <br />
+                            <hr />
+                            <strong>Starttid:</strong>
+                            @Html.DisplayFor(model => item.StartTime)
+                            <br />   
+                            <strong>Sluttid:</strong>
+                            @Html.DisplayFor(model => item.EndTime)
+                            <br /><hr />
                             @foreach (var file in item.Files)
                             {
-                                if (file.Activity.Id == item.Id)
+                                if (file.Activity.Id == item.Id && file.CourseName == null)
                                 {
-                                    @Html.DisplayFor(model => file.Name) @Html.ActionLink("Ladda ner", "DownloadFile", "UploadDocument", new { id = file.Id }, null)
+                                    <strong>Dokument</strong>
+                                    @Html.DisplayFor(model => file.Name) @Html.ActionLink(" ", "DownloadFile", "UploadDocument", new { id = file.Id }, new { @class = "glyphicon glyphicon-floppy-save" })<br/>
                                 }
                             }
                         </div>

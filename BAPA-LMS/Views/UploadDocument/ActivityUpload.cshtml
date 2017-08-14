@@ -19,14 +19,18 @@
             <div id="collapse@(item.Id)" class="panel-collapse collapse ">
                 <div class="panel-body">
                     @Html.DisplayFor(model => item.Name)
-                    <br />
+                    <hr />
+                    
+                    <strong>Slutdatum:</strong>
                     @Html.DisplayFor(model => item.EndDate)
                     <br />
+                    <strong>Sluttid:</strong>
                     @Html.DisplayFor(model => item.EndTime)
                     <br />
-                  
+                 <hr />
                     @if (Model.Item3.Exists(e => e.Member.Id == Model.Item2.Id) && Model.Item3.Exists(f => f.ActivityId == item.Id))
                     {
+                       
                       <strong>Uppgiften är redan inlämnad.</strong>
                     }
                     else
