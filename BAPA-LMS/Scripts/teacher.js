@@ -181,7 +181,7 @@
                 switchToEditor(row.data('id'), row.find('td:first').text());
             });
             // but not the buttons
-            $('#courseList').on('click', 'a.btn', function (e) {
+            $('#courseList').on('click', 'a.uploads', function (e) {
                 e.stopPropagation();
             });
 
@@ -190,6 +190,12 @@
 
             // Load first list
             $('#courses form').submit();
+
+            // Reset the filter
+            $('#resetfilter').on('click', function () {
+                $('#courses input').val('');
+                $('#courses form').submit();
+            });
         },
         showAlert: function (message) {
             localAlert(message)

@@ -17,6 +17,10 @@
         {
             <div class="panel-heading">
                 <div class="form-group">
+                    <a class="btn btn-default" id="resetfilter" data-toggle="tooltip" title="Rensa sökfält"><span class="glyphicon glyphicon-remove"></span></a>
+                </div>
+                
+                <div class="form-group">
                     @Html.LabelFor(model => model.Filter, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Filter, new { htmlAttributes = new { id = "coursefilter", @class = "form-control", placeholder = "Minst 3 tecken per ord" } })
                 </div>
