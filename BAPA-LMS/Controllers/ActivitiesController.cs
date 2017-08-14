@@ -214,11 +214,43 @@ namespace BAPA_LMS.Controllers
 			return PartialView("_Delete", advm);
 		}
 
+		private string GetColor(Activity activity, ApplicationUser user)
+		{
+			string result = activity.Type.Color;
+			if (activity.Type.Submit)
+			{
+				if (activity.Files.Where(f => f.MemberId == user.Id).Any())
+				{
+					result = "#5cb85c"; // Btn-Success
+				}
+				else if (activity.EndTime < DateTime.Now)
+				{
+					result = "#c9302c"; // Btn-Danger
+				}
+			}
+			else if (activity.EndTime <= DateTime.Now)
+			{
+				result = "Gray";
+			};
+			return result;
+		}
+
+		private string GetIcons(Activity activity, ApplicationUser user)
+		{
+			string result = "";
+			if (activity.Files.Where(f => f.CourseName == null).Any())
+			{
+				result = "file";
+			}
+			if (activity.Type.Submit && (!activity.Files.Where(f => f.MemberId == user.Id).Any()) && activity.EndTime <= (DateTime.Today + new TimeSpan(5, 0, 0, 0)))
+			{
+				result += " exclamation-sign";
+			}
+			return result;
+		}
+
 		public JsonResult GetStudentActivities()
 		{
-			// Hardcoded demodata
-			Random rng = new Random();
-			string[] activityIcons = new string[] { "", "file", "file" };
 			var user = UserUtils.GetCurrentUser(HttpContext);
 			var actArray = db.Activities
 				.Where(a => a.Module.CourseId == user.CourseId)
@@ -229,10 +261,10 @@ namespace BAPA_LMS.Controllers
 					title = item.Name,
 					start = item.StartTime,
 					end = item.EndTime,
-					color = (item.EndTime >= DateTime.Now) || item.Type.Submit ? item.Type.Color : "Gray",
+					color = GetColor(item, user),
 					url = "/activities/details/" + item.Id.Encode(),
 					className = "modal-link",
-					icon = activityIcons[rng.Next(3)] + (item.Type.Submit ? " exclamation-sign" : "")
+					icon = GetIcons(item, user)
 				}).ToArray();
 
 			return Json(actArray, JsonRequestBehavior.AllowGet);
